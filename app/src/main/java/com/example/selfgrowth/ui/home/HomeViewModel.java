@@ -50,7 +50,7 @@ public class HomeViewModel extends ViewModel {
             public void onResponse(Call<String> call, Response<String> response) {
                 String outWarehouseList = response.body();
                 System.out.println(outWarehouseList);
-                mText.setValue(outWarehouseList);
+                mText.setValue("get web:" + outWarehouseList);
             }
 
             @Override
