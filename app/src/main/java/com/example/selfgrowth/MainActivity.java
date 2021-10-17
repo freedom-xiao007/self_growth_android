@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private String beforeActivity;
-    private MutableLiveData<String> uploadRes;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -103,9 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
         PeriodicWorkRequest monitorTask = new PeriodicWorkRequest.Builder(MonitorTask.class, 3, TimeUnit.SECONDS).build();
         WorkManager.getInstance(this).enqueue(monitorTask);
-
-        uploadRes = new MutableLiveData<>();
-        uploadRes.setValue("test");
 
         Handler handler=new Handler();
         Runnable runnable=new Runnable(){
@@ -253,7 +249,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 String res = response.body();
                 Log.d("http response", res);
-                uploadRes.setValue(res);
                 Snackbar.make(getWindow().getDecorView(), "upload:" + topActivity, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
