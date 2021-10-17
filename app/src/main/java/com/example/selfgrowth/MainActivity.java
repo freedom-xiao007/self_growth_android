@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import com.example.selfgrowth.http.GetRequestInterface;
+import com.example.selfgrowth.http.PhoneUseRecord;
 import com.example.selfgrowth.scheduler.MonitorTask;
 import com.example.selfgrowth.server.forground.MyForeGroundService;
 import com.example.selfgrowth.service.backgroud.MonitorService;
@@ -41,6 +43,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -103,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(this, 2000);
             }
         };
-        handler.postDelayed(runnable, 3000);//每两秒执行一次runnable.
+        handler.postDelayed(runnable, 5000);//每两秒执行一次runnable.
 
         Process process = null;
         try {
@@ -209,6 +217,33 @@ public class MainActivity extends AppCompatActivity {
         ActivityManager manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         final String topActivity = manager.getRunningTasks(1).get(0).topActivity.getClassName();
         Log.i("top activity:", topActivity);
+        sendRecord(topActivity);
+    }
+
+    private void sendRecord(String topActivity) {
+        //创建Retrofit对象
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.3:8080/") //基础url,其他部分在GetRequestInterface里
+                .addConverterFactory(GsonConverterFactory.create()) //Gson数据转换器
+                .build();
+
+        //创建网络请求接口实例
+        PhoneUseRecord request = retrofit.create(PhoneUseRecord.class);
+        Call<String> call = request.uploadRecord(topActivity);
+
+        //发送网络请求(异步)
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String res = response.body();
+                Log.d("http response", res);
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                System.out.println("GetOutWarehouseList->onFailure(MainActivity.java): "+t.toString() );
+            }
+        });
     }
 
     @Override
