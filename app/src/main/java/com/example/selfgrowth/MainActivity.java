@@ -6,13 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.selfgrowth.scheduler.MonitorTask;
 import com.example.selfgrowth.server.forground.MyForeGroundService;
+import com.example.selfgrowth.service.backgroud.MonitorService;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -22,6 +25,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.example.selfgrowth.databinding.ActivityMainBinding;
 
@@ -61,35 +67,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        Button startServiceButton = findViewById(R.id.start_foreground_service_button);
-        startServiceButton.setOnClickListener(v -> {
-            // TODO Auto-generated method stub
-            Intent intent = new Intent(MainActivity.this, MyForeGroundService.class);
-            startService(intent);
-        });
-
-//        Button stopServiceButton = findViewById(R.id.stop_foreground_service_button);
-//        stopServiceButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, MyForeGroundService.class);
-//            intent.setAction(MyForeGroundService.ACTION_STOP_FOREGROUND_SERVICE);
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                startForegroundService(intent);
-//            } else {
-//                startService(intent);
-//            }
-//        });
-
         Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
         this.startActivity(intent);
-
-        ScheduledExecutorService scheduledExecutorService =  Executors.newScheduledThreadPool(1);
-        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                getTopActivity();
-            }
-        },0,5, TimeUnit.SECONDS);
 
         // Android 8.0使用startForegroundService在前台启动新服务
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -99,6 +78,24 @@ public class MainActivity extends AppCompatActivity {
         else{
             this.startService(new Intent(MainActivity.this, MyForeGroundService.class));
         }
+
+        this.startService(new Intent(MainActivity.this, MonitorService.class));
+
+        PeriodicWorkRequest monitorTask = new PeriodicWorkRequest.Builder(MonitorTask.class, 3, TimeUnit.SECONDS).build();
+        WorkManager.getInstance(this).enqueue(monitorTask);
+
+        Handler handler=new Handler();
+        Runnable runnable=new Runnable(){
+            @Override
+            public void run() {
+// TODO Auto-generated method stub
+//要做的事情
+                Log.d("Monitor Detect", "定时检测顶层应用");
+                getTopActivity();
+                handler.postDelayed(this, 2000);
+            }
+        };
+        handler.postDelayed(runnable, 3000);//每两秒执行一次runnable.
     }
 
     public void getTopActivity()
