@@ -17,6 +17,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.selfgrowth.http.GetRequestInterface;
 import com.example.selfgrowth.http.PhoneUseRecord;
@@ -27,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private String beforeActivity;
+    private MutableLiveData<String> uploadRes;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -100,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
         PeriodicWorkRequest monitorTask = new PeriodicWorkRequest.Builder(MonitorTask.class, 3, TimeUnit.SECONDS).build();
         WorkManager.getInstance(this).enqueue(monitorTask);
 
+        uploadRes = new MutableLiveData<>();
+        uploadRes.setValue("test");
+
         Handler handler=new Handler();
         Runnable runnable=new Runnable(){
             @Override
@@ -108,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
 //要做的事情
                 Log.d("Monitor Detect", "定时检测顶层应用");
                 getTopActivity();
-                handler.postDelayed(this, 2000);
+                handler.postDelayed(this, 10000);
             }
         };
-        handler.postDelayed(runnable, 5000);//每两秒执行一次runnable.
+        handler.postDelayed(runnable, 10000);//每两秒执行一次runnable.
 
         Process process = null;
         try {
@@ -212,15 +219,24 @@ public class MainActivity extends AppCompatActivity {
         }
         if (!android.text.TextUtils.isEmpty(result)) {
             Log.i("Service", result);
+            sendRecord(result);
+            beforeActivity = result;
+        } else {
+            sendRecord(beforeActivity);
         }
 
         ActivityManager manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         final String topActivity = manager.getRunningTasks(1).get(0).topActivity.getClassName();
         Log.i("top activity:", topActivity);
-        sendRecord(topActivity);
     }
 
     private void sendRecord(String topActivity) {
+        if (topActivity == null) {
+            Snackbar.make(getWindow().getDecorView(), "activity is null", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            return;
+        }
+
         //创建Retrofit对象
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.1.3:8080/") //基础url,其他部分在GetRequestInterface里
@@ -237,11 +253,16 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 String res = response.body();
                 Log.d("http response", res);
+                uploadRes.setValue(res);
+                Snackbar.make(getWindow().getDecorView(), "upload:" + topActivity, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 System.out.println("GetOutWarehouseList->onFailure(MainActivity.java): "+t.toString() );
+                Snackbar.make(getWindow().getDecorView(), t.toString(), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }
