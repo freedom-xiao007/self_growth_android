@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
 
-import com.example.selfgrowth.scheduler.MonitorTask;
 import com.example.selfgrowth.server.forground.MyForeGroundService;
-import com.example.selfgrowth.service.backgroud.MonitorService;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -22,12 +20,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 
 import com.example.selfgrowth.databinding.ActivityMainBinding;
-
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        // 获取手机使用情况权限
         if (!isStatAccessPermissionSet()) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             this.startActivity(intent);
@@ -71,11 +66,6 @@ public class MainActivity extends AppCompatActivity {
         else{
             this.startService(new Intent(MainActivity.this, MyForeGroundService.class));
         }
-
-        this.startService(new Intent(MainActivity.this, MonitorService.class));
-
-        PeriodicWorkRequest monitorTask = new PeriodicWorkRequest.Builder(MonitorTask.class, 3, TimeUnit.SECONDS).build();
-        WorkManager.getInstance(this).enqueue(monitorTask);
     }
 
     /**
