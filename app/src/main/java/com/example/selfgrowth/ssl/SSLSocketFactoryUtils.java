@@ -1,14 +1,10 @@
 package com.example.selfgrowth.ssl;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.CertificateException;
@@ -173,7 +169,6 @@ public class SSLSocketFactoryUtils extends AppCompatActivity {
         @Override
         public boolean verify(String hostname, SSLSession session) {
             return hostname.equals(HOST_NAME);
-            //return true;
         }
     };
 }

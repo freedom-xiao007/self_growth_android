@@ -88,8 +88,6 @@ public class MonitorActivityService extends Service {
         Runnable runnable=new Runnable(){
             @Override
             public void run() {
-// TODO Auto-generated method stub
-//要做的事情
                 Log.d("Monitor Detect", "定时检测顶层应用");
                 getTopActivity();
                 handler.postDelayed(this, 10000);
@@ -113,10 +111,11 @@ public class MonitorActivityService extends Service {
             }
         }
         if (!android.text.TextUtils.isEmpty(result)) {
-            Log.i("Service", result);
+            Log.d("Service", result);
             sendRecord(result);
             beforeActivity = result;
         } else {
+            Log.d("Before Service", beforeActivity);
             sendRecord(beforeActivity);
         }
     }
