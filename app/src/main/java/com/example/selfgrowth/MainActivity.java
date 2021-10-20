@@ -1,7 +1,6 @@
 package com.example.selfgrowth;
 
 import android.app.AppOpsManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
