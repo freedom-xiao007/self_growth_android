@@ -115,7 +115,7 @@ public class MonitorActivityService extends Service {
             sendRecord(result);
             beforeActivity = result;
         } else {
-            Log.d("Before Service", beforeActivity);
+            Log.d("Before Service", beforeActivity == null ? "null" : beforeActivity);
             sendRecord(beforeActivity);
         }
     }
