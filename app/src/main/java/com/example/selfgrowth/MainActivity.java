@@ -1,6 +1,10 @@
 package com.example.selfgrowth;
 
+import android.app.AppOpsManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -55,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-        this.startActivity(intent);
+        if (!isStatAccessPermissionSet()) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            this.startActivity(intent);
+        }
 
         // Android 8.0使用startForegroundService在前台启动新服务
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -73,7 +79,20 @@ public class MainActivity extends AppCompatActivity {
         WorkManager.getInstance(this).enqueue(monitorTask);
     }
 
-
+    /**
+     * Determine whether the application permission with permission to view usage has been obtained
+     */
+    public boolean isStatAccessPermissionSet() {
+        try {
+            PackageManager packageManager = this.getPackageManager();
+            ApplicationInfo info = packageManager.getApplicationInfo(this.getPackageName(), 0);
+            AppOpsManager appOpsManager = (AppOpsManager) this.getSystemService(APP_OPS_SERVICE);
+            return appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, info.uid, info.packageName) == AppOpsManager.MODE_ALLOWED;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
