@@ -1,25 +1,16 @@
 package com.example.selfgrowth;
 
-import android.app.ActivityManager;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioAttributes;
-import android.media.AudioFocusRequest;
-import android.media.AudioManager;
-import android.media.AudioPlaybackConfiguration;
-import android.media.AudioRecordingConfiguration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.widget.TextView;
 
-import com.example.selfgrowth.http.GetRequestInterface;
 import com.example.selfgrowth.http.PhoneUseRecord;
 import com.example.selfgrowth.scheduler.MonitorTask;
 import com.example.selfgrowth.server.forground.MyForeGroundService;
@@ -28,7 +19,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -40,11 +30,7 @@ import androidx.work.WorkManager;
 
 import com.example.selfgrowth.databinding.ActivityMainBinding;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,13 +53,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        binding.appBarMain.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -115,95 +96,13 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable, 10000);//每两秒执行一次runnable.
-
-        Process process = null;
-        try {
-            ArrayList<String> files = new ArrayList<String>();
-            File file = new File("/proc");
-            File[] tempList = file.listFiles();
-
-            for (int i = 0; i < tempList.length; i++) {
-                if (tempList[i].isFile()) {
-                    Log.d("文     件：", tempList[i].getAbsolutePath());
-                    files.add(tempList[i].toString());
-                }
-                if (tempList[i].isDirectory()) {
-                    String name = tempList[i].getAbsolutePath();
-                    Log.d("文件夹：", name);
-                    Pattern pattern = Pattern.compile("/proc/[0-9]+");
-                    if (pattern.matcher(name).matches()) {
-//                        process = Runtime.getRuntime().exec("cat " + name + "/cmdline");
-//                        process = Runtime.getRuntime().exec("cat /proc/1/cmdline");
-//                        BufferedReader processReader =  new BufferedReader(new InputStreamReader(process.getInputStream()));
-//                        // Read from BufferedReader
-//                        String s = processReader.readLine();
-//                        Log.d("cmd:", s);
-                    }
-                }
-            }
-
-//            process = Runtime.getRuntime().exec("ps -aux");
-//            BufferedReader processReader =  new BufferedReader(new InputStreamReader(process.getInputStream()));
-//            // Read from BufferedReader
-//            String s = processReader.readLine();
-//            Log.d("process:", s);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        ActivityManager mActivityManager = (ActivityManager)this.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = mActivityManager.getRunningAppProcesses();
-        for(ActivityManager.RunningAppProcessInfo info : runningAppProcesses) {
-            Log.d("process", info.toString());
-        }
-
-        AudioManager audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-        List<AudioPlaybackConfiguration> f = audioManager.getActivePlaybackConfigurations();
-        List<AudioRecordingConfiguration> d = audioManager.getActiveRecordingConfigurations();
-        for (AudioPlaybackConfiguration playbackConfiguration: f) {
-            final String s = playbackConfiguration.toString().split(" ")[1];
-            Log.d("audio", s);
-            final int piid = Integer.parseInt(s.split(":")[1]);
-
-//            try {
-//                process = Runtime.getRuntime().exec("cat /proc/" + piid + "/cmdline");
-//                BufferedReader processReader =  new BufferedReader(new InputStreamReader(process.getInputStream()));
-//                // Read from BufferedReader
-//                String s2 = processReader.readLine();
-//                Log.d("cmd:", s2);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
-
-            for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager.getRunningAppProcesses()) {
-                if (appProcess.pid == piid) {
-                    String procName = appProcess.processName;
-                    Log.d("audio process name", procName);
-                }
-            }
-        }
-        Log.d("audio", "audio");
-//        AudioAttributes playbackAttributes = new AudioAttributes.Builder()
-//                .setUsage(AudioAttributes.USAGE_GAME)
-//                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-//                .build();
-//        AudioFocusRequest focusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
-//                .setAudioAttributes(playbackAttributes)
-//                .setAcceptsDelayedFocusGain(true)
-//                .setOnAudioFocusChangeListener(afChangeListener, handler)
-//                .build();
     }
 
     public void getTopActivity()
     {
         long endTime = System.currentTimeMillis();
         long beginTime = endTime - 10000;
-        UsageStatsManager sUsageStatsManager =null;
-        if (sUsageStatsManager == null) {
-            sUsageStatsManager = (UsageStatsManager) this.getSystemService(Context.USAGE_STATS_SERVICE);
-        }
+        UsageStatsManager sUsageStatsManager = (UsageStatsManager) this.getSystemService(Context.USAGE_STATS_SERVICE);
         String result = "";
         UsageEvents.Event event = new UsageEvents.Event();
         UsageEvents usageEvents = sUsageStatsManager.queryEvents(beginTime, endTime);
@@ -220,10 +119,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             sendRecord(beforeActivity);
         }
-
-        ActivityManager manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
-        final String topActivity = manager.getRunningTasks(1).get(0).topActivity.getClassName();
-        Log.i("top activity:", topActivity);
     }
 
     private void sendRecord(String topActivity) {
