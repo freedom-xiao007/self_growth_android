@@ -1,4 +1,4 @@
-package com.example.selfgrowth.server.forground;
+package com.example.selfgrowth.server.foreground;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
@@ -25,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MyForeGroundService extends Service {
+public class MonitorActivityService extends Service {
 
     private String beforeActivity;
 

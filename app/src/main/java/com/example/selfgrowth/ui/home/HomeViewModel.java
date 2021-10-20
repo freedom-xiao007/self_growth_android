@@ -24,9 +24,6 @@ public class HomeViewModel extends ViewModel {
     public String url= "https://reqres.in/api/users/2";
 
     public HomeViewModel() throws IOException {
-//        final String text = get("https://192.168.1.3:8443/v1/hello");
-//        final String text = get("https://www.baidu.com");
-//        final String text = get("http://192.168.1.3:8080/v1/hello");
         mText = new MutableLiveData<>();
         mText.setValue("home init");
 

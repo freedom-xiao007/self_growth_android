@@ -20,17 +20,10 @@
 
         <!-- Declare foreground service -->
         <service
-            android:name=".server.forground.MyForeGroundService"
+            android:name=".server.foreground.MonitorActivityService"
             android:enabled="true"
             android:exported="true" />
         <!-- Declare activity -->
-
-        <receiver android:name=".service.backgroud.AlarmReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.broadcast.static"/>
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".MainActivity"

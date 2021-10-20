@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
 
-import com.example.selfgrowth.server.forground.MyForeGroundService;
+import com.example.selfgrowth.server.foreground.MonitorActivityService;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -61,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
         // Android 8.0使用startForegroundService在前台启动新服务
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
-            this.startForegroundService(new Intent(MainActivity.this, MyForeGroundService.class));
+            this.startForegroundService(new Intent(MainActivity.this, MonitorActivityService.class));
         }
         else{
-            this.startService(new Intent(MainActivity.this, MyForeGroundService.class));
+            this.startService(new Intent(MainActivity.this, MonitorActivityService.class));
         }
     }
 
