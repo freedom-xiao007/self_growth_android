@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="add_task_labels">
+        <item>学习</item>
+        <item>运动</item>
+        <item>睡觉</item>
+        <item>工作</item>
+    </string-array>
+
+    <string-array name="add_task_cycles">
+        <item>单次</item>
+        <item>每日</item>
+        <item>每周</item>
+        <item>每月</item>
+        <item>每年</item>
+    </string-array>
+
+    <string-array name="add_task_types">
+        <item>输入</item>
+        <item>输出</item>
+        <item>日常</item>
+    </string-array>
+</resources>

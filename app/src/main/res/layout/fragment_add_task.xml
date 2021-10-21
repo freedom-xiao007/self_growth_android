@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.addTask.AddTaskFragment">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/add_task_name_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="任务名称：" />
+
+        <EditText
+            android:id="@+id/add_task_name_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/add_task_desc_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="任务描述：" />
+
+        <EditText
+            android:id="@+id/add_task_desc_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/add_task_label_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="任务标签：" />
+
+        <Spinner
+            android:id="@+id/add_add_label_spinner"
+            android:entries="@array/add_task_labels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/add_task_cycle_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="任务周期：" />
+
+        <Spinner
+            android:id="@+id/add_add_cycle_spinner"
+            android:entries="@array/add_task_cycles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/add_task_type_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="任务类型：" />
+
+        <Spinner
+            android:id="@+id/add_add_type_spinner"
+            android:entries="@array/add_task_types"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/add_task_button_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消" />
+
+        <Button
+            android:id="@+id/add_task_button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新增" />
+    </TableRow>
+
+</TableLayout>

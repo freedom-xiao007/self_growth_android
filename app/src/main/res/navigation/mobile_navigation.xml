@@ -12,14 +12,32 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.selfgrowth.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_learn"
+        android:name="com.example.selfgrowth.ui.gallery.LearnFragment"
         android:label="@string/menu_learn"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_learn" />
 
     <fragment
-        android:id="@+id/nav_sleep"
-        android:name="com.example.selfgrowth.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_running"
+        android:name="com.example.selfgrowth.ui.slideshow.RunningFragment"
         android:label="@string/menu_running"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_running" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_sleep"-->
+<!--        android:name="com.example.selfgrowth.ui.slideshow.RunningFragment"-->
+<!--        android:label="@string/menu_sleep"-->
+<!--        tools:layout="@layout/fragment_running" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_work"-->
+<!--        android:name="com.example.selfgrowth.ui.slideshow.RunningFragment"-->
+<!--        android:label="@string/menu_work"-->
+<!--        tools:layout="@layout/fragment_running" />-->
+
+    <fragment
+        android:id="@+id/nav_add_task"
+        android:name="com.example.selfgrowth.ui.addTask.AddTaskFragment"
+        android:label="新增任务"
+        tools:layout="@layout/fragment_add_task" />
 </navigation>

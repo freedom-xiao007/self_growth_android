@@ -9,7 +9,7 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_learn"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_learn" />
         <item
@@ -24,5 +24,10 @@
             android:id="@+id/nav_work"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_work" />
+
+        <item
+            android:id="@+id/nav_add_task"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="新增任务" />
     </group>
 </menu>
