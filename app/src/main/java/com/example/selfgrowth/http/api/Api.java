@@ -1,4 +1,6 @@
-package com.example.selfgrowth.http;
+package com.example.selfgrowth.http.api;
+
+import com.example.selfgrowth.http.Results;
 
 import java.util.List;
 

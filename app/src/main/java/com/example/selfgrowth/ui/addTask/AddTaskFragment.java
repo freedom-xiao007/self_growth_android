@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.databinding.FragmentAddTaskBinding;
+import com.example.selfgrowth.http.model.NewTask;
 import com.google.android.material.snackbar.Snackbar;
 
 public class AddTaskFragment extends Fragment {
@@ -32,20 +33,19 @@ public class AddTaskFragment extends Fragment {
         addTaskButton = rootView.findViewById(R.id.add_task_button_confirm);
         addTaskButton.setOnClickListener(view -> {
             EditText taskNameEdit = rootView.findViewById(R.id.add_task_name_edit);
-            String taskName = taskNameEdit.getText().toString();
-
             EditText taskDescEdit = rootView.findViewById(R.id.add_task_desc_edit);
-            String taskDesc = taskDescEdit.getText().toString();
-
             Spinner taskLabelSpinner = rootView.findViewById(R.id.add_task_label_spinner);
-            String taskLabel = taskLabelSpinner.getSelectedItem().toString();
-
             Spinner taskCycleSpinner = rootView.findViewById(R.id.add_task_cycle_spinner);
-            String taskCycle = taskCycleSpinner.getSelectedItem().toString();
-
             Spinner taskTypeSpinner = rootView.findViewById(R.id.add_task_type_spinner);
-            String taskType = taskTypeSpinner.getSelectedItem().toString();
 
+            final NewTask newTask = NewTask.builder()
+                    .name(taskNameEdit.getText().toString())
+                    .description(taskDescEdit.getText().toString())
+                    .label(taskLabelSpinner.getSelectedItem().toString())
+                    .cycleType(taskCycleSpinner.getSelectedItem().toString())
+                    .type(taskTypeSpinner.getSelectedItem().toString())
+                    .build();
+            
             Snackbar.make(view, "add Task success", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         });

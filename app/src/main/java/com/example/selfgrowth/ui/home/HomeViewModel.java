@@ -4,13 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.selfgrowth.http.GetRequestInterface;
-import com.example.selfgrowth.ssl.SSLSocketFactoryUtils;
+import com.example.selfgrowth.http.api.GetRequestInterface;
 
 import java.io.IOException;
-
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;

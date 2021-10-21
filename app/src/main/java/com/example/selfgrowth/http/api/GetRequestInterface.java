@@ -1,4 +1,4 @@
-package com.example.selfgrowth.http;
+package com.example.selfgrowth.http.api;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

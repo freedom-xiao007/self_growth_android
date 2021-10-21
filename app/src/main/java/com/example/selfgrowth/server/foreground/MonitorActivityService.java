@@ -17,7 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.PhoneUseRecord;
+import com.example.selfgrowth.http.HttpConfig;
+import com.example.selfgrowth.http.api.PhoneUseRecord;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -127,7 +128,7 @@ public class MonitorActivityService extends Service {
 
         //创建Retrofit对象
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.3:8080/") //基础url,其他部分在GetRequestInterface里
+                .baseUrl(HttpConfig.ADDRESS) //基础url,其他部分在GetRequestInterface里
                 .addConverterFactory(GsonConverterFactory.create()) //Gson数据转换器
                 .build();
 
