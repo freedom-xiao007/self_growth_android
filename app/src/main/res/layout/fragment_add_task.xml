@@ -55,7 +55,7 @@
             android:text="任务标签：" />
 
         <Spinner
-            android:id="@+id/add_add_label_spinner"
+            android:id="@+id/add_task_label_spinner"
             android:entries="@array/add_task_labels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -73,7 +73,7 @@
             android:text="任务周期：" />
 
         <Spinner
-            android:id="@+id/add_add_cycle_spinner"
+            android:id="@+id/add_task_cycle_spinner"
             android:entries="@array/add_task_cycles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -91,7 +91,7 @@
             android:text="任务类型：" />
 
         <Spinner
-            android:id="@+id/add_add_type_spinner"
+            android:id="@+id/add_task_type_spinner"
             android:entries="@array/add_task_types"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -103,13 +103,13 @@
         android:layout_height="match_parent" >
 
         <Button
-            android:id="@+id/add_task_button_confirm"
+            android:id="@+id/add_task_button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="取消" />
 
         <Button
-            android:id="@+id/add_task_button_cancel"
+            android:id="@+id/add_task_button_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="新增" />
