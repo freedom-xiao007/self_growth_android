@@ -3,54 +3,86 @@ package com.example.selfgrowth.ui.home;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
 import com.example.selfgrowth.databinding.FragmentHomeBinding;
 import com.example.selfgrowth.http.model.LoginUser;
+import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.http.request.UserRequest;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private final UserRequest userRequest = new UserRequest();
+    private final TaskRequest taskRequest = new TaskRequest();
+    private ListView testLv;//ListView组件
+    private Button updateDataBtn;//动态加载数据组件
+    private ListViewDemoAdapter listViewDemoAdapter;//ListView的数据适配器
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initView();//初始化组件
+        autoLogin();
+//        getTaskData();//初始化数据
+    }
+
+    /**
+     * 初始化组件
+     */
+    private void initView() {
+        testLv = (ListView) getView().findViewById(R.id.test_lv);
+        updateDataBtn = (Button) getView().findViewById(R.id.update_data_btn);
+        updateDataBtn.setOnClickListener(this);
+    }
+    /**
+     * 初始化数据
+     */
+    private void getTaskData() {
+        taskRequest.list(success -> {
+            Log.d("获取任务列表：", "成功");
+            List<Map<String, Object>> taskConfigs = (List<Map<String, Object>>) success;
+            final List<TaskConfig> dataList = new ArrayList<>(taskConfigs.size());
+            taskConfigs.forEach(task -> {
+                final String s = new Gson().toJson(task);
+                dataList.add(new Gson().fromJson(s, TaskConfig.class));
+            });
+            //设置ListView的适配器
+            listViewDemoAdapter = new ListViewDemoAdapter(this.getContext(), dataList);
+            testLv.setAdapter(listViewDemoAdapter);
+            testLv.setSelection(4);
+        }, failed -> {
+            Snackbar.make(getView(), "获取列表失败:" + failed, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            Log.d("获取任务列表：", "失败");
+        });
+    }
+
+    private void autoLogin() {
         final SharedPreferences preferences = getActivity().getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
         final String userName = preferences.getString("username", "");
         final String password = preferences.getString("password", "");
@@ -61,6 +93,7 @@ public class HomeFragment extends Fragment {
         }
 
         if (UserCache.getInstance().isLogin()) {
+            getTaskData();
             return;
         }
 
@@ -72,9 +105,12 @@ public class HomeFragment extends Fragment {
             UserCache.getInstance().initUser(userName, token.toString());
             Snackbar.make(getView(), "登录成功:" + token.toString(), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
+            Log.d("用户登录：", token.toString());
+            getTaskData();
         }, failedMessage -> {
             Snackbar.make(getView(), "登录失败:" + failedMessage, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
+            Log.d("用户登录：", "失败");
         });
     }
 
@@ -82,5 +118,14 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.update_data_btn://动态加载列表数据
+                getTaskData();
+                break;
+        }
     }
 }

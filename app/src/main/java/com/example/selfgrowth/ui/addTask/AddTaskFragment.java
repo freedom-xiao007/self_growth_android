@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -15,18 +14,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.model.CycleTypeConvert;
-import com.example.selfgrowth.http.model.NewTask;
+import com.example.selfgrowth.http.model.TaskConfig;
 import com.example.selfgrowth.http.model.TaskTypeConvert;
-import com.example.selfgrowth.http.request.TaskLabelRequest;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class AddTaskFragment extends Fragment {
 
@@ -44,14 +35,14 @@ public class AddTaskFragment extends Fragment {
             Spinner taskCycleSpinner = rootView.findViewById(R.id.add_task_cycle_spinner);
             Spinner taskTypeSpinner = rootView.findViewById(R.id.add_task_type_spinner);
 
-            final NewTask newTask = NewTask.builder()
+            final TaskConfig taskConfig = TaskConfig.builder()
                     .name(taskNameEdit.getText().toString())
                     .description(taskDescEdit.getText().toString())
                     .label(taskLabelSpinner.getSelectedItem().toString())
-                    .cycleType(CycleTypeConvert.convert(taskCycleSpinner.getSelectedItem().toString()))
-                    .type(TaskTypeConvert.convert(taskTypeSpinner.getSelectedItem().toString()))
+                    .cycleType(CycleTypeConvert.convertToValue(taskCycleSpinner.getSelectedItem().toString()))
+                    .type(TaskTypeConvert.convertToValue(taskTypeSpinner.getSelectedItem().toString()))
                     .build();
-            taskRequest.add(newTask, success -> {
+            taskRequest.add(taskConfig, success -> {
                     Snackbar.make(view, "新增成功:" + success, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
             }, failed -> {

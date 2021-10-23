@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class NewTask {
+public class TaskConfig {
 
     private String name;
     private String description;
