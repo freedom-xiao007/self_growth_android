@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class TaskConfig {
 
+    private String id;
     private String name;
     private String description;
     private String label;

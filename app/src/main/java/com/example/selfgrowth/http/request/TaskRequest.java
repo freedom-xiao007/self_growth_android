@@ -21,4 +21,10 @@ public class TaskRequest extends Request {
         Call<ApiResponse> call = request.list();
         sendRequest(call, success, failed);
     }
+
+    public void complete(String id, Consumer<? super Object> success, Consumer<? super Object> failed) {
+        TaskApi request = retrofit.create(TaskApi.class);
+        Call<ApiResponse> call = request.complete(id);
+        sendRequest(call, success, failed);
+    }
 }
