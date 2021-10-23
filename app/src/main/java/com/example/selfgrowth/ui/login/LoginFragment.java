@@ -35,12 +35,12 @@ public class LoginFragment extends Fragment {
                     .password(password.getText().toString())
                     .build();
 
-            userRequest.login(user, success -> {
-                UserCache.getInstance().initUser(email.getText().toString());
-                Snackbar.make(view, "登录成功", Snackbar.LENGTH_LONG)
+            userRequest.login(user, (token) -> {
+                UserCache.getInstance().initUser(email.getText().toString(), token.toString());
+                Snackbar.make(view, "登录成功:" + token.toString(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-            }, failed -> {
-                Snackbar.make(view, "登录失败", Snackbar.LENGTH_LONG)
+            }, failedMessage -> {
+                Snackbar.make(view, "登录失败:" + failedMessage, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             });
         });
