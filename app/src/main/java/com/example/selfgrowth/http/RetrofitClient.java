@@ -1,30 +1,19 @@
 package com.example.selfgrowth.http;
 
-import com.google.android.gms.common.api.Api;
-
+import lombok.Data;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@Data
 public class RetrofitClient {
 
-    private static RetrofitClient instance = null;
-    private Api myApi;
+    private static final RetrofitClient instance = new RetrofitClient();
+    private final Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(HttpConfig.ADDRESS) //基础url,其他部分在GetRequestInterface里
+            .addConverterFactory(GsonConverterFactory.create()) //Gson数据转换器
+            .build();
 
-    private RetrofitClient() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://simplifiedcoding.net/demos/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        myApi = retrofit.create(Api.class);
-    }
-
-    public static synchronized RetrofitClient getInstance() {
-        if (instance == null) {
-            instance = new RetrofitClient();
-        }
+    public static RetrofitClient getInstance() {
         return instance;
-    }
-
-    public Api getMyApi() {
-        return myApi;
     }
 }
