@@ -60,6 +60,10 @@ public class HomeFragment extends Fragment {
             return;
         }
 
+        if (UserCache.getInstance().isLogin()) {
+            return;
+        }
+
         final LoginUser user = LoginUser.builder()
                 .email(userName)
                 .password(password)

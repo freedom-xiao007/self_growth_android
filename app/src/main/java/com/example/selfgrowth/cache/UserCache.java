@@ -4,6 +4,7 @@ public class UserCache {
 
     private String userName = null;
     private String token = null;
+    private boolean login = false;
     private static final UserCache instance = new UserCache();
 
     public static UserCache getInstance() {
@@ -13,6 +14,7 @@ public class UserCache {
     public void initUser(String userName, String token) {
         this.userName = userName;
         this.token = token;
+        this.login = true;
     }
 
     public String getUserName() {
@@ -21,5 +23,9 @@ public class UserCache {
 
     public String getToken() {
         return token;
+    }
+
+    public boolean isLogin() {
+        return this.login;
     }
 }
