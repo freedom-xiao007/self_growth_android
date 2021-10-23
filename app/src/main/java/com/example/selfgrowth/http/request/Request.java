@@ -33,8 +33,7 @@ public abstract class Request {
                     failed.accept(response.raw().message());
                     return;
                 }
-                assert response.body() != null;
-                String res = response.body().getData().toString();
+                String res = response.raw().message();
                 Log.d("http response", res);
                 success.accept(res);
             }

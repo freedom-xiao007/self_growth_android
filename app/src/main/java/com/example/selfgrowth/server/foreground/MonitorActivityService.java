@@ -1,24 +1,30 @@
 package com.example.selfgrowth.server.foreground;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.HttpConfig;
-import com.example.selfgrowth.http.api.PhoneUseRecord;
+import com.example.selfgrowth.http.api.PhoneUseRecordApi;
+import com.example.selfgrowth.http.request.PhoneUseRecordRequest;
+import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MonitorActivityService extends Service {
 
     private String beforeActivity;
+    private final PhoneUseRecordRequest phoneUseRecordRequest = new PhoneUseRecordRequest();
 
     /*
      * @param intent
@@ -113,41 +120,21 @@ public class MonitorActivityService extends Service {
         }
         if (!android.text.TextUtils.isEmpty(result)) {
             Log.d("Service", result);
-            sendRecord(result);
             beforeActivity = result;
         } else {
             Log.d("Before Service", beforeActivity == null ? "null" : beforeActivity);
-            sendRecord(beforeActivity);
         }
-    }
 
-    private void sendRecord(String topActivity) {
-        if (topActivity == null) {
+        if (beforeActivity == null) {
+            Toast.makeText(MonitorActivityService.this.getApplicationContext(),"活动为空",Toast.LENGTH_SHORT).show();
             return;
         }
 
-        //创建Retrofit对象
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(HttpConfig.ADDRESS) //基础url,其他部分在GetRequestInterface里
-                .addConverterFactory(GsonConverterFactory.create()) //Gson数据转换器
-                .build();
-
-        //创建网络请求接口实例
-        PhoneUseRecord request = retrofit.create(PhoneUseRecord.class);
-        Call<String> call = request.uploadRecord(topActivity);
-
-        //发送网络请求(异步)
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                String res = response.body();
-                Log.d("http response", res);
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                System.out.println("GetOutWarehouseList->onFailure(MainActivity.java): "+t.toString() );
-            }
+        phoneUseRecordRequest.uploadRecord(beforeActivity, success -> {
+            Toast.makeText(MonitorActivityService.this.getApplicationContext(),"上传成功",Toast.LENGTH_SHORT).show();
+        }, failed -> {
+            Toast.makeText(MonitorActivityService.this.getApplicationContext(),"上传失败",Toast.LENGTH_SHORT).show();
+            Log.w("Activity", "上传失败");
         });
     }
 }
