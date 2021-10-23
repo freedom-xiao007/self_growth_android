@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
+import com.example.selfgrowth.cache.UserCache;
 import com.example.selfgrowth.http.model.LoginUser;
 import com.example.selfgrowth.http.request.UserRequest;
 import com.google.android.material.snackbar.Snackbar;
@@ -35,6 +36,7 @@ public class LoginFragment extends Fragment {
                     .build();
 
             userRequest.login(user, success -> {
+                UserCache.getInstance().initUser(email.getText().toString());
                 Snackbar.make(view, "登录成功", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }, failed -> {
