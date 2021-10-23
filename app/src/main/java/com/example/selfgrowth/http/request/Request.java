@@ -33,7 +33,11 @@ public abstract class Request {
                     failed.accept(response.raw().message());
                     return;
                 }
-                String res = response.raw().message();
+                if (response.body() == null || response.body().getData() == null) {
+                    success.accept("");
+                    return;
+                }
+                String res = response.body().getData().toString();
                 Log.d("http response", res);
                 success.accept(res);
             }
