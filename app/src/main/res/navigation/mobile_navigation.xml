@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_login">
 
     <fragment
         android:id="@+id/nav_home"
@@ -40,4 +40,10 @@
         android:name="com.example.selfgrowth.ui.addTask.AddTaskFragment"
         android:label="新增任务"
         tools:layout="@layout/fragment_add_task" />
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.selfgrowth.ui.login.LoginFragment"
+        android:label="新增任务"
+        tools:layout="@layout/fragment_login" />
 </navigation>
