@@ -1,5 +1,7 @@
 package com.example.selfgrowth.ui.login;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,11 @@ public class LoginFragment extends Fragment {
 
             userRequest.login(user, (token) -> {
                 UserCache.getInstance().initUser(email.getText().toString(), token.toString());
+                final SharedPreferences preferences = requireContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor edit = preferences.edit();
+                edit.putString("username", email.getText().toString());
+                edit.putString("password", password.getText().toString());
+                edit.apply();
                 Snackbar.make(view, "登录成功:" + token.toString(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }, failedMessage -> {
