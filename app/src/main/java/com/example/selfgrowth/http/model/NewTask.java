@@ -10,6 +10,7 @@ public class NewTask {
     private String name;
     private String description;
     private String label;
-    private String cycleType;
-    private String type;
+    private int cycleType;
+    private int type;
+    private boolean isComplete;
 }
