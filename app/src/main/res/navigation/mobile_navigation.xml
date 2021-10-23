@@ -44,6 +44,6 @@
     <fragment
         android:id="@+id/nav_login"
         android:name="com.example.selfgrowth.ui.login.LoginFragment"
-        android:label="新增任务"
+        android:label="登录"
         tools:layout="@layout/fragment_login" />
 </navigation>
