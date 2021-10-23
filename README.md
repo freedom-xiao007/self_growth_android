@@ -20,3 +20,7 @@
 - [Okhttp3 Https请求配置自签名证书](https://www.jianshu.com/p/4f738788be67)
 - [Android okhttp3.0配置https的自签证书和信任所有证书](https://juejin.cn/post/6844903793096687630)
 - [看完这篇文章后还不会windows下生成自签名https安全证书的话，你就打死我表弟](https://juejin.cn/post/6844904176284090381)
+
+### 自动登录
+- [Android学习之保存用户登录信息](https://blog.csdn.net/u013132758/article/details/)
+- [Fragment生命周期与Fragment执行hide、show后的生命周期探讨](https://blog.csdn.net/s13383754499/article/details/84782605)
