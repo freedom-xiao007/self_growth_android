@@ -31,6 +31,11 @@
             android:title="新增任务" />
 
         <item
+            android:id="@+id/nav_add_label"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="新增标签" />
+
+        <item
             android:id="@+id/nav_login"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="登录" />
