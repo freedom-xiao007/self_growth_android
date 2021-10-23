@@ -14,6 +14,6 @@ public interface UserApi {
     /**
      * 用户登录
      **/
-    @POST("v1/user/login")
+    @POST("auth/user/login")
     Call<ApiResponse> login(@Body LoginUser user);
 }
