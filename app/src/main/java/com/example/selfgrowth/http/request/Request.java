@@ -37,8 +37,7 @@ public abstract class Request {
                     success.accept("");
                     return;
                 }
-                String res = response.body().getData().toString();
-                Log.d("http response", res);
+                Object res = response.body().getData();
                 success.accept(res);
             }
 
