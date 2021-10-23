@@ -3,6 +3,7 @@ package com.example.selfgrowth.http.api;
 import com.example.selfgrowth.http.model.ApiResponse;
 
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -15,4 +16,7 @@ public interface TaskLabelApi {
     @Multipart
     @POST("v1/label/add")
     Call<ApiResponse> addLabel(@Part("name") final String name);
+
+    @GET("v1/label/list")
+    Call<ApiResponse> labelList();
 }
