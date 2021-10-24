@@ -11,7 +11,7 @@
         <item
             android:id="@+id/nav_learn"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_learn" />
+            android:title="@string/menu_activity" />
         <item
             android:id="@+id/nav_running"
             android:icon="@drawable/ic_menu_slideshow"
