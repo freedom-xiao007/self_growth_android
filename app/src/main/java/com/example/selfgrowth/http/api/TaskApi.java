@@ -25,4 +25,7 @@ public interface TaskApi {
     @Multipart
     @POST("v1/task/complete")
     Call<ApiResponse> complete(@Part("id") String id);
+
+    @GET("v1/task/history")
+    Call<ApiResponse> history();
 }
