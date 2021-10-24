@@ -18,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/update_data_btn"
-        android:divider="@color/black"
-        android:dividerHeight="3dp"
+        android:divider="@color/gray"
+        android:dividerHeight="1dp"
         android:listSelector="#ff0000"
         android:scrollbars="none"/>
 </RelativeLayout>
