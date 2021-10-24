@@ -10,10 +10,41 @@
         android:layout_height="match_parent" >
 
         <TextView
+            android:id="@+id/textView8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="应用名称：" />
+
+<!--        <Spinner-->
+<!--            android:id="@+id/application_for_activity"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="0.5"/>-->
+
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            android:id="@+id/application_for_activity"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/application_for_activity_update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="√" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
             android:id="@+id/activity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="1"
+            android:maxLines="2"
             android:ellipsize="start"
             android:text="TextView" />
     </TableRow>
@@ -23,30 +54,31 @@
         android:layout_height="match_parent" >
 
         <TextView
-            android:id="@+id/textView8"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="应用：" />
-
-        <Spinner
-            android:id="@+id/application_for_activity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
-
-        <TextView
             android:id="@+id/textView9"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
+            android:layout_weight="0.3"
             android:text="上报次数:" />
 
         <TextView
             android:id="@+id/activity_times"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"
+            android:layout_weight="0.2"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="总时长(小时):" />
+
+        <TextView
+            android:id="@+id/activity_time_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
             android:text="TextView" />
 
     </TableRow>

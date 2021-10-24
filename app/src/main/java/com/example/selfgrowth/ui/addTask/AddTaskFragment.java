@@ -43,6 +43,9 @@ public class AddTaskFragment extends Fragment {
                     .type(TaskTypeConvert.convertToValue(taskTypeSpinner.getSelectedItem().toString()))
                     .build();
             taskRequest.add(taskConfig, success -> {
+                if (success == null) {
+                    return;
+                }
                     Snackbar.make(view, "新增成功:" + success, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
             }, failed -> {

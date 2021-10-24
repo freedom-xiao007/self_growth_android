@@ -28,13 +28,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private final UserRequest userRequest = new UserRequest();
     private final TaskRequest taskRequest = new TaskRequest();
     private ListView testLv;//ListView组件
-    private Button updateDataBtn;//动态加载数据组件
     private ListViewDemoAdapter listViewDemoAdapter;//ListView的数据适配器
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,14 +54,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
      */
     private void initView() {
         testLv = (ListView) getView().findViewById(R.id.task_list_view);
-        updateDataBtn = (Button) getView().findViewById(R.id.update_data_btn);
-        updateDataBtn.setOnClickListener(this);
     }
     /**
      * 初始化数据
      */
     private void getTaskData() {
         taskRequest.list(success -> {
+            if (success == null) {
+                Snackbar.make(getView(), "获取列表为空:", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return;
+            }
             Log.d("获取任务列表：", "成功");
             List<Map<String, Object>> taskConfigs = (List<Map<String, Object>>) success;
             final List<TaskConfig> dataList = new ArrayList<>(taskConfigs.size());
@@ -117,14 +119,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.update_data_btn://动态加载列表数据
-                getTaskData();
-                break;
-        }
     }
 }

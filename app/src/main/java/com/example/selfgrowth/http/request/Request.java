@@ -34,10 +34,14 @@ public abstract class Request {
                     return;
                 }
                 if (response.body() == null || response.body().getData() == null) {
-                    success.accept("");
+                    success.accept(null);
                     return;
                 }
                 Object res = response.body().getData();
+                if (String.valueOf(res).isEmpty()) {
+                    success.accept(null);
+                    return;
+                }
                 success.accept(res);
             }
 

@@ -45,6 +45,9 @@ public class ActivityFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         testLv = (ListView) getView().findViewById(R.id.activity_list_view);
         activityRequest.overview(success -> {
+            if (success == null) {
+                return;
+            }
             Log.d("获取活动列表：", "成功");
             List<Map<String, Object>> taskConfigs = (List<Map<String, Object>>) success;
             final List<ActivityModel> dataList = new ArrayList<>(taskConfigs.size());

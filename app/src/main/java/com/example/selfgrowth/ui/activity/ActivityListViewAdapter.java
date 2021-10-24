@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -27,7 +28,9 @@ import com.example.selfgrowth.http.model.TaskTypeConvert;
 import com.example.selfgrowth.http.request.ActivityRequest;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.google.android.material.snackbar.Snackbar;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +86,10 @@ public class ActivityListViewAdapter extends BaseAdapter {
         viewHolder.name.setOnClickListener(v -> {
             final String activityName = viewHolder.name.getText().toString();
             activityRequest.activityHistory(activityName, success -> {
+                if (success == null) {
+                    return;
+                }
+
                 final List<Map<String, Object>> data = (List<Map<String, Object>>) success;
                 final String[] dates = new String[data.size()];
                 for (int i=0; i<data.size(); i++) {
@@ -103,6 +110,9 @@ public class ActivityListViewAdapter extends BaseAdapter {
         });
 
         viewHolder.times.setText(String.valueOf(dataList.get(position).getTimes()));
+        final double timeAmount = (dataList.get(position).getTimes().doubleValue() * 10) / 3600;
+        BigDecimal bigDecimal = new BigDecimal(timeAmount);
+        viewHolder.timeAmount.setText(String.valueOf(bigDecimal.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue()));
 
         List<String> apps = new ArrayList<>(installAppNames.size() + 1);
         apps.add(dataList.get(position).getApplication());
@@ -111,29 +121,24 @@ public class ActivityListViewAdapter extends BaseAdapter {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         viewHolder.application.setAdapter(spinnerAdapter);
         viewHolder.application.setSelection(0, true);
-        viewHolder.application.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                final String activityName = viewHolder.name.getText().toString();
-                String appName = parent.getItemAtPosition(position).toString();//获取i所在的文本
-                final ActivityModel activityModel = ActivityModel.builder()
-                        .application(appName)
-                        .activity(activityName)
-                        .build();
-                activityRequest.updateActivityModel(activityModel, success -> {
-                    Snackbar.make(view, "更新获取应用名成功:" + success, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }, failed -> {
-                    Snackbar.make(view, "更新获取应用名失败:" + failed, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                });
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+        viewHolder.updateButton.setOnClickListener(view -> {
+            final String activityName = viewHolder.name.getText().toString();
+            String appName = viewHolder.application.getSelectedItem().toString();//获取i所在的文本
+            final ActivityModel activityModel = ActivityModel.builder()
+                    .application(appName)
+                    .activity(activityName)
+                    .build();
+            activityRequest.updateActivityModel(activityModel, success -> {
+                if (success == null) {
+                    return;
+                }
+                Snackbar.make(view, "更新获取应用名成功:" + success, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }, failed -> {
+                Snackbar.make(view, "更新获取应用名失败:" + failed, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            });
         });
 
         return convertView;
@@ -144,8 +149,10 @@ public class ActivityListViewAdapter extends BaseAdapter {
      */
     private static final class ViewHolder {
         private final TextView name;
-        private final Spinner application;
+        private final SearchableSpinner application;
         private final TextView times;
+        private final Button updateButton;
+        private final TextView timeAmount;
 
         /**
          * 构造器
@@ -153,8 +160,10 @@ public class ActivityListViewAdapter extends BaseAdapter {
          */
         ViewHolder(View view) {
             name = (TextView) view.findViewById(R.id.activity_name);
-            application = (Spinner) view.findViewById(R.id.application_for_activity);
+            application = (SearchableSpinner) view.findViewById(R.id.application_for_activity);
             times = (TextView) view.findViewById(R.id.activity_times);
+            updateButton = (Button) view.findViewById(R.id.application_for_activity_update);
+            timeAmount = (TextView) view.findViewById(R.id.activity_time_amount);
         }
     }
 }
