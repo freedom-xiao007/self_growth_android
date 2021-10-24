@@ -16,15 +16,9 @@
             android:layout_weight="0.3"
             android:text="应用名称：" />
 
-<!--        <Spinner-->
-<!--            android:id="@+id/application_for_activity"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="0.5"/>-->
-
         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
             android:id="@+id/application_for_activity"
-            android:layout_weight="0.5"
+            android:layout_weight="0.4"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
@@ -32,8 +26,27 @@
             android:id="@+id/application_for_activity_update"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="√" />
+            android:layout_weight="0.3"
+            android:text="更新√" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="活动与应用类型：" />
+
+        <Spinner
+            android:id="@+id/application_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:entries="@array/add_task_labels" />
     </TableRow>
 
     <TableRow

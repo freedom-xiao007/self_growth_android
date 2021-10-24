@@ -11,4 +11,5 @@ public class ActivityModel {
     private String name;
     private Integer times;
     private String activity;
+    private String label;
 }

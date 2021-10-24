@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.model.ActivityModel;
 import com.example.selfgrowth.http.model.CycleTypeConvert;
+import com.example.selfgrowth.http.model.LabelType;
 import com.example.selfgrowth.http.model.TaskConfig;
 import com.example.selfgrowth.http.model.TaskTypeConvert;
 import com.example.selfgrowth.http.request.ActivityRequest;
@@ -125,9 +126,11 @@ public class ActivityListViewAdapter extends BaseAdapter {
         viewHolder.updateButton.setOnClickListener(view -> {
             final String activityName = viewHolder.name.getText().toString();
             String appName = viewHolder.application.getSelectedItem().toString();//获取i所在的文本
+            final String activityLabel = viewHolder.label.getSelectedItem().toString();
             final ActivityModel activityModel = ActivityModel.builder()
                     .application(appName)
                     .activity(activityName)
+                    .label(activityLabel)
                     .build();
             activityRequest.updateActivityModel(activityModel, success -> {
                 if (success == null) {
@@ -141,6 +144,13 @@ public class ActivityListViewAdapter extends BaseAdapter {
             });
         });
 
+        final String activityLabel = dataList.get(position).getLabel();
+        if (activityLabel == null || activityLabel.isEmpty()) {
+            viewHolder.label.setSelection(4, true);
+        } else {
+            viewHolder.label.setSelection(LabelType.convertToValue(activityLabel), true);
+        }
+
         return convertView;
     }
 
@@ -153,6 +163,7 @@ public class ActivityListViewAdapter extends BaseAdapter {
         private final TextView times;
         private final Button updateButton;
         private final TextView timeAmount;
+        private final Spinner label;
 
         /**
          * 构造器
@@ -164,6 +175,7 @@ public class ActivityListViewAdapter extends BaseAdapter {
             times = (TextView) view.findViewById(R.id.activity_times);
             updateButton = (Button) view.findViewById(R.id.application_for_activity_update);
             timeAmount = (TextView) view.findViewById(R.id.activity_time_amount);
+            label = (Spinner) view.findViewById(R.id.application_label);
         }
     }
 }
