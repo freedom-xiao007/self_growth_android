@@ -1,6 +1,8 @@
 package com.example.selfgrowth.ui.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.model.ActivityModel;
@@ -27,6 +30,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ActivityListViewAdapter extends BaseAdapter {
 
@@ -76,6 +80,28 @@ public class ActivityListViewAdapter extends BaseAdapter {
         }
 
         viewHolder.name.setText(dataList.get(position).getName());
+        viewHolder.name.setOnClickListener(v -> {
+            final String activityName = viewHolder.name.getText().toString();
+            activityRequest.activityHistory(activityName, success -> {
+                final List<Map<String, Object>> data = (List<Map<String, Object>>) success;
+                final String[] dates = new String[data.size()];
+                for (int i=0; i<data.size(); i++) {
+                    dates[i] = data.get(i).getOrDefault("date", "未知").toString();
+                }
+                AlertDialog alertDialog3 = new AlertDialog.Builder(context)
+                        .setTitle("活动上报时间列表")
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setItems(dates, (dialog, which) -> {
+                        })
+                        .create();
+                alertDialog3.show();
+            }, failed -> {
+                Snackbar.make(v, "更新活动历史失败:" + failed, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            });
+
+        });
+
         viewHolder.times.setText(String.valueOf(dataList.get(position).getTimes()));
 
         List<String> apps = new ArrayList<>(installAppNames.size() + 1);

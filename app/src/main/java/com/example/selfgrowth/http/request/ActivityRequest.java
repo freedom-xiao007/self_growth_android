@@ -27,4 +27,10 @@ public class ActivityRequest extends Request {
         Call<ApiResponse> call = request.updateActivityModel(activityModel);
         sendRequest(call, success, failed);
     }
+
+    public void activityHistory(String activity, Consumer<? super Object> success, Consumer<? super Object> failed) {
+        ActivityApi request = retrofit.create(ActivityApi.class);
+        Call<ApiResponse> call = request.activityHistory(activity, 0, 0);
+        sendRequest(call, success, failed);
+    }
 }
