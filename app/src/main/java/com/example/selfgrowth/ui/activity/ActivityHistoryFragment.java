@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.model.ActivityModel;
+import com.example.selfgrowth.http.model.ActivityRecordModel;
 import com.example.selfgrowth.http.request.ActivityRequest;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -26,7 +27,7 @@ import java.util.Map;
 public class ActivityHistoryFragment extends Fragment {
 
     private final ActivityRequest activityRequest = new ActivityRequest();
-    private ActivityListViewAdapter activityListViewAdapter;
+    private ActivityHistoryListViewAdapter activityListViewAdapter;
     private ListView testLv;//ListView组件
 
     @Nullable
@@ -35,26 +36,26 @@ public class ActivityHistoryFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return (ViewGroup) inflater.inflate(
-                R.layout.fragment_activity, container, false);
+                R.layout.fragment_activity_history, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        testLv = (ListView) getView().findViewById(R.id.activity_list_view);
-        activityRequest.overview(success -> {
+        testLv = (ListView) getView().findViewById(R.id.activity_history_list_view);
+        activityRequest.activityHistory("", success -> {
             if (success == null) {
                 return;
             }
             Log.d("获取活动列表：", "成功");
             List<Map<String, Object>> taskConfigs = (List<Map<String, Object>>) success;
-            final List<ActivityModel> dataList = new ArrayList<>(taskConfigs.size());
+            final List<ActivityRecordModel> dataList = new ArrayList<>(taskConfigs.size());
             taskConfigs.forEach(task -> {
                 final String s = new Gson().toJson(task);
-                dataList.add(new Gson().fromJson(s, ActivityModel.class));
+                dataList.add(new Gson().fromJson(s, ActivityRecordModel.class));
             });
             //设置ListView的适配器
-            activityListViewAdapter = new ActivityListViewAdapter(this.getContext(), dataList, getInstallSoftware());
+            activityListViewAdapter = new ActivityHistoryListViewAdapter(this.getContext(), dataList);
             testLv.setAdapter(activityListViewAdapter);
             testLv.setSelection(4);
         }, failed -> {
@@ -62,14 +63,5 @@ public class ActivityHistoryFragment extends Fragment {
                     .setAction("Action", null).show();
             Log.d("获取任务列表：", "失败");
         });
-    }
-
-    private List<String> getInstallSoftware() {
-        List<PackageInfo> packages = getContext().getPackageManager().getInstalledPackages(0);
-        List<String> installAppNames = new ArrayList<>(packages.size());
-        for(PackageInfo packageInfo: packages) {
-            installAppNames.add(packageInfo.applicationInfo.loadLabel(getContext().getPackageManager()).toString());
-        }
-        return installAppNames;
     }
 }

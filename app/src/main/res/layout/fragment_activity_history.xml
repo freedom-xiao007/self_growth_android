@@ -6,17 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.ActivityHistoryFragment">
 
-    <TextView
-        android:id="@+id/text_slideshow"
+    <ListView
+        android:id="@+id/activity_history_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:divider="@color/gray"
+        android:dividerHeight="1dp"
+        android:listSelector="#ff0000"
+        android:scrollbars="none"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

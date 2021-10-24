@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/nav_activity_history"
-        android:name="com.example.selfgrowth.ui.history.RunningFragment"
+        android:name="com.example.selfgrowth.ui.activity.ActivityHistoryFragment"
         android:label="活动历史数据"
         tools:layout="@layout/fragment_activity_history" />
 
