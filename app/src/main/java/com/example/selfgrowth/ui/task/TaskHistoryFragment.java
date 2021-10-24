@@ -1,4 +1,4 @@
-package com.example.selfgrowth.ui.addTask;
+package com.example.selfgrowth.ui.task;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +19,7 @@ import com.example.selfgrowth.http.model.TaskTypeConvert;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.google.android.material.snackbar.Snackbar;
 
-public class AddTaskFragment extends Fragment {
+public class TaskHistoryFragment extends Fragment {
 
     private final TaskRequest taskRequest = new TaskRequest();
 

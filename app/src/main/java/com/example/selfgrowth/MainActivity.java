@@ -1,7 +1,6 @@
 package com.example.selfgrowth;
 
 import android.app.AppOpsManager;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -11,16 +10,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.selfgrowth.databinding.ActivityMainBinding;
 import com.example.selfgrowth.server.foreground.MonitorActivityService;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -53,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_login, R.id.nav_home, R.id.nav_learn, R.id.nav_running, R.id.nav_sleep,
-                R.id.nav_work, R.id.nav_add_task, R.id.nav_login, R.id.nav_add_label)
+                R.id.nav_login, R.id.nav_home, R.id.nav_activity, R.id.nav_activity_history, R.id.nav_task_history,
+                R.id.nav_summary, R.id.nav_add_task, R.id.nav_login, R.id.nav_add_label)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

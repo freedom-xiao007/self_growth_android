@@ -7,24 +7,19 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:title="任务" />
         <item
-            android:id="@+id/nav_learn"
+            android:id="@+id/nav_task_history"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="任务历史数据" />
+        <item
+            android:id="@+id/nav_activity"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_activity" />
         <item
-            android:id="@+id/nav_running"
+            android:id="@+id/nav_activity_history"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_running" />
-        <item
-            android:id="@+id/nav_sleep"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_sleep" />
-        <item
-            android:id="@+id/nav_work"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_work" />
-
+            android:title="活动历史数据" />
         <item
             android:id="@+id/nav_add_task"
             android:icon="@drawable/ic_menu_slideshow"
@@ -39,5 +34,9 @@
             android:id="@+id/nav_login"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="登录" />
+        <item
+            android:id="@+id/nav_summary"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="数据观星" />
     </group>
 </menu>
