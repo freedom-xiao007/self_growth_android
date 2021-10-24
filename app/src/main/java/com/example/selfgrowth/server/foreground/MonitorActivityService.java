@@ -1,41 +1,29 @@
 package com.example.selfgrowth.server.foreground;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.HttpConfig;
-import com.example.selfgrowth.http.api.PhoneUseRecordApi;
-import com.example.selfgrowth.http.request.PhoneUseRecordRequest;
-import com.google.android.material.snackbar.Snackbar;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.example.selfgrowth.http.request.ActivityRequest;
 
 public class MonitorActivityService extends Service {
 
     private String beforeActivity;
-    private final PhoneUseRecordRequest phoneUseRecordRequest = new PhoneUseRecordRequest();
+    private final ActivityRequest activityRequest = new ActivityRequest();
 
     /*
      * @param intent
@@ -130,7 +118,7 @@ public class MonitorActivityService extends Service {
             return;
         }
 
-        phoneUseRecordRequest.uploadRecord(beforeActivity, success -> {
+        activityRequest.uploadRecord(beforeActivity, success -> {
             Toast.makeText(MonitorActivityService.this.getApplicationContext(),"上传成功",Toast.LENGTH_SHORT).show();
         }, failed -> {
             Toast.makeText(MonitorActivityService.this.getApplicationContext(),"上传失败",Toast.LENGTH_SHORT).show();
