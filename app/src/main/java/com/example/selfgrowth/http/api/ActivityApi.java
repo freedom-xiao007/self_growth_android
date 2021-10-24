@@ -1,8 +1,11 @@
 package com.example.selfgrowth.http.api;
 
+import com.example.selfgrowth.http.model.ActivityModel;
 import com.example.selfgrowth.http.model.ApiResponse;
+import com.example.selfgrowth.http.model.LoginUser;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -15,9 +18,12 @@ public interface ActivityApi {
      *
      **/
     @Multipart
-    @POST("v1/phone/useRecord")
+    @POST("v1/activity/useRecord")
     Call<ApiResponse> uploadRecord(@Part("activity") final String activity);
 
-    @GET("v1/phone/overview")
+    @GET("v1/activity/overview")
     Call<ApiResponse> overview();
+
+    @POST("v1/activity/updateActivityModel")
+    Call<ApiResponse> updateActivityModel(@Body ActivityModel activityModel);
 }

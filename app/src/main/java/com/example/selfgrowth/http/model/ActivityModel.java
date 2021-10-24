@@ -10,4 +10,5 @@ public class ActivityModel {
     private String application;
     private String name;
     private Integer times;
+    private String activity;
 }

@@ -16,10 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.model.ActivityModel;
-import com.example.selfgrowth.http.model.TaskConfig;
 import com.example.selfgrowth.http.request.ActivityRequest;
-import com.example.selfgrowth.http.request.TaskRequest;
-import com.example.selfgrowth.system.model.AppInfo;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 

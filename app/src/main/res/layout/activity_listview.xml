@@ -26,21 +26,14 @@
             android:id="@+id/textView8"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"
+            android:layout_weight="0.2"
             android:text="应用：" />
 
         <Spinner
             android:id="@+id/application_for_activity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.4"/>
-
-        <Button
-            android:id="@+id/update_activity_application"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="更新" />
+            android:layout_weight="0.5"/>
 
         <TextView
             android:id="@+id/textView9"

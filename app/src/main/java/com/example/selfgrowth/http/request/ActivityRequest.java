@@ -1,6 +1,7 @@
 package com.example.selfgrowth.http.request;
 
 import com.example.selfgrowth.http.api.ActivityApi;
+import com.example.selfgrowth.http.model.ActivityModel;
 import com.example.selfgrowth.http.model.ApiResponse;
 
 import java.util.function.Consumer;
@@ -18,6 +19,12 @@ public class ActivityRequest extends Request {
     public void overview(Consumer<? super Object> success, Consumer<? super Object> failed) {
         ActivityApi request = retrofit.create(ActivityApi.class);
         Call<ApiResponse> call = request.overview();
+        sendRequest(call, success, failed);
+    }
+
+    public void updateActivityModel(ActivityModel activityModel, Consumer<? super Object> success, Consumer<? super Object> failed) {
+        ActivityApi request = retrofit.create(ActivityApi.class);
+        Call<ApiResponse> call = request.updateActivityModel(activityModel);
         sendRequest(call, success, failed);
     }
 }

@@ -3,6 +3,7 @@ package com.example.selfgrowth.ui.activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.example.selfgrowth.http.model.ActivityModel;
 import com.example.selfgrowth.http.model.CycleTypeConvert;
 import com.example.selfgrowth.http.model.TaskConfig;
 import com.example.selfgrowth.http.model.TaskTypeConvert;
+import com.example.selfgrowth.http.request.ActivityRequest;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,6 +33,8 @@ public class ActivityListViewAdapter extends BaseAdapter {
     private final Context context;//上下文对象
     private final List<ActivityModel> dataList;//ListView显示的数据
     private final List<String> installAppNames;
+    private final ActivityRequest activityRequest = new ActivityRequest();
+
     /**
      * 构造器
      *
@@ -81,17 +85,33 @@ public class ActivityListViewAdapter extends BaseAdapter {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         viewHolder.application.setAdapter(spinnerAdapter);
         viewHolder.application.setSelection(0, true);
-        viewHolder.application.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        viewHolder.application.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final String activityName = viewHolder.name.getText().toString();
                 String appName = parent.getItemAtPosition(position).toString();//获取i所在的文本
+                final ActivityModel activityModel = ActivityModel.builder()
+                        .application(appName)
+                        .activity(activityName)
+                        .build();
+                activityRequest.updateActivityModel(activityModel, success -> {
+                    Snackbar.make(view, "更新获取应用名成功:" + success, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }, failed -> {
+                    Snackbar.make(view, "更新获取应用名失败:" + failed, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
         return convertView;
     }
-
-
 
     /**
      * ViewHolder类
