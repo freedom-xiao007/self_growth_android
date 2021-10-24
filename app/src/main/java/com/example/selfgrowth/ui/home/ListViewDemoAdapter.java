@@ -53,7 +53,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         //判断是否有缓存
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_demo, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.task_listview, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {

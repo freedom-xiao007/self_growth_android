@@ -48,14 +48,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onActivityCreated(savedInstanceState);
         initView();//初始化组件
         autoLogin();
-//        getTaskData();//初始化数据
     }
 
     /**
      * 初始化组件
      */
     private void initView() {
-        testLv = (ListView) getView().findViewById(R.id.test_lv);
+        testLv = (ListView) getView().findViewById(R.id.task_list_view);
         updateDataBtn = (Button) getView().findViewById(R.id.update_data_btn);
         updateDataBtn.setOnClickListener(this);
     }

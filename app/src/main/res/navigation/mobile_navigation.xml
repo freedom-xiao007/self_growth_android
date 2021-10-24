@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_learn"
-        android:name="com.example.selfgrowth.ui.gallery.LearnFragment"
+        android:name="com.example.selfgrowth.ui.activity.ActivityFragment"
         android:label="@string/menu_learn"
-        tools:layout="@layout/fragment_learn" />
+        tools:layout="@layout/fragment_activity" />
 
     <fragment
         android:id="@+id/nav_running"
