@@ -1,5 +1,6 @@
 package com.example.selfgrowth.ui.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -52,5 +53,17 @@ public class LoginFragment extends Fragment {
             });
         });
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        final SharedPreferences preferences = getActivity().getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
+        final String userName = preferences.getString("username", "");
+        final String password = preferences.getString("password", "");
+        final EditText emailEdit = getView().findViewById(R.id.login_email_edit);
+        final EditText passwordEdit = getView().findViewById(R.id.login_password_edit);
+        emailEdit.setText(userName);
+        passwordEdit.setText(password);
     }
 }
