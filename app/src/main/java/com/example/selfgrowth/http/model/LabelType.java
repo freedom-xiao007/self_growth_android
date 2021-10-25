@@ -1,5 +1,7 @@
 package com.example.selfgrowth.http.model;
 
+import android.util.Log;
+
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
@@ -23,7 +25,8 @@ public class LabelType {
     @SneakyThrows
     public static Integer convertToValue(String key) {
         if (!convertKey.containsKey(key)) {
-            throw new Exception("没有该映射");
+            Log.e("没有该映射：", key);
+            return -1;
         }
         return convertKey.get(key);
     }

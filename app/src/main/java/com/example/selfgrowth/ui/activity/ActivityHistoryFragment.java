@@ -55,7 +55,7 @@ public class ActivityHistoryFragment extends Fragment {
                 dataList.add(new Gson().fromJson(s, ActivityRecordModel.class));
             });
             //设置ListView的适配器
-            activityListViewAdapter = new ActivityHistoryListViewAdapter(this.getContext(), dataList);
+            activityListViewAdapter = new ActivityHistoryListViewAdapter(this.getContext(), dataList, getInstallSoftware());
             testLv.setAdapter(activityListViewAdapter);
             testLv.setSelection(4);
         }, failed -> {
@@ -63,5 +63,14 @@ public class ActivityHistoryFragment extends Fragment {
                     .setAction("Action", null).show();
             Log.d("获取任务列表：", "失败");
         });
+    }
+
+    private List<String> getInstallSoftware() {
+        List<PackageInfo> packages = getContext().getPackageManager().getInstalledPackages(0);
+        List<String> installAppNames = new ArrayList<>(packages.size());
+        for(PackageInfo packageInfo: packages) {
+            installAppNames.add(packageInfo.applicationInfo.loadLabel(getContext().getPackageManager()).toString());
+        }
+        return installAppNames;
     }
 }

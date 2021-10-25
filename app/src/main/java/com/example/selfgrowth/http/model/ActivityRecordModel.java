@@ -11,4 +11,5 @@ public class ActivityRecordModel {
 
     private Date date;
     private String activity;
+    private String application;
 }

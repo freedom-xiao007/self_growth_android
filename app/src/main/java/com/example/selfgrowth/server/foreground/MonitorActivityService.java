@@ -119,10 +119,10 @@ public class MonitorActivityService extends Service {
         }
 
         activityRequest.uploadRecord(beforeActivity, success -> {
-            Toast.makeText(MonitorActivityService.this.getApplicationContext(),"上传成功",Toast.LENGTH_SHORT).show();
+
         }, failed -> {
             Toast.makeText(MonitorActivityService.this.getApplicationContext(),"上传失败",Toast.LENGTH_SHORT).show();
-            Log.w("Activity", "上传失败");
+            Log.w("Activity", "上传失败:" + failed);
         });
     }
 }
