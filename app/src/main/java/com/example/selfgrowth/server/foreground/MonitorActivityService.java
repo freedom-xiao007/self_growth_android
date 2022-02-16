@@ -55,7 +55,9 @@ public class MonitorActivityService extends Service {
     }
 
     /**
-     *通过通知启动服务
+     * 通过通知启动服务
+     *
+     * 10秒获取一次
      */
     @androidx.annotation.RequiresApi(api = Build.VERSION_CODES.O)
     public void  setForegroundService()
@@ -92,6 +94,9 @@ public class MonitorActivityService extends Service {
         handler.postDelayed(runnable, 10000);//每两秒执行一次runnable.
     }
 
+    /**
+     * 获取手机顶层Activity
+     */
     public void getTopActivity()
     {
         long endTime = System.currentTimeMillis();
