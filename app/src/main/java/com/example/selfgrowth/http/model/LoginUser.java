@@ -1,5 +1,7 @@
 package com.example.selfgrowth.http.model;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,4 +11,5 @@ public class LoginUser {
 
     private String email;
     private String password;
+    private List<String> applications;
 }

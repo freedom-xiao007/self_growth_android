@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.model.ActivityModel;
 import com.example.selfgrowth.http.request.ActivityRequest;
+import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -56,7 +57,7 @@ public class ActivityFragment extends Fragment {
                 dataList.add(new Gson().fromJson(s, ActivityModel.class));
             });
             //设置ListView的适配器
-            activityListViewAdapter = new ActivityListViewAdapter(this.getContext(), dataList, getInstallSoftware());
+            activityListViewAdapter = new ActivityListViewAdapter(this.getContext(), dataList, AppUtils.getInstallSoftware(this.getContext()));
             testLv.setAdapter(activityListViewAdapter);
             testLv.setSelection(4);
         }, failed -> {
@@ -66,12 +67,5 @@ public class ActivityFragment extends Fragment {
         });
     }
 
-    private List<String> getInstallSoftware() {
-        List<PackageInfo> packages = getContext().getPackageManager().getInstalledPackages(0);
-        List<String> installAppNames = new ArrayList<>(packages.size());
-        for(PackageInfo packageInfo: packages) {
-            installAppNames.add(packageInfo.applicationInfo.loadLabel(getContext().getPackageManager()).toString());
-        }
-        return installAppNames;
-    }
+
 }

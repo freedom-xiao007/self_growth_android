@@ -21,6 +21,7 @@ import com.example.selfgrowth.http.model.LoginUser;
 import com.example.selfgrowth.http.model.TaskConfig;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.http.request.UserRequest;
+import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -101,6 +102,7 @@ public class HomeFragment extends Fragment {
         final LoginUser user = LoginUser.builder()
                 .email(userName)
                 .password(password)
+                .applications(AppUtils.getInstallSoftware(this.getContext()))
                 .build();
         userRequest.login(user, (token) -> {
             UserCache.getInstance().initUser(userName, token.toString());

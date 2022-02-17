@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,10 @@ import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
 import com.example.selfgrowth.http.model.LoginUser;
 import com.example.selfgrowth.http.request.UserRequest;
+import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 public class LoginFragment extends Fragment {
 
@@ -36,6 +40,7 @@ public class LoginFragment extends Fragment {
             final LoginUser user = LoginUser.builder()
                     .email(email.getText().toString())
                     .password(password.getText().toString())
+                    .applications(AppUtils.getInstallSoftware(this.getContext()))
                     .build();
 
             userRequest.login(user, (token) -> {
