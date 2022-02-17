@@ -48,9 +48,10 @@ public class ActivityHistoryFragment extends Fragment {
                 return;
             }
             Log.d("获取活动列表：", "成功");
-            List<Map<String, Object>> taskConfigs = (List<Map<String, Object>>) success;
-            final List<ActivityRecordModel> dataList = new ArrayList<>(taskConfigs.size());
-            taskConfigs.forEach(task -> {
+            Map<String, Object> taskConfigs = (Map<String, Object>) success;
+            List<Map<String, Object>> tasks = (List<Map<String, Object>>) taskConfigs.get("data");
+            final List<ActivityRecordModel> dataList = new ArrayList<>(tasks.size());
+            tasks.forEach(task -> {
                 final String s = new Gson().toJson(task);
                 dataList.add(new Gson().fromJson(s, ActivityRecordModel.class));
             });
