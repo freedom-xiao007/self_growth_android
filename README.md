@@ -38,6 +38,9 @@
 - [Android几种方式实现控件圆角](https://www.jianshu.com/p/ab42f2198776)
 - [Best practice to implement key-value pair in android Spinner](https://stackoverflow.com/questions/35449800/best-practice-to-implement-key-value-pair-in-android-spinner)
 
+### 数据存储与操作
+- [保存键值对数据](https://developer.android.com/training/data-storage/shared-preferences?hl=zh-cn)
+
 ### 网络
 - [Add Header Parameter in Retrofit](https://stackoverflow.com/questions/42898920/add-header-parameter-in-retrofit)
 - [Retotfit2默认带请求头](https://blog.csdn.net/yechaoa/article/details/103067284)
