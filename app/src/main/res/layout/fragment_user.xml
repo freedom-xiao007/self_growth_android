@@ -20,6 +20,7 @@
             android:text="TextView"
             android:textAlignment="textEnd"
             android:textSize="35sp"
+            android:textColor="@color/white"
             app:drawableEndCompat="@drawable/me_small" />
 
         <TextView
