@@ -1,19 +1,15 @@
-package com.example.selfgrowth.ui.home;
+package com.example.selfgrowth.ui.task;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.model.CycleTypeConvert;
 import com.example.selfgrowth.http.model.TaskConfig;
-import com.example.selfgrowth.http.model.TaskTypeConvert;
 import com.example.selfgrowth.http.request.TaskRequest;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 

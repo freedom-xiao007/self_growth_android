@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.selfgrowth.ui.home.HomeFragment"/>
+        android:name="com.example.selfgrowth.ui.task.TaskFragment"/>
 
     <fragment
         android:id="@+id/navigation_dashboard"

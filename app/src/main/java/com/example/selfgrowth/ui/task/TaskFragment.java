@@ -1,4 +1,4 @@
-package com.example.selfgrowth.ui.home;
+package com.example.selfgrowth.ui.task;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -29,7 +29,7 @@ import java.util.Map;
 
 import lombok.SneakyThrows;
 
-public class HomeFragment extends Fragment {
+public class TaskFragment extends Fragment {
 
     private final UserRequest userRequest = new UserRequest();
     private final TaskRequest taskRequest = new TaskRequest();
