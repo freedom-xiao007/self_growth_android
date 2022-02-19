@@ -28,6 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"
-            android:text="自我生成：页面规划中" />
+            android:textSize="35sp"
+            android:textColor="@color/white"
+            android:text="自我生长：页面规划中" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
