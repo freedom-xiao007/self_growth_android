@@ -53,3 +53,4 @@
 - [字节开源的，Apache2 使用起来放心点：IconPark](https://github.com/bytedance/iconpark)
 - [iconparkBETA](https://iconpark.oceanengine.com/official)
 - [有哪些无版权、免费、高清图片素材网站？](https://www.zhihu.com/question/318961106/answer/767074512)
+- [官方Vector资源](https://fonts.google.com/icons?selected=Material+Icons)
