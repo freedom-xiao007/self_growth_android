@@ -36,6 +36,7 @@ public class TaskFragment extends Fragment {
 
     private ListView list;
     private ListViewDemoAdapter listViewDemoAdapter;
+    private org.angmarch.views.NiceSpinner spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class TaskFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         list = requireView().findViewById(R.id.task_list_view);
+        spinner = requireView().findViewById(R.id.task_group_spinner);
         initTaskData();
     }
 
@@ -92,6 +94,21 @@ public class TaskFragment extends Fragment {
      * 初始化数据
      */
     private void initTaskData() {
+        taskRequest.allGroups(success -> {
+            if (success == null) {
+                Snackbar.make(requireView(), "获取列表为空:", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return;
+            }
+            List<String> dataset = (List<String>) success;
+            spinner.attachDataSource(dataset);
+            spinner.hideArrow();
+        }, failed -> {
+            Snackbar.make(requireView(), "获取任务组列表失败:" + failed, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            Log.d("获取任务组任务列表：", "失败");
+        });
+
         taskRequest.list(success -> {
             if (success == null) {
                 Snackbar.make(requireView(), "获取列表为空:", Snackbar.LENGTH_LONG)

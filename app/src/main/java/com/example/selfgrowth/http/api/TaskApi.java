@@ -28,4 +28,7 @@ public interface TaskApi {
 
     @GET("v1/task/history")
     Call<ApiResponse> history();
+
+    @GET("v1/task/allGroups")
+    Call<ApiResponse> allGroups();
 }

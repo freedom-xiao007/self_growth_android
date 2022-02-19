@@ -33,4 +33,10 @@ public class TaskRequest extends Request {
         Call<ApiResponse> call = request.history();
         sendRequest(call, success, failed);
     }
+
+    public void allGroups(Consumer<? super Object> success, Consumer<? super Object> failed) {
+        TaskApi request = retrofit.create(TaskApi.class);
+        Call<ApiResponse> call = request.allGroups();
+        sendRequest(call, success, failed);
+    }
 }
