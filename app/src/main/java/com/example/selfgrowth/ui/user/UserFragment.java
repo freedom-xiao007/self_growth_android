@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,10 +28,17 @@ public class UserFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         if (UserCache.getInstance().isLogin()) {
-            return null;
+            return userInfo(inflater, container);
         } else {
             return loadLoginFragment(inflater, container);
         }
+    }
+
+    private View userInfo(LayoutInflater inflater, ViewGroup container) {
+        View rootView = inflater.inflate(R.layout.fragment_user, container, false);
+        TextView userEmail = rootView.findViewById(R.id.login_user_email);
+        userEmail.setText(UserCache.getInstance().getUserName());
+        return rootView;
     }
 
     private View loadLoginFragment(LayoutInflater inflater, ViewGroup container) {
