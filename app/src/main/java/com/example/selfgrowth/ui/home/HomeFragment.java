@@ -1,46 +1,66 @@
 package com.example.selfgrowth.ui.home;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.databinding.FragmentHomeBinding;
+import com.example.selfgrowth.cache.UserCache;
+import com.example.selfgrowth.http.model.LoginUser;
+import com.example.selfgrowth.http.request.UserRequest;
+import com.example.selfgrowth.utils.AppUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
+    private final UserRequest userRequest = new UserRequest();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        autoLogin();
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+    private void autoLogin() {
+        if (UserCache.getInstance().isLogin()) {
+            return;
+        }
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
+        final SharedPreferences preferences = requireActivity().getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
+        final String userName = preferences.getString("username", "");
+        final String password = preferences.getString("password", "");
+        if (userName.isEmpty() || password.isEmpty()) {
+            Snackbar.make(requireView(), "无用户，请登录", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            return;
+        }
+
+        final LoginUser user = LoginUser.builder()
+                .email(userName)
+                .password(password)
+                .applications(AppUtils.getInstallSoftware(this.requireContext()))
+                .build();
+        userRequest.login(user, (token) -> {
+            UserCache.getInstance().initUser(userName, token.toString());
+            Snackbar.make(requireView(), "登录成功:" + token.toString(), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            Log.d("用户登录：", token.toString());
+        }, failedMessage -> {
+            Snackbar.make(requireView(), "登录失败:" + failedMessage, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            Log.d("用户登录：", "失败");
         });
-        return root;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 }
