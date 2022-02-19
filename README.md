@@ -38,6 +38,7 @@
 - [Android几种方式实现控件圆角](https://www.jianshu.com/p/ab42f2198776)
 - [Best practice to implement key-value pair in android Spinner](https://stackoverflow.com/questions/35449800/best-practice-to-implement-key-value-pair-in-android-spinner)
 - [Nice Spinner](https://github.com/arcadefire/nice-spinner)
+- [关于Android中Button的Backgroud背景设置默认为蓝紫色，且无法修改的问题](https://my.oschina.net/u/4296470/blog/4732012)
 
 ### 数据存储与操作
 - [保存键值对数据](https://developer.android.com/training/data-storage/shared-preferences?hl=zh-cn)
