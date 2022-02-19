@@ -53,7 +53,7 @@
         app:layout_constraintHorizontal_bias="0.5" />
 
     <EditText
-        android:id="@+id/login_password"
+        android:id="@+id/editTextNumberPassword"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:ems="10"
@@ -68,7 +68,7 @@
         app:layout_constraintHorizontal_bias="0.5" />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/button"
         style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
         android:layout_width="230dp"
         android:layout_height="55dp"

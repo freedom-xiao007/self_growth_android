@@ -2,7 +2,6 @@ package com.example.selfgrowth.http.api;
 
 import com.example.selfgrowth.http.model.ActivityModel;
 import com.example.selfgrowth.http.model.ApiResponse;
-import com.example.selfgrowth.http.model.LoginUser;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

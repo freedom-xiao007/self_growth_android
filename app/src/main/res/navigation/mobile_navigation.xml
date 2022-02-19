@@ -3,53 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/navigation_home"
         android:name="com.example.selfgrowth.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_task_history"
-        android:name="com.example.selfgrowth.ui.task.TaskHistoryFragment"
-        android:label="@string/menu_sleep"
-        tools:layout="任务历史数据" />
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.selfgrowth.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/nav_activity"
-        android:name="com.example.selfgrowth.ui.activity.ActivityFragment"
-        android:label="@string/menu_activity"
-        tools:layout="@layout/fragment_activity" />
-
-    <fragment
-        android:id="@+id/nav_activity_history"
-        android:name="com.example.selfgrowth.ui.activity.ActivityHistoryFragment"
-        android:label="活动历史数据"
-        tools:layout="@layout/fragment_activity_history" />
-
-    <fragment
-        android:id="@+id/nav_add_task"
-        android:name="com.example.selfgrowth.ui.task.AddTaskFragment"
-        android:label="新增任务"
-        tools:layout="@layout/fragment_add_task" />
-
-    <fragment
-        android:id="@+id/nav_add_label"
-        android:name="com.example.selfgrowth.ui.label.AddLabelFragment"
-        android:label="新增标签"
-        tools:layout="@layout/fragment_add_label" />
-
-    <fragment
-        android:id="@+id/nav_login"
-        android:name="com.example.selfgrowth.ui.login.LoginFragment"
-        android:label="登录"
-        tools:layout="@layout/fragment_login" />
-
-    <fragment
-        android:id="@+id/nav_summary"
-        android:name="com.example.selfgrowth.ui.summary.SummaryFragment"
-        android:label="@string/menu_work"
-        tools:layout="数据观星" />
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.selfgrowth.ui.user.UserFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_user" />
 </navigation>
