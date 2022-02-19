@@ -1,8 +1,5 @@
 <resources>
-    <string name="app_name">selfGrowth</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">自我生长</string>
     <string name="nav_task">任务</string>
     <string name="nav_activity">活动</string>
     <string name="nav_self">我的</string>
