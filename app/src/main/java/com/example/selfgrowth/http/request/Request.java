@@ -29,7 +29,7 @@ public abstract class Request {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.code() != 200) {
-                    Log.w("Http Response", "请求响应错误");
+                    Log.w("Http Response", "请求响应错误:" + response.message());
                     failed.accept(response.raw().message());
                     return;
                 }

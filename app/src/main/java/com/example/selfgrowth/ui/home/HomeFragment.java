@@ -7,27 +7,56 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
 import com.example.selfgrowth.http.model.LoginUser;
+import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.http.request.UserRequest;
 import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import lombok.SneakyThrows;
 
 public class HomeFragment extends Fragment {
 
     private final UserRequest userRequest = new UserRequest();
+    private final TaskRequest taskRequest = new TaskRequest();
+
+    private ListView list;
+    private ListViewDemoAdapter listViewDemoAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         autoLogin();
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_task, container, false);
     }
 
+    @SneakyThrows
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        list = requireView().findViewById(R.id.task_list_view);
+        initTaskData();
+    }
+
+    /**
+     * todo
+     * 目前的登录有问题
+     * 不是在应用启动前进行登录
+     * 但放到Main中，取不到想要的数据
+     */
     private void autoLogin() {
         if (UserCache.getInstance().isLogin()) {
             return;
@@ -56,6 +85,34 @@ public class HomeFragment extends Fragment {
             Snackbar.make(requireView(), "登录失败:" + failedMessage, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             Log.d("用户登录：", "失败");
+        });
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initTaskData() {
+        taskRequest.list(success -> {
+            if (success == null) {
+                Snackbar.make(requireView(), "获取列表为空:", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return;
+            }
+            Log.d("获取任务列表：", "成功");
+            List<Map<String, Object>> taskConfigs = (List<Map<String, Object>>) success;
+            final List<TaskConfig> dataList = new ArrayList<>(taskConfigs.size());
+            taskConfigs.forEach(task -> {
+                final String s = new Gson().toJson(task);
+                dataList.add(new Gson().fromJson(s, TaskConfig.class));
+            });
+            //设置ListView的适配器
+            listViewDemoAdapter = new ListViewDemoAdapter(this.getContext(), dataList);
+            list.setAdapter(listViewDemoAdapter);
+            list.setSelection(4);
+        }, failed -> {
+            Snackbar.make(requireView(), "获取列表失败:" + failed, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            Log.d("获取任务列表：", "失败");
         });
     }
 
