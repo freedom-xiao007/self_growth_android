@@ -23,6 +23,9 @@ import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
+import org.angmarch.views.NiceSpinner;
+import org.angmarch.views.OnSpinnerItemSelectedListener;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +53,14 @@ public class TaskFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         list = requireView().findViewById(R.id.task_list_view);
         spinner = requireView().findViewById(R.id.task_group_spinner);
+        spinner.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
+            @Override
+            public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
+                // This example uses String, but your type can be any
+                String item = (String) parent.getItemAtPosition(position);
+                initTaskListOfGroup(item);
+            }
+        });
         initTaskData();
     }
 
@@ -103,13 +114,19 @@ public class TaskFragment extends Fragment {
             List<String> dataset = (List<String>) success;
             spinner.attachDataSource(dataset);
             spinner.hideArrow();
+
+            if (!dataset.isEmpty()) {
+                initTaskListOfGroup(dataset.get(0));
+            }
         }, failed -> {
             Snackbar.make(requireView(), "获取任务组列表失败:" + failed, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             Log.d("获取任务组任务列表：", "失败");
         });
+    }
 
-        taskRequest.list(success -> {
+    private void initTaskListOfGroup(String groupName) {
+        taskRequest.list(groupName, success -> {
             if (success == null) {
                 Snackbar.make(requireView(), "获取列表为空:", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -125,7 +142,9 @@ public class TaskFragment extends Fragment {
             //设置ListView的适配器
             listViewDemoAdapter = new ListViewDemoAdapter(this.getContext(), dataList);
             list.setAdapter(listViewDemoAdapter);
-            list.setSelection(4);
+            if (!taskConfigs.isEmpty()) {
+                list.setSelection(0);
+            }
         }, failed -> {
             Snackbar.make(requireView(), "获取列表失败:" + failed, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();

@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface TaskApi {
 
@@ -20,7 +21,7 @@ public interface TaskApi {
     Call<ApiResponse> add(@Body TaskConfig taskConfig);
 
     @GET("v1/task/list")
-    Call<ApiResponse> list();
+    Call<ApiResponse> list(@Query("groupName") String groupName);
 
     @Multipart
     @POST("v1/task/complete")
