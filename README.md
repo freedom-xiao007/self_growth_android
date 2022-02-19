@@ -46,3 +46,9 @@
 
 ### 列表
 - [Android列表组件ListView使用详解之动态加载或修改列表数据](https://cloud.tencent.com/developer/article/1742232)
+
+### 资源
+- [Awesome Android](https://github.com/JStumpp/awesome-android)
+- [Android DOCUMENTATION](https://developer.android.com/reference)
+- [字节开源的，Apache2 使用起来放心点：IconPark](https://github.com/bytedance/iconpark)
+- [iconparkBETA](https://iconpark.oceanengine.com/official)
