@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
                 .build();
         userRequest.login(user, (token) -> {
             UserCache.getInstance().initUser(userName, token.toString());
-            Snackbar.make(requireView(), "登录成功:" + token.toString(), Snackbar.LENGTH_LONG)
+            Snackbar.make(requireView(), "登录成功", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             Log.d("用户登录：", token.toString());
         }, failedMessage -> {
