@@ -12,6 +12,9 @@ import com.example.selfgrowth.http.model.AppInfo;
 import com.example.selfgrowth.http.model.DashboardStatistics;
 import com.example.selfgrowth.http.request.TaskRequest;
 
+import org.angmarch.views.NiceSpinner;
+import org.angmarch.views.OnSpinnerItemSelectedListener;
+
 import java.util.List;
 
 public class AppInfoListViewAdapter extends BaseAdapter {
@@ -55,6 +58,10 @@ public class AppInfoListViewAdapter extends BaseAdapter {
 
         viewHolder.appName.setText(dataList.get(position).getAppName());
         viewHolder.packageName.setText(dataList.get(position).getPackageName());
+        viewHolder.labelSpinner.setOnSpinnerItemSelectedListener((parent1, view, position1, id) -> {
+            String label =parent1.getItemAtPosition(position1).toString();
+            viewHolder.appLabel.setText("标签： " + label);
+        });
         return convertView;
     }
 
@@ -72,6 +79,8 @@ public class AppInfoListViewAdapter extends BaseAdapter {
     private static final class ViewHolder {
         private final TextView appName;
         private final TextView packageName;
+        private final TextView appLabel;
+        private final NiceSpinner labelSpinner;
 
         /**
          * 构造器
@@ -80,6 +89,8 @@ public class AppInfoListViewAdapter extends BaseAdapter {
         ViewHolder(View view) {
             appName = view.findViewById(R.id.app_info_name);
             packageName = view.findViewById(R.id.app_info_package);
+            appLabel = view.findViewById(R.id.app_info_label);
+            labelSpinner = view.findViewById(R.id.app_info_label_spinner);
         }
     }
 }

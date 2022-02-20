@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -51,6 +52,21 @@
         app:layout_constraintLeft_toLeftOf="@+id/app_info_item_background"
         app:layout_constraintRight_toRightOf="@+id/app_info_item_background"
         android:text="标签：学习"/>
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/app_info_label_spinner"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape"
+        android:alpha="0"
+        android:layout_marginTop="5dp"
+        app:entries="@array/add_task_label"
+        app:textTint="@color/blue_1"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintTop_toTopOf="@+id/app_info_item_background"
+        app:layout_constraintBottom_toBottomOf="@+id/app_info_item_background"
+        app:layout_constraintLeft_toLeftOf="@+id/app_info_item_background"
+        app:layout_constraintRight_toRightOf="@+id/app_info_item_background"/>
     <TextView
         android:id="@+id/app_info_package"
         android:layout_width="match_parent"
