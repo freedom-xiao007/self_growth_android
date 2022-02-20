@@ -1,11 +1,14 @@
 package com.example.selfgrowth.http.request;
 
+import android.util.Log;
+
 import com.example.selfgrowth.http.api.TaskApi;
 import com.example.selfgrowth.http.model.ApiResponse;
 import com.example.selfgrowth.http.model.TaskConfig;
 
 import java.util.function.Consumer;
 
+import lombok.extern.slf4j.Slf4j;
 import retrofit2.Call;
 
 public class TaskRequest extends Request {
@@ -23,6 +26,7 @@ public class TaskRequest extends Request {
     }
 
     public void complete(String id, Consumer<? super Object> success, Consumer<? super Object> failed) {
+        Log.i("完成任务：", id);
         TaskApi request = retrofit.create(TaskApi.class);
         Call<ApiResponse> call = request.complete(id);
         sendRequest(call, success, failed);
