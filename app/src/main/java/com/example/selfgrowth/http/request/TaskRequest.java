@@ -18,7 +18,7 @@ public class TaskRequest extends Request {
 
     public void list(String groupName, Consumer<? super Object> success, Consumer<? super Object> failed) {
         TaskApi request = retrofit.create(TaskApi.class);
-        Call<ApiResponse> call = request.list(groupName);
+        Call<ApiResponse> call = request.list(groupName, "false");
         sendRequest(call, success, failed);
     }
 

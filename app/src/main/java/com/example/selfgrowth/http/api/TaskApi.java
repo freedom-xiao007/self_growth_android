@@ -21,7 +21,7 @@ public interface TaskApi {
     Call<ApiResponse> add(@Body TaskConfig taskConfig);
 
     @GET("v1/task/list")
-    Call<ApiResponse> list(@Query("groupName") String groupName);
+    Call<ApiResponse> list(@Query("groupName") String groupName, @Query("isComplete") String isComplete);
 
     @Multipart
     @POST("v1/task/complete")

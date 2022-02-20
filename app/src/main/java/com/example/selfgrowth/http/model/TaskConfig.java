@@ -14,4 +14,7 @@ public class TaskConfig {
     private int cycleType;
     private int type;
     private boolean isComplete;
+    private String group;
+    private int learnType;
+    private int outputType;
 }
