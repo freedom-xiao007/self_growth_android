@@ -40,6 +40,10 @@
 - [Nice Spinner](https://github.com/arcadefire/nice-spinner)
 - [关于Android中Button的Backgroud背景设置默认为蓝紫色，且无法修改的问题](https://my.oschina.net/u/4296470/blog/4732012)
 
+### 路由与跳转
+- [How to move from one fragment to another fragment on click of an ImageView in Android?](https://stackoverflow.com/questions/23212162/how-to-move-from-one-fragment-to-another-fragment-on-click-of-an-imageview-in-an)
+- [Fragment transactions](https://developer.android.com/guide/fragments/transactions)
+
 ### 数据存储与操作
 - [保存键值对数据](https://developer.android.com/training/data-storage/shared-preferences?hl=zh-cn)
 
