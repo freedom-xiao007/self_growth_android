@@ -9,8 +9,12 @@
         android:name="com.example.selfgrowth.ui.task.TaskFragment"/>
 
     <fragment
-        android:id="@+id/navigation_activity"
+        android:id="@+id/navigation_dashboard"
         android:name="com.example.selfgrowth.ui.dashboard.DashboardFragment"/>
+
+    <fragment
+        android:id="@+id/navigation_activity"
+        android:name="com.example.selfgrowth.ui.activity.ActivityFragment"/>
 
     <fragment
         android:id="@+id/navigation_user"

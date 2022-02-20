@@ -5,6 +5,7 @@
     <string name="nav_self">我的</string>
     <string name="login_app_name">自 我 生 长</string>
     <string name="login_button">登录</string>
+    <string name="nav_dashboard">仪表盘</string>
 
     <string-array name="add_task_label">
         <item>学习</item>

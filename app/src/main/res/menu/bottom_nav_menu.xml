@@ -7,6 +7,11 @@
         android:title="@string/nav_task" />
 
     <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/application"
+        android:title="@string/nav_dashboard" />
+
+    <item
         android:id="@+id/navigation_activity"
         android:icon="@drawable/application"
         android:title="@string/nav_activity" />
