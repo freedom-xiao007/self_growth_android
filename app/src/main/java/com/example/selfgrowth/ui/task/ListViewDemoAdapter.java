@@ -77,6 +77,8 @@ public class ListViewDemoAdapter extends BaseAdapter {
                 return;
             }
             taskRequest.complete(viewHolder.id.getText().toString(), success -> {
+                // todo
+                // 每次完成任务后，以这样的方式刷新会不会有问题，总感觉有点怪，不怎么优雅
                 taskFragment.initTaskListOfGroup(groupName);
                 Snackbar.make(finalConvertView, "任务请求完成:" + success, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
