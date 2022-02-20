@@ -1,6 +1,7 @@
 package com.example.selfgrowth.ui.task;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,9 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
@@ -24,7 +28,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import org.angmarch.views.NiceSpinner;
-import org.angmarch.views.OnSpinnerItemSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +42,20 @@ public class TaskFragment extends Fragment {
 
     private ListView list;
     private ListViewDemoAdapter listViewDemoAdapter;
-    private org.angmarch.views.NiceSpinner spinner;
+    private NiceSpinner spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         autoLogin();
-        return inflater.inflate(R.layout.fragment_task, container, false);
+        View view = inflater.inflate(R.layout.fragment_task, container, false);
+        view.findViewById(R.id.add_task_jump).setOnClickListener(v -> {
+           requireActivity().getSupportFragmentManager()
+                   .beginTransaction()
+                   .replace(R.id.task_list_manage, new AddTaskFragment())
+                   .addToBackStack(null)
+                   .commit();
+        });
+        return view;
     }
 
     @SneakyThrows
@@ -52,14 +63,11 @@ public class TaskFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         list = requireView().findViewById(R.id.task_list_view);
+
         spinner = requireView().findViewById(R.id.task_group_spinner);
-        spinner.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
-            @Override
-            public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
-                // This example uses String, but your type can be any
-                String item = (String) parent.getItemAtPosition(position);
-                initTaskListOfGroup(item);
-            }
+        spinner.setOnSpinnerItemSelectedListener((parent, view, position, id) -> {
+            String item = (String) parent.getItemAtPosition(position);
+            initTaskListOfGroup(item);
         });
         initTaskData();
     }
