@@ -2,17 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_task">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_task"
         android:name="com.example.selfgrowth.ui.task.TaskFragment"/>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_activity"
         android:name="com.example.selfgrowth.ui.dashboard.DashboardFragment"/>
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_user"
         android:name="com.example.selfgrowth.ui.user.UserFragment"/>
 </navigation>
