@@ -13,7 +13,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.model.DashboardStatistics;
+import com.example.selfgrowth.http.request.DashboardRequest;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
 
 import org.angmarch.views.NiceSpinner;
 import org.angmarch.views.OnSpinnerItemSelectedListener;
@@ -26,24 +29,35 @@ import java.util.Map;
 
 public class DashboardFragment extends Fragment {
 
+    private final DashboardRequest dashboardRequest = new DashboardRequest();
     private DashboardStatistics data;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         initData(view);
-        initComponent(view);
         return view;
     }
 
     private void initData(View view) {
-        this.data = createData();
-        final ListView listView = view.findViewById(R.id.dashboard_group_view_id);
-        final DashboardItemListViewAdapter adapter = new DashboardItemListViewAdapter(requireContext(), data.getGroups().get("learn").getApps());
-        listView.setAdapter(adapter);
+        dashboardRequest.statistics(
+                success -> {
+                    String jsonStr = new Gson().toJson(success);
+                    this.data = new Gson().fromJson(jsonStr, DashboardStatistics.class);
+                    final ListView listView = view.findViewById(R.id.dashboard_group_view_id);
+                    final DashboardItemListViewAdapter adapter = new DashboardItemListViewAdapter(requireContext(), data.getGroups().get("learn").getApps());
+                    listView.setAdapter(adapter);
+                    initComponent(view);
+        },
+                failed -> Snackbar.make(view, "仪表盘统计数据请求失败:" + failed, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show());
     }
 
     private void initComponent(View view) {
+        if (data == null) {
+            return;
+        }
+
         TextView groupShow = view.findViewById(R.id.dashboard_group_name);
         groupShow.setText("类型：" +data.getGroups().keySet().toArray()[0].toString());
         NiceSpinner spinnerOfGroup = view.findViewById(R.id.dashboard_group_spinner);
