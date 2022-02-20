@@ -1,7 +1,6 @@
 package com.example.selfgrowth.ui.task;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +12,6 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.Navigation;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
@@ -48,13 +44,12 @@ public class TaskFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         autoLogin();
         View view = inflater.inflate(R.layout.fragment_task, container, false);
-        view.findViewById(R.id.add_task_jump).setOnClickListener(v -> {
-           requireActivity().getSupportFragmentManager()
-                   .beginTransaction()
-                   .replace(R.id.task_list_manage, new AddTaskFragment())
-                   .addToBackStack(null)
-                   .commit();
-        });
+        view.findViewById(R.id.add_task_jump).setOnClickListener(v -> requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.task_list_manage, new AddTaskFragment())
+                .addToBackStack(null)
+                .commit());
         return view;
     }
 
