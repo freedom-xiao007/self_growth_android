@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,6 +63,7 @@ public class TaskFragment extends Fragment {
         spinner = requireView().findViewById(R.id.task_group_spinner);
         spinner.setOnSpinnerItemSelectedListener((parent, view, position, id) -> {
             String item = (String) parent.getItemAtPosition(position);
+            ((TextView)requireView().findViewById(R.id.task_group_name)).setText("任务组：" + item);
             initTaskListOfGroup(item);
         });
         initTaskData();
@@ -119,6 +121,7 @@ public class TaskFragment extends Fragment {
             spinner.hideArrow();
 
             if (!dataset.isEmpty()) {
+                ((TextView)requireView().findViewById(R.id.task_group_name)).setText("任务组：" + dataset.get(0));
                 initTaskListOfGroup(dataset.get(0));
             }
         }, failed -> {

@@ -5,19 +5,44 @@
     android:id="@+id/task_list_manage"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:id="@+id/task_list_background"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape"
+        android:alpha="0.1"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text=""/>
+    <TextView
+        android:id="@+id/task_group_name"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center_vertical|left"
+        app:layout_constraintTop_toTopOf="@+id/task_list_background"
+        app:layout_constraintBottom_toBottomOf="@+id/task_list_background"
+        app:layout_constraintLeft_toLeftOf="@+id/task_list_background"
+        app:layout_constraintRight_toRightOf="@+id/task_list_background"
+        android:text="任务组名称"/>
     <org.angmarch.views.NiceSpinner
         android:id="@+id/task_group_spinner"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:background="@drawable/shape"
-        android:alpha="0.3"
+        android:alpha="0"
         android:layout_marginTop="5dp"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintTop_toTopOf="@+id/task_list_background"
+        app:layout_constraintBottom_toBottomOf="@+id/task_list_background"
+        app:layout_constraintLeft_toLeftOf="@+id/task_list_background"
+        app:layout_constraintRight_toRightOf="@+id/task_list_background"/>
 
     <Button
         android:id="@+id/add_task_jump"
