@@ -20,15 +20,21 @@ public class ListViewDemoAdapter extends BaseAdapter {
     private final TaskRequest taskRequest = new TaskRequest();
     private final Context context;//上下文对象
     private final List<TaskConfig> dataList;//ListView显示的数据
+    private final TaskFragment taskFragment;
+    private final String groupName;
+
     /**
      * 构造器
-     *
      * @param context 上下文对象
      * @param dataList 数据
+     * @param taskFragment
+     * @param groupName
      */
-    public ListViewDemoAdapter(Context context, List<TaskConfig>  dataList) {
+    public ListViewDemoAdapter(Context context, List<TaskConfig> dataList, TaskFragment taskFragment, String groupName) {
         this.context = context;
         this.dataList = dataList;
+        this.taskFragment = taskFragment;
+        this.groupName = groupName;
     }
 
     @Override
@@ -71,6 +77,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
                 return;
             }
             taskRequest.complete(viewHolder.id.getText().toString(), success -> {
+                taskFragment.initTaskListOfGroup(groupName);
                 Snackbar.make(finalConvertView, "任务请求完成:" + success, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }, failed -> {

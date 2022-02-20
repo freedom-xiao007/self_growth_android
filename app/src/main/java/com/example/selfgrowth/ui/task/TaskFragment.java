@@ -128,7 +128,7 @@ public class TaskFragment extends Fragment {
         });
     }
 
-    private void initTaskListOfGroup(String groupName) {
+    public void initTaskListOfGroup(String groupName) {
         taskRequest.list(groupName, success -> {
             if (success == null) {
                 Snackbar.make(requireView(), "获取列表为空:", Snackbar.LENGTH_LONG)
@@ -143,7 +143,7 @@ public class TaskFragment extends Fragment {
                 dataList.add(new Gson().fromJson(s, TaskConfig.class));
             });
             //设置ListView的适配器
-            listViewDemoAdapter = new ListViewDemoAdapter(this.getContext(), dataList);
+            listViewDemoAdapter = new ListViewDemoAdapter(this.getContext(), dataList, this, groupName);
             list.setAdapter(listViewDemoAdapter);
             if (!taskConfigs.isEmpty()) {
                 list.setSelection(0);
