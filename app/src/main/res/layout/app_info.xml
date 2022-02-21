@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/app_info_background"
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/shape"
@@ -23,15 +23,68 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:gravity="center_vertical|left"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintTop_toTopOf="@+id/app_info_background"
-        app:layout_constraintBottom_toBottomOf="@+id/app_info_background"
-        app:layout_constraintLeft_toLeftOf="@+id/app_info_background"
-        app:layout_constraintRight_toRightOf="@+id/app_info_background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintLeft_toLeftOf="@+id/background"
+        app:layout_constraintRight_toRightOf="@+id/background"
         android:text="手机应用信息"/>
+    <TextView
+        android:id="@+id/dashboard_group_name"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center_vertical|left"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintLeft_toLeftOf="@+id/background"
+        app:layout_constraintRight_toRightOf="@+id/background"
+        android:text="类型: 总览"/>
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/dashboard_group_spinner"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:background="@drawable/shape"
+        android:alpha="0"
+        android:layout_marginTop="5dp"
+        app:entries="@array/add_task_label"
+        app:textTint="@color/blue_1"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintLeft_toLeftOf="@+id/background"
+        app:layout_constraintRight_toRightOf="@+id/background"/>
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/blue_1"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintLeft_toLeftOf="@+id/background"
+        app:layout_constraintRight_toRightOf="@+id/background"/>
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ic_baseline_search_40"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintLeft_toLeftOf="@+id/background"
+        app:layout_constraintRight_toRightOf="@+id/background"/>
 
     <ListView
         android:id="@+id/app_info_list_view"
