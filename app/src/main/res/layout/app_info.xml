@@ -33,7 +33,7 @@
         app:layout_constraintRight_toRightOf="@+id/background"
         android:text="手机应用信息"/>
     <TextView
-        android:id="@+id/dashboard_group_name"
+        android:id="@+id/type_text"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:textColor="@color/white"
@@ -45,9 +45,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/background"
         app:layout_constraintLeft_toLeftOf="@+id/background"
         app:layout_constraintRight_toRightOf="@+id/background"
-        android:text="类型: 总览"/>
+        android:text="类型: ______"/>
     <org.angmarch.views.NiceSpinner
-        android:id="@+id/dashboard_group_spinner"
+        android:id="@+id/type_spinner"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:background="@drawable/shape"

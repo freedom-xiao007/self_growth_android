@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,9 +17,14 @@ import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.model.AppInfo;
 import com.example.selfgrowth.utils.AppUtils;
 
+import org.angmarch.views.NiceSpinner;
+import org.angmarch.views.OnSpinnerItemSelectedListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppFragment extends Fragment {
+
 
     @Nullable
     @Override
@@ -32,6 +38,18 @@ public class AppFragment extends Fragment {
         ListView listView = view.findViewById(R.id.app_info_list_view);
         final AppInfoListViewAdapter adapter = new AppInfoListViewAdapter(view.getContext(), apps);
         listView.setAdapter(adapter);
+
+        ((NiceSpinner)view.findViewById(R.id.type_spinner)).setOnSpinnerItemSelectedListener((parent, view1, position, id) -> {
+            String type = (String) parent.getItemAtPosition(position);
+            ((TextView)view.findViewById(R.id.type_text)).setText("类型： " + type);
+            List<AppInfo> searchApp = new ArrayList<>();
+            for (AppInfo appInfo: apps) {
+                if (appInfo.getLabel().equals(type)) {
+                    searchApp.add(appInfo);
+                }
+            }
+            listView.setAdapter(new AppInfoListViewAdapter(view.getContext(), searchApp));
+        });
 
         return view;
     }
