@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,6 +46,18 @@ public class AppFragment extends Fragment {
             List<AppInfo> searchApp = new ArrayList<>();
             for (AppInfo appInfo: apps) {
                 if (appInfo.getLabel().equals(type)) {
+                    searchApp.add(appInfo);
+                }
+            }
+            listView.setAdapter(new AppInfoListViewAdapter(view.getContext(), searchApp));
+        });
+
+        final EditText searchText = view.findViewById(R.id.search);
+        view.findViewById(R.id.search_button).setOnClickListener(v -> {
+            final String content = searchText.getText().toString();
+            List<AppInfo> searchApp = new ArrayList<>();
+            for (AppInfo appInfo: apps) {
+                if (content.isEmpty() || appInfo.getAppName().startsWith(content)) {
                     searchApp.add(appInfo);
                 }
             }
