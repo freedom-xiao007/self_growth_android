@@ -8,6 +8,7 @@
     <string name="nav_dashboard">仪表盘</string>
 
     <string-array name="add_task_label">
+        <item>其他</item>
         <item>学习</item>
         <item>运动</item>
         <item>睡觉</item>

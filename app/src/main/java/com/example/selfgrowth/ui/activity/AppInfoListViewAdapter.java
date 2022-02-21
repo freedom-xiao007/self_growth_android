@@ -1,6 +1,7 @@
 package com.example.selfgrowth.ui.activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,19 +59,14 @@ public class AppInfoListViewAdapter extends BaseAdapter {
 
         viewHolder.appName.setText(dataList.get(position).getAppName());
         viewHolder.packageName.setText(dataList.get(position).getPackageName());
+        viewHolder.appLabel.setText(dataList.get(position).getLabel());
         viewHolder.labelSpinner.setOnSpinnerItemSelectedListener((parent1, view, position1, id) -> {
             String label =parent1.getItemAtPosition(position1).toString();
             viewHolder.appLabel.setText("标签： " + label);
+            final SharedPreferences preferences = context.getSharedPreferences(AppInfo.APP_INFO, Context.MODE_PRIVATE);
+            dataList.get(position).updateLabel(preferences, label);
         });
         return convertView;
-    }
-
-    private String showTime(int minutes) {
-        int hours = minutes / 60;
-        if (hours > 0) {
-            return String.format("%d 小时 %d 分钟", hours, minutes % 60);
-        }
-        return String.format("%d 分钟", minutes);
     }
 
     /**
