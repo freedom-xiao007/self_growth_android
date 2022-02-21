@@ -9,6 +9,14 @@
     <uses-permission android:name="android.permission.Pro" />
     <permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
+    <!--     重要提醒    -->
+    <!--    加上下面这个，才能避免获取应用列表时不全的问题-->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
