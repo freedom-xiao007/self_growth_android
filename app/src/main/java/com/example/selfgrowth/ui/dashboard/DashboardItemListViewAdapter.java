@@ -4,14 +4,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.model.DashboardStatistics;
 import com.example.selfgrowth.http.model.TaskConfig;
 import com.example.selfgrowth.http.request.TaskRequest;
+import com.example.selfgrowth.ui.activity.AppUseLogListViewAdapter;
 import com.example.selfgrowth.ui.task.TaskFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.common.base.Strings;
@@ -59,6 +63,13 @@ public class DashboardItemListViewAdapter extends BaseAdapter {
 
         viewHolder.name.setText(dataList.get(position).getName());
         viewHolder.time.setText(showTime(dataList.get(position).getMinutes()));
+        viewHolder.time.setOnClickListener(v -> {
+            View view = View.inflate(context, R.layout.app_use_log, null);
+            AppUseLogListViewAdapter adapter = new AppUseLogListViewAdapter(view.getContext(), dataList.get(position).getLogs());
+            ((ListView)view.findViewById(R.id.app_use_log)).setAdapter(adapter);
+            PopupLayout popupLayout= PopupLayout.init(context, view);
+            popupLayout.show();
+        });
         return convertView;
     }
 

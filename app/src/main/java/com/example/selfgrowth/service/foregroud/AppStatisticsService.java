@@ -10,6 +10,7 @@ import com.example.selfgrowth.http.model.AppInfo;
 import com.example.selfgrowth.http.model.AppLog;
 import com.example.selfgrowth.http.model.DashboardStatistics;
 import com.example.selfgrowth.utils.AppUtils;
+import com.example.selfgrowth.utils.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -64,11 +65,10 @@ public class AppStatisticsService {
             }
 
             final long speedTime = record.cal(log.getDate());
-            final String appName = Objects.requireNonNull(packageName2AppInfo.get(packageName)).getAppName();
-            final String label = Objects.requireNonNull(packageName2AppInfo.get(packageName)).getLabel();
+            final String label = record.getLabel();
             labelTime.computeIfAbsent(label, k -> new AtomicLong()).getAndAdd(speedTime);
-            appTime.computeIfAbsent(label, k -> new HashMap<>()).computeIfAbsent(appName, k -> new AtomicLong()).getAndAdd(speedTime);
-            appUserLogs.computeIfAbsent(appName, k -> new ArrayList<>())
+            appTime.computeIfAbsent(label, k -> new HashMap<>()).computeIfAbsent(record.getAppName(), k -> new AtomicLong()).getAndAdd(speedTime);
+            appUserLogs.computeIfAbsent(record.getAppName(), k -> new ArrayList<>())
                     .add(DashboardStatistics.AppUseLog.builder()
                             .startTime(record.getStart())
                             .endTime(record.getEnd())
@@ -78,10 +78,13 @@ public class AppStatisticsService {
         });
 
         final long speedTime = record.cal(record.getEnd());
-        final String appName = record.getAppName();
-        final String label = record.getLabel();
-        labelTime.computeIfAbsent(label, k -> new AtomicLong()).getAndAdd(speedTime);
-        appTime.computeIfAbsent(label, k -> new HashMap<>()).computeIfAbsent(appName, k -> new AtomicLong()).getAndAdd(speedTime);
+        labelTime.computeIfAbsent(record.getLabel(), k -> new AtomicLong()).getAndAdd(speedTime);
+        appTime.computeIfAbsent(record.getLabel(), k -> new HashMap<>()).computeIfAbsent(record.getAppName(), k -> new AtomicLong()).getAndAdd(speedTime);
+        appUserLogs.computeIfAbsent(record.getAppName(), k -> new ArrayList<>())
+                .add(DashboardStatistics.AppUseLog.builder()
+                        .startTime(record.getStart())
+                        .endTime(record.getEnd())
+                        .build());
 
         return DashboardStatistics.builder()
                 .groups(createDashboardGroups(labelTime, appTime, appUserLogs))
@@ -148,6 +151,9 @@ public class AppStatisticsService {
             if (start == null || end == null) {
                 return 0;
             }
+            Log.d("app start time：", DateUtils.dateString(start));
+            Log.d("app end time：", DateUtils.dateString(end));
+            Log.d("app info", appInfo.toString());
             return Duration.between(start.toInstant(), end.toInstant()).toMinutes();
         }
 
