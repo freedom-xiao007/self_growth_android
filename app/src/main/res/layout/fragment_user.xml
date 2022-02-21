@@ -2,34 +2,252 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.user.UserFragment">
 
+    <TextView
+        android:id="@+id/login_user_email"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="未登录"
+        android:textAlignment="textStart"
+        android:textSize="35sp"
+        android:textColor="@color/white"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:drawableStartCompat="@drawable/ic_outline_account_circle_50" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
-        <TextView
-            android:id="@+id/login_user_email"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="TextView"
-            android:textAlignment="textEnd"
-            android:textSize="35sp"
-            android:textColor="@color/white"
-            app:drawableEndCompat="@drawable/me_small" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:textSize="35sp"
-            android:textColor="@color/white"
-            android:text="自我生长：页面规划中" />
+            android:orientation="vertical">
+
+            <TextView
+                android:text="100"
+                android:textSize="15sp"
+                android:gravity="center_vertical|center"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+            <TextView
+                android:text="学习"
+                android:textSize="15sp"
+                android:gravity="center_vertical|center"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="100"
+                android:textSize="15sp"
+                android:gravity="center_vertical|center"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+            <TextView
+                android:text="运动"
+                android:textSize="15sp"
+                android:gravity="center_vertical|center"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="100"
+                android:textSize="15sp"
+                android:gravity="center_vertical|center"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+            <TextView
+                android:text="睡觉"
+                android:textSize="15sp"
+                android:gravity="center_vertical|center"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="100"
+                android:textSize="15sp"
+                android:gravity="center_vertical|center"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+            <TextView
+                android:text="任务"
+                android:textSize="15sp"
+                android:gravity="center_vertical|center"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+        </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/shape_gray"
+        android:alpha="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="25dp">
+            <TextView
+                android:text="更多功能"
+                android:textColor="@color/white"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:background="@drawable/ic_outline_folder_50"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+                <TextView
+                    android:text="应用设置"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:background="@drawable/ic_outline_folder_50"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+                <TextView
+                    android:text="应用历史"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:background="@drawable/ic_outline_folder_50"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+                <TextView
+                    android:text="服务地址"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:background="@drawable/ic_outline_folder_50"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+                <TextView
+                    android:text="数据同步"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

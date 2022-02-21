@@ -27,11 +27,13 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        if (UserCache.getInstance().isLogin()) {
-            return userInfo(inflater, container);
-        } else {
-            return loadLoginFragment(inflater, container);
-        }
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
+        return view;
+//        if (UserCache.getInstance().isLogin()) {
+//            return userInfo(inflater, container);
+//        } else {
+//            return loadLoginFragment(inflater, container);
+//        }
     }
 
     private View userInfo(LayoutInflater inflater, ViewGroup container) {
