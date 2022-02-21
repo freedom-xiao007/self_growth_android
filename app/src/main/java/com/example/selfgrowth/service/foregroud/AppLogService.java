@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.selfgrowth.http.model.AppInfo;
 import com.example.selfgrowth.http.model.AppLog;
 import com.example.selfgrowth.utils.GsonUtils;
 
@@ -33,7 +34,7 @@ public class AppLogService {
     }
 
     public void initSharedPreferences(Context applicationContext) {
-        this.sharedPreferences = applicationContext.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        this.sharedPreferences = applicationContext.getSharedPreferences(AppInfo.APP_INFO, Context.MODE_PRIVATE);
     }
 
     private void save(final AppLog appLog) {

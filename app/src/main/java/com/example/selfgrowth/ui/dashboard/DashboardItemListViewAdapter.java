@@ -62,8 +62,8 @@ public class DashboardItemListViewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private String showTime(int minutes) {
-        int hours = minutes / 60;
+    private String showTime(long minutes) {
+        long hours = minutes / 60;
         if (hours > 0) {
             return String.format("%d 小时 %d 分钟", hours, minutes % 60);
         }

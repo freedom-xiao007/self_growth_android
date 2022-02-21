@@ -33,7 +33,7 @@ public class DashboardStatistics {
     public static class DashboardGroup {
 
         private String name;
-        private int minutes;
+        private long minutes;
         private List<DashboardApp> apps;
     }
 
@@ -45,7 +45,7 @@ public class DashboardStatistics {
     @Builder
     public static class DashboardApp {
         private String name;
-        private int minutes;
+        private long minutes;
         private List<AppUseLog> logs;
     }
 

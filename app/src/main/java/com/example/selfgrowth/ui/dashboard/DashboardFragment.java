@@ -1,5 +1,6 @@
 package com.example.selfgrowth.ui.dashboard;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
@@ -24,6 +26,7 @@ public class DashboardFragment extends Fragment {
     private final AppStatisticsService appStatisticsService = AppStatisticsService.getInstance();
     private DashboardStatistics data;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -31,9 +34,10 @@ public class DashboardFragment extends Fragment {
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initData(View view) {
         this.data = appStatisticsService.statistics(new Date(), requireContext());
-        if (data.getGroups().keySet().size() > 0) {
+        if (data != null && data.getGroups().keySet().size() > 0) {
             final String firstGroup = (String) data.getGroups().keySet().toArray()[0];
             final DashboardItemListViewAdapter adapter = new DashboardItemListViewAdapter(requireContext(), data.getGroups().get(firstGroup).getApps());
             final ListView listView = view.findViewById(R.id.dashboard_group_view_id);
