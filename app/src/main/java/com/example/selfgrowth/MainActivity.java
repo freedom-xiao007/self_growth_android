@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 
+import com.example.selfgrowth.service.foregroud.AppLogService;
 import com.example.selfgrowth.service.foregroud.MonitorActivityService;
 
 import androidx.annotation.RequiresApi;
@@ -63,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         if (!isNotificationEnabled()) {
             goToNotificationSetting();
         }
+
+        // 初始化应用监控相关的服务
+        AppLogService.getInstance().initSharedPreferences(this.getApplicationContext());
     }
 
     /**

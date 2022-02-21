@@ -24,6 +24,7 @@ public class MonitorActivityService extends Service {
 
     private String beforeActivity;
     private final ActivityRequest activityRequest = new ActivityRequest();
+    private final AppLogService appLogService = AppLogService.getInstance();
 
     /*
      * @param intent
@@ -108,27 +109,27 @@ public class MonitorActivityService extends Service {
         while (usageEvents.hasNextEvent()) {
             usageEvents.getNextEvent(event);
             if (event.getEventType() == UsageEvents.Event.MOVE_TO_FOREGROUND) {
-                result = event.getPackageName()+"/"+event.getClassName();
+                result = event.getPackageName();
             }
         }
         if (!android.text.TextUtils.isEmpty(result)) {
-            Log.d("Service", result);
+            Log.d("app package", result);
             beforeActivity = result;
         } else {
-            Log.d("Before Service", beforeActivity == null ? "null" : beforeActivity);
+            Log.d("Before app package", beforeActivity == null ? "null" : beforeActivity);
         }
 
         if (beforeActivity == null) {
             Toast.makeText(MonitorActivityService.this.getApplicationContext(),"活动为空",Toast.LENGTH_SHORT).show();
             return;
         }
-
-        activityRequest.uploadRecord(beforeActivity, success -> {
-
-        }, failed -> {
-            Toast.makeText(MonitorActivityService.this.getApplicationContext(),"上传失败",Toast.LENGTH_SHORT).show();
-            Log.w("Activity", "上传失败:" + failed);
-        });
+        appLogService.add(beforeActivity);
+        activityRequest.uploadRecord(beforeActivity,
+                success -> {},
+                failed -> {
+                    Toast.makeText(MonitorActivityService.this.getApplicationContext(),"上传失败",Toast.LENGTH_SHORT).show();
+                    Log.w("Activity", "上传失败:" + failed);
+                });
     }
 }
 
