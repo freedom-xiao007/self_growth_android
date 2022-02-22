@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.selfgrowth.http.model.AppInfo;
 import com.example.selfgrowth.http.model.AppLog;
+import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.GsonUtils;
 
 import java.text.SimpleDateFormat;
@@ -25,7 +26,6 @@ public class AppLogService {
     private final int cacheSize = 30;
     private List<AppLog> logCache = new ArrayList<>(cacheSize);
     private SharedPreferences sharedPreferences;
-    private final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
     public void add(final String packageName) {
         AppLog appLog = new AppLog(new Date(), packageName);
@@ -41,7 +41,7 @@ public class AppLogService {
         if (sharedPreferences == null) {
             throw new RuntimeException("sharedPreferences isn't init");
         }
-        final String today = formatter.format(new Date());
+        final String today = DateUtils.toCustomDay(new Date());
         Set<String> origin = sharedPreferences.getStringSet(today, new HashSet<>());
         List<String> logs = new ArrayList<>(origin.size() + 1);
         logs.addAll(origin);

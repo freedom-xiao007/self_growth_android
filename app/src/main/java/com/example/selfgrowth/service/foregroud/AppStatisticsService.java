@@ -31,11 +31,10 @@ public class AppStatisticsService {
     }
 
     private final AppLogService appLogService = AppLogService.getInstance();
-    private final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public DashboardStatistics statistics(final Date date, final Context context) {
-        final String day = formatter.format(date);
+        final String day = DateUtils.toCustomDay(date);
         final List<AppLog> appLogs = appLogService.getAppLogs(day);
         if (appLogs.isEmpty()) {
             return DashboardStatistics.builder().build();
