@@ -1,5 +1,9 @@
 package com.example.selfgrowth.enums;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,20 +13,25 @@ import lombok.NoArgsConstructor;
 @Getter
 public enum TaskTypeEnum {
 
-    Default(-1, "无"),
-    Code(0, "代码"),
-    Note(1, "博客笔记"),
-    Book(3, "书籍"),
+    DEFAULT("无"),
+    CODE("代码"),
+    NOTE("博客笔记"),
+    BOOK("书籍"),
+    DAILY("日常"),
     ;
 
-    private int index;
     private String name;
 
-    public static int getIndexByName(final String name) {
-        return TaskTypeEnum.valueOf(name).index;
+    public static TaskTypeEnum fromString(final String name) {
+        for (TaskTypeEnum e: TaskTypeEnum.values()) {
+            if (e.name.equalsIgnoreCase(name)) {
+                return e;
+            }
+        }
+        return DEFAULT;
     }
 
-    public static String getNameByIndex(final int index) {
-        return TaskTypeEnum.values()[index].name;
+    public static List<String> names() {
+        return Arrays.stream(TaskTypeEnum.values()).map(e -> e.name).collect(Collectors.toList());
     }
 }

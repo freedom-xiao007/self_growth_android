@@ -1,5 +1,9 @@
 package com.example.selfgrowth.http.model;
 
+import com.example.selfgrowth.enums.LabelEnum;
+import com.example.selfgrowth.enums.TaskCycleEnum;
+import com.example.selfgrowth.enums.TaskTypeEnum;
+
 import java.util.Date;
 
 import lombok.Builder;
@@ -13,7 +17,7 @@ public class TaskRecord {
     private Date completeDate;
     private String name;
     private String description;
-    private String label;
-    private int cycleType;
-    private int type;
+    private LabelEnum label;
+    private TaskCycleEnum cycleType;
+    private TaskTypeEnum taskType;
 }

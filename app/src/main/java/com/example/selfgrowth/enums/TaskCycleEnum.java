@@ -1,5 +1,9 @@
 package com.example.selfgrowth.enums;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,21 +13,25 @@ import lombok.NoArgsConstructor;
 @Getter
 public enum TaskCycleEnum {
 
-    No(-1, "无"),
-    Daily(0, "每天"),
-    Week(1, "每周"),
-    Month(2, "每月"),
-    Year(3, "没年"),
+    DEFAULT("无"),
+    DAILY("每天"),
+    WEEK("每周"),
+    MONTH("每月"),
+    YEAR("每年"),
     ;
 
-    private int index;
     private String name;
 
-    public static int getIndexByName(final String name) {
-        return TaskCycleEnum.valueOf(name).index;
+    public static TaskCycleEnum fromString(final String name) {
+        for (TaskCycleEnum e: TaskCycleEnum.values()) {
+            if (e.name.equalsIgnoreCase(name)) {
+                return e;
+            }
+        }
+        return DEFAULT;
     }
 
-    public static String getNameByIndex(final int index) {
-        return TaskCycleEnum.values()[index].name;
+    public static List<String> names() {
+        return Arrays.stream(TaskCycleEnum.values()).map(e -> e.name).collect(Collectors.toList());
     }
 }

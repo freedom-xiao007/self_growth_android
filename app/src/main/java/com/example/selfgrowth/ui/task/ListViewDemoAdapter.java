@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.model.TaskConfig;
 import com.example.selfgrowth.http.request.TaskRequest;
+import com.example.selfgrowth.service.foregroud.TaskService;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
     private final List<TaskConfig> dataList;//ListView显示的数据
     private final TaskFragment taskFragment;
     private final String groupName;
+    private final TaskService taskService = TaskService.getInstance();
 
     /**
      * 构造器
@@ -71,21 +73,13 @@ public class ListViewDemoAdapter extends BaseAdapter {
 //        viewHolder.cycle.setText(CycleTypeConvert.convertToKey(dataList.get(position).getCycleType()));
 //        viewHolder.type.setText(TaskTypeConvert.convertToKey(dataList.get(position).getType()));
 //        viewHolder.isComplete.setText(dataList.get(position).isComplete() ? "已完成" : "未完成");
-        View finalConvertView = convertView;
         viewHolder.complete.setOnClickListener(v -> {
-            if (!viewHolder.complete.isChecked()) {
-                return;
-            }
-            taskRequest.complete(viewHolder.id.getText().toString(), success -> {
-                // todo
-                // 每次完成任务后，以这样的方式刷新会不会有问题，总感觉有点怪，不怎么优雅
-                taskFragment.initTaskListOfGroup(groupName);
-                Snackbar.make(finalConvertView, "任务请求完成:" + success, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }, failed -> {
-                Snackbar.make(finalConvertView, "任务完成请求失败:" + failed, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            });
+            taskService.complete(groupName, dataList.get(position).getId());
+            taskFragment.initTaskListOfGroup(groupName);
+        });
+        viewHolder.delete.setOnClickListener(v -> {
+            taskService.delete(groupName, dataList.get(position).getId());
+            taskFragment.initTaskListOfGroup(groupName);
         });
         return convertView;
     }
@@ -101,6 +95,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
 //        private final TextView type;
 //        private final TextView isComplete;
         private final CheckBox complete;
+        private final CheckBox delete;
 
         /**
          * 构造器
@@ -114,6 +109,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
 //            type = view.findViewById(R.id.task_type);
 //            isComplete = view.findViewById(R.id.task_isComplete);
             complete = view.findViewById(R.id.task_complete);
+            delete = view.findViewById(R.id.task_delete);
         }
     }
 }

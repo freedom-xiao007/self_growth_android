@@ -20,15 +20,13 @@ import com.example.selfgrowth.http.model.LoginUser;
 import com.example.selfgrowth.http.model.TaskConfig;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.http.request.UserRequest;
+import com.example.selfgrowth.service.foregroud.TaskService;
 import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import org.angmarch.views.NiceSpinner;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import lombok.SneakyThrows;
 
@@ -36,6 +34,7 @@ public class TaskFragment extends Fragment {
 
     private final UserRequest userRequest = new UserRequest();
     private final TaskRequest taskRequest = new TaskRequest();
+    private final TaskService taskService = TaskService.getInstance();
 
     private ListView list;
     private ListViewDemoAdapter listViewDemoAdapter;
@@ -110,52 +109,22 @@ public class TaskFragment extends Fragment {
      * 初始化数据
      */
     private void initTaskData() {
-        taskRequest.allGroups(success -> {
-            if (success == null) {
-                Snackbar.make(requireView(), "获取列表为空:", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                return;
-            }
-            List<String> dataset = (List<String>) success;
-            spinner.attachDataSource(dataset);
-            spinner.hideArrow();
-
-            if (!dataset.isEmpty()) {
-                ((TextView)requireView().findViewById(R.id.task_group_name)).setText("任务组：" + dataset.get(0));
-                initTaskListOfGroup(dataset.get(0));
-            }
-        }, failed -> {
-            Snackbar.make(requireView(), "获取任务组列表失败:" + failed, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            Log.d("获取任务组任务列表：", "失败");
-        });
+        List<String> groups = taskService.getAllGroup();
+        if (groups == null || groups.isEmpty()) {
+            ((TextView)requireView().findViewById(R.id.task_group_name)).setText("任务组：无任务，请添加");
+            return;
+        }
+        spinner.attachDataSource(groups);
+        spinner.hideArrow();
+        ((TextView)requireView().findViewById(R.id.task_group_name)).setText("任务组：" + groups.get(0));
+        initTaskListOfGroup(groups.get(0));
     }
 
     public void initTaskListOfGroup(String groupName) {
-        taskRequest.list(groupName, success -> {
-            if (success == null) {
-                Snackbar.make(requireView(), "获取列表为空:", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                return;
-            }
-            Log.d("获取任务列表：", "成功");
-            List<Map<String, Object>> taskConfigs = (List<Map<String, Object>>) success;
-            final List<TaskConfig> dataList = new ArrayList<>(taskConfigs.size());
-            taskConfigs.forEach(task -> {
-                final String s = new Gson().toJson(task);
-                dataList.add(new Gson().fromJson(s, TaskConfig.class));
-            });
-            //设置ListView的适配器
-            listViewDemoAdapter = new ListViewDemoAdapter(this.getContext(), dataList, this, groupName);
-            list.setAdapter(listViewDemoAdapter);
-            if (!taskConfigs.isEmpty()) {
-                list.setSelection(0);
-            }
-        }, failed -> {
-            Snackbar.make(requireView(), "获取列表失败:" + failed, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            Log.d("获取任务列表：", "失败");
-        });
+        List<TaskConfig> tasks = taskService.query(groupName, null);
+        listViewDemoAdapter = new ListViewDemoAdapter(this.getContext(), tasks, this, groupName);
+        list.setAdapter(listViewDemoAdapter);
+        list.setSelection(0);
     }
 
     @Override

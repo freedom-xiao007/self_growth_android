@@ -1,7 +1,6 @@
 package com.example.selfgrowth.ui.task;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,24 +12,25 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
+import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.TaskCycleEnum;
 import com.example.selfgrowth.enums.TaskLearnTypeEnum;
 import com.example.selfgrowth.enums.TaskTypeEnum;
 import com.example.selfgrowth.http.model.TaskConfig;
-import com.example.selfgrowth.http.request.TaskRequest;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.selfgrowth.service.foregroud.TaskService;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddTaskFragment extends Fragment {
 
-    private final TaskRequest taskRequest = new TaskRequest();
-    private String label = "学习";
-    private int cycle = 0;
-    private int learnType = -1;
-    private int taskType = 0;
+    private final TaskService taskService = TaskService.getInstance();
+    private LabelEnum label = LabelEnum.DEFAULT;
+    private TaskCycleEnum cycle = TaskCycleEnum.DEFAULT;
+    private TaskLearnTypeEnum learnType = TaskLearnTypeEnum.DEFAULT;
+    private TaskTypeEnum taskType = TaskTypeEnum.DEFAULT;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -42,47 +42,40 @@ public class AddTaskFragment extends Fragment {
     }
 
     private void getAllGroups(View view) {
-        taskRequest.allGroups(success -> {
-            if (success == null) {
-                Snackbar.make(requireView(), "获取列表为空:", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                return;
-            }
-            List<String> dataset = (List<String>) success;
-            String[] groups = new String[dataset.size()];
-            for (int i=0; i<dataset.size(); i++) {
-                groups[i] = dataset.get(i);
-            }
-            AutoCompleteTextView taskGroupEdit = view.findViewById(R.id.add_task_group);
-            taskGroupEdit.setAdapter(new ArrayAdapter<>(requireContext(), R.layout.root_text_view, groups));
-        }, failed -> {
-            Snackbar.make(requireView(), "获取任务组列表失败:" + failed, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            Log.d("获取任务组任务列表：", "失败");
-        });
+        List<String> groups = taskService.getAllGroup();
+        AutoCompleteTextView taskGroupEdit = view.findViewById(R.id.add_task_group);
+        taskGroupEdit.setAdapter(new ArrayAdapter<>(requireContext(), R.layout.root_text_view, new ArrayList<>(groups)));
     }
 
     private void init(View view) {
-        ((NiceSpinner)view.findViewById(R.id.add_task_label)).setOnSpinnerItemSelectedListener((parent, view1, position, id) -> {
-            label = (String) parent.getItemAtPosition(position);
-            ((EditText)view.findViewById(R.id.add_task_label_show)).setText("任务标签    " + label);
+        NiceSpinner labels = view.findViewById(R.id.add_task_label);
+        labels.attachDataSource(LabelEnum.names());
+        labels.setOnSpinnerItemSelectedListener((parent, view1, position, id) -> {
+            label = LabelEnum.fromString((String) parent.getItemAtPosition(position));
+            ((EditText)view.findViewById(R.id.add_task_label_show)).setText("任务标签    " + label.getName());
         });
 
-        ((NiceSpinner)view.findViewById(R.id.add_task_cycleType)).setOnSpinnerItemSelectedListener(((parent, view1, position, id) -> {
+        NiceSpinner cycleTypes = view.findViewById(R.id.add_task_cycleType);
+        cycleTypes.attachDataSource(TaskCycleEnum.names());
+        cycleTypes.setOnSpinnerItemSelectedListener(((parent, view1, position, id) -> {
             String item = (String) parent.getItemAtPosition(position);
-            cycle = TaskCycleEnum.getIndexByName(item);
+            cycle = TaskCycleEnum.fromString(item);
             ((EditText)view.findViewById(R.id.add_task_cycleType_show)).setText("任务周期    " + item);
         }));
 
-        ((NiceSpinner)view.findViewById(R.id.add_task_learnType)).setOnSpinnerItemSelectedListener(((parent, view1, position, id) -> {
+        NiceSpinner learnTypes = view.findViewById(R.id.add_task_learnType);
+        learnTypes.attachDataSource(TaskLearnTypeEnum.names());
+        learnTypes.setOnSpinnerItemSelectedListener(((parent, view1, position, id) -> {
             String item = (String) parent.getItemAtPosition(position);
-            learnType = TaskLearnTypeEnum.getIndexByName(item);
+            learnType = TaskLearnTypeEnum.fromString(item);
             ((EditText)view.findViewById(R.id.add_task_learnType_show)).setText("任务类型    " + item);
         }));
 
-        ((NiceSpinner)view.findViewById(R.id.add_task_outputType)).setOnSpinnerItemSelectedListener(((parent, view1, position, id) -> {
+        NiceSpinner taskTypes = view.findViewById(R.id.add_task_outputType);
+        taskTypes.attachDataSource(TaskTypeEnum.names());
+        taskTypes.setOnSpinnerItemSelectedListener(((parent, view1, position, id) -> {
             String item = (String) parent.getItemAtPosition(position);
-            taskType = TaskTypeEnum.getIndexByName(item);
+            taskType = TaskTypeEnum.fromString(item);
             ((EditText)view.findViewById(R.id.add_task_outputType_show)).setText("任务周期    " + item);
         }));
 
@@ -93,18 +86,14 @@ public class AddTaskFragment extends Fragment {
             final TaskConfig taskConfig = TaskConfig.builder()
                     .name(taskName)
                     .description(desc)
+                    .label(label)
                     .cycleType(cycle)
                     .learnType(learnType)
                     .group(taskGroup)
-                    .outputType(taskType)
+                    .taskTypeEnum(taskType)
+                    .isComplete(false)
                     .build();
-            taskRequest.add(taskConfig,
-                    success -> Snackbar.make(view, "任务添加成功", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show(),
-
-                    failed -> Snackbar.make(view, "添加失败：" + failed, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show()
-            );
+            taskService.add(taskConfig, view);
         });
     }
 }

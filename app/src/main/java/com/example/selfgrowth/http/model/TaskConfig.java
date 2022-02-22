@@ -1,5 +1,10 @@
 package com.example.selfgrowth.http.model;
 
+import com.example.selfgrowth.enums.LabelEnum;
+import com.example.selfgrowth.enums.TaskCycleEnum;
+import com.example.selfgrowth.enums.TaskLearnTypeEnum;
+import com.example.selfgrowth.enums.TaskTypeEnum;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,11 +15,10 @@ public class TaskConfig {
     private String id;
     private String name;
     private String description;
-    private String label;
-    private int cycleType;
-    private int type;
-    private boolean isComplete;
+    private LabelEnum label;
+    private TaskCycleEnum cycleType;
+    private TaskLearnTypeEnum learnType;
     private String group;
-    private int learnType;
-    private int outputType;
+    private TaskTypeEnum taskTypeEnum;
+    private Boolean isComplete;
 }
