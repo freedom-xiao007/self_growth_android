@@ -146,6 +146,134 @@
             android:layout_width="match_parent"
             android:layout_height="25dp">
             <TextView
+                android:text="数据报表"
+                android:textColor="@color/white"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:background="@drawable/ic_dashboard_black_24dp"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+                <TextView
+                    android:text="数据日报"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:background="@drawable/ic_dashboard_black_24dp"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+                <TextView
+                    android:text="数据周报"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/month"
+                    android:background="@drawable/ic_dashboard_black_24dp"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+                <TextView
+                    android:text="数据月报"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:background="@drawable/ic_dashboard_black_24dp"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+                <TextView
+                    android:text="数据年报"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|center"
+                    android:textColor="@color/white"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/shape_gray"
+        android:alpha="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0.65"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="25dp">
+            <TextView
                 android:text="更多功能"
                 android:textColor="@color/white"
                 android:paddingStart="5dp"

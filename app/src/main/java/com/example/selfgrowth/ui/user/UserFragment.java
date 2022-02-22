@@ -46,11 +46,6 @@ public class UserFragment extends Fragment {
         initOverview(view);
         initServerUrlSetting(view);
         return view;
-//        if (UserCache.getInstance().isLogin()) {
-//            return userInfo(inflater, container);
-//        } else {
-//            return loadLoginFragment(inflater, container);
-//        }
     }
 
     private void initUserInfo(View view) {
