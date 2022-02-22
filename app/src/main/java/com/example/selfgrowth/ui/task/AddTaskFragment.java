@@ -1,6 +1,8 @@
 package com.example.selfgrowth.ui.task;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
@@ -95,7 +98,13 @@ public class AddTaskFragment extends Fragment {
                     .build();
             taskService.add(taskConfig, view);
 
-            requireActivity().getSupportFragmentManager().popBackStack();
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+            builder.setPositiveButton(R.string.yes, (dialog, which) -> Log.d("add task", "continue"));
+            builder.setNegativeButton(R.string.no, (dialog, which) -> requireActivity().getSupportFragmentManager().popBackStack());
+            AlertDialog dialog = builder.create();
+            dialog.setTitle("是否继续添加任务");
+            dialog.setCancelable(false);
+            dialog.show();
         });
     }
 }
