@@ -52,7 +52,7 @@ public class TaskFragment extends Fragment {
                 .addToBackStack(null)
                 .commit());
 
-        requireActivity().getSupportFragmentManager().addOnBackStackChangedListener(this::initTaskData);
+        requireActivity().getSupportFragmentManager().addOnBackStackChangedListener(() -> initTaskData(view));
         return view;
     }
 
@@ -68,7 +68,7 @@ public class TaskFragment extends Fragment {
             ((TextView)requireView().findViewById(R.id.task_group_name)).setText("任务组：" + item);
             initTaskListOfGroup(item);
         });
-        initTaskData();
+        initTaskData(requireView());
     }
 
     /**
@@ -111,15 +111,15 @@ public class TaskFragment extends Fragment {
     /**
      * 初始化数据
      */
-    private void initTaskData() {
+    private void initTaskData(final View view) {
         List<String> groups = taskService.getAllGroup();
         if (groups == null || groups.isEmpty()) {
-            ((TextView)requireView().findViewById(R.id.task_group_name)).setText("任务组：无任务，请添加");
+            ((TextView) view.findViewById(R.id.task_group_name)).setText("任务组：无任务，请添加");
             return;
         }
         spinner.attachDataSource(groups);
         spinner.hideArrow();
-        ((TextView)requireView().findViewById(R.id.task_group_name)).setText("任务组：" + groups.get(0));
+        ((TextView) view.findViewById(R.id.task_group_name)).setText("任务组：" + groups.get(0));
         initTaskListOfGroup(groups.get(0));
     }
 
