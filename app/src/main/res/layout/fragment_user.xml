@@ -5,6 +5,7 @@
     android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/user_info"
     tools:context=".ui.user.UserFragment">
 
     <TextView
@@ -295,6 +296,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/app_setting"
                     android:background="@drawable/ic_outline_folder_50"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"

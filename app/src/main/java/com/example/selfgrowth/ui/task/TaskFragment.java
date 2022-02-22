@@ -13,13 +13,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
 import com.example.selfgrowth.http.model.LoginUser;
 import com.example.selfgrowth.http.model.TaskConfig;
-import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.http.request.UserRequest;
 import com.example.selfgrowth.service.foregroud.TaskService;
 import com.example.selfgrowth.utils.AppUtils;
@@ -34,11 +32,9 @@ import lombok.SneakyThrows;
 public class TaskFragment extends Fragment {
 
     private final UserRequest userRequest = new UserRequest();
-    private final TaskRequest taskRequest = new TaskRequest();
     private final TaskService taskService = TaskService.getInstance();
 
     private ListView list;
-    private ListViewDemoAdapter listViewDemoAdapter;
     private NiceSpinner spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -125,7 +121,7 @@ public class TaskFragment extends Fragment {
 
     public void initTaskListOfGroup(String groupName) {
         List<TaskConfig> tasks = taskService.query(groupName, null);
-        listViewDemoAdapter = new ListViewDemoAdapter(this.getContext(), tasks, this, groupName);
+        ListViewDemoAdapter listViewDemoAdapter = new ListViewDemoAdapter(this.getContext(), tasks, this, groupName);
         list.setAdapter(listViewDemoAdapter);
         list.setSelection(0);
     }

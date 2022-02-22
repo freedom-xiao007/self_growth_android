@@ -26,7 +26,9 @@ import com.example.selfgrowth.http.model.DashboardStatistics;
 import com.example.selfgrowth.http.model.LoginUser;
 import com.example.selfgrowth.http.request.UserRequest;
 import com.example.selfgrowth.service.foregroud.AppStatisticsService;
+import com.example.selfgrowth.ui.activity.AppFragment;
 import com.example.selfgrowth.ui.activity.AppUseLogListViewAdapter;
+import com.example.selfgrowth.ui.task.AddTaskFragment;
 import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -38,14 +40,23 @@ public class UserFragment extends Fragment {
     private final UserRequest userRequest = new UserRequest();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         initUserInfo(view);
         initOverview(view);
         initServerUrlSetting(view);
+        initAppSetting(view);
         return view;
+    }
+
+    private void initAppSetting(final View view) {
+        view.findViewById(R.id.app_setting).setOnClickListener(v -> requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.user_info, new AppFragment())
+                .addToBackStack(null)
+                .commit());
     }
 
     private void initUserInfo(View view) {
