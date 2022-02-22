@@ -94,6 +94,8 @@ public class AddTaskFragment extends Fragment {
                     .isComplete(false)
                     .build();
             taskService.add(taskConfig, view);
+
+            requireActivity().getSupportFragmentManager().popBackStack();
         });
     }
 }

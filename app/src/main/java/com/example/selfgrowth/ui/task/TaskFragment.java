@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
@@ -50,6 +51,8 @@ public class TaskFragment extends Fragment {
                 .replace(R.id.task_list_manage, new AddTaskFragment())
                 .addToBackStack(null)
                 .commit());
+
+        requireActivity().getSupportFragmentManager().addOnBackStackChangedListener(this::initTaskData);
         return view;
     }
 
