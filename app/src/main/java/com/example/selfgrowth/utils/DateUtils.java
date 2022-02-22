@@ -6,10 +6,11 @@ import java.util.Date;
 
 public class DateUtils {
 
-    private static final SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+    private static final SimpleDateFormat dayFormat = new SimpleDateFormat("MM/dd/yyyy");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:MM:SS");
 
     public static String dateString(final Date date) {
-        return format.format(date);
+        return dateFormat.format(date);
     }
 
     /**
@@ -30,6 +31,6 @@ public class DateUtils {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.HOUR_OF_DAY, 2);
-        return format.format(calendar.getTime());
+        return dayFormat.format(calendar.getTime());
     }
 }

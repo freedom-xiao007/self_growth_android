@@ -64,7 +64,7 @@ public class AppUseLogListViewAdapter extends BaseAdapter {
     private String showTime(DashboardStatistics.AppUseLog appUseLog) {
         final String start = DateUtils.dateString(appUseLog.getStartTime());
         final String end = DateUtils.dateString(appUseLog.getEndTime());
-        return String.format("%s -- %s", start, end);
+        return String.format("%s 至 %s", start, end);
     }
 
     /**
