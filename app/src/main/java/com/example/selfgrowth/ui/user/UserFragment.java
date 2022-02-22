@@ -2,6 +2,7 @@ package com.example.selfgrowth.ui.user;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,29 +12,48 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
+import com.example.selfgrowth.enums.LabelEnum;
+import com.example.selfgrowth.http.model.DashboardStatistics;
 import com.example.selfgrowth.http.model.LoginUser;
 import com.example.selfgrowth.http.request.UserRequest;
+import com.example.selfgrowth.service.foregroud.AppStatisticsService;
 import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Date;
 
 public class UserFragment extends Fragment {
 
     private final UserRequest userRequest = new UserRequest();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
+        initOverview(view);
         return view;
 //        if (UserCache.getInstance().isLogin()) {
 //            return userInfo(inflater, container);
 //        } else {
 //            return loadLoginFragment(inflater, container);
 //        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initOverview(View view) {
+        DashboardStatistics statistics = AppStatisticsService.getInstance().statistics(new Date(), view.getContext());
+        long learnMinutes = statistics.getGroups().getOrDefault(LabelEnum.LEARN.getName(), DashboardStatistics.DashboardGroup.builder().build()).getMinutes();
+        long runningMinutes = statistics.getGroups().getOrDefault(LabelEnum.RUNNING.getName(), DashboardStatistics.DashboardGroup.builder().build()).getMinutes();
+        long sleepMinutes = statistics.getGroups().getOrDefault(LabelEnum.SLEEP.getName(), DashboardStatistics.DashboardGroup.builder().build()).getMinutes();
+        ((TextView)view.findViewById(R.id.learn_minutes)).setText(String.valueOf(learnMinutes));
+        ((TextView)view.findViewById(R.id.running_minutes)).setText(String.valueOf(runningMinutes));
+        ((TextView)view.findViewById(R.id.sleep_minutes)).setText(String.valueOf(sleepMinutes));
     }
 
     private View userInfo(LayoutInflater inflater, ViewGroup container) {

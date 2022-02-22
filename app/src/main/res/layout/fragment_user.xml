@@ -41,6 +41,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/learn_minutes"
                 android:text="100"
                 android:textSize="15sp"
                 android:gravity="center_vertical|center"
@@ -63,6 +64,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/running_minutes"
                 android:text="100"
                 android:textSize="15sp"
                 android:gravity="center_vertical|center"
@@ -85,6 +87,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/sleep_minutes"
                 android:text="100"
                 android:textSize="15sp"
                 android:gravity="center_vertical|center"
@@ -132,7 +135,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintVertical_bias="0.35"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
