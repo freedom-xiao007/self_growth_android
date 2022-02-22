@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 
+import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.service.foregroud.AppLogService;
 import com.example.selfgrowth.service.foregroud.MonitorActivityService;
 
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 初始化应用监控相关的服务
+        AppLogService.getInstance().initSharedPreferences(this.getApplicationContext());
+        // 初始化网络请求配置
+        HttpConfig.init(this.getApplicationContext());
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -64,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
         if (!isNotificationEnabled()) {
             goToNotificationSetting();
         }
-
-        // 初始化应用监控相关的服务
-        AppLogService.getInstance().initSharedPreferences(this.getApplicationContext());
     }
 
     /**

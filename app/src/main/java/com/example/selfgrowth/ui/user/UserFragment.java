@@ -42,6 +42,7 @@ public class UserFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
+        initUserInfo(view);
         initOverview(view);
         initServerUrlSetting(view);
         return view;
@@ -50,6 +51,15 @@ public class UserFragment extends Fragment {
 //        } else {
 //            return loadLoginFragment(inflater, container);
 //        }
+    }
+
+    private void initUserInfo(View view) {
+        TextView userEmail = view.findViewById(R.id.login_user_email);
+        if (UserCache.getInstance().isLogin()) {
+            userEmail.setText(UserCache.getInstance().getUserName());
+        } else {
+            userEmail.setText("未登录");
+        }
     }
 
     private void initServerUrlSetting(View view) {
