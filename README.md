@@ -73,6 +73,8 @@
 ### 路由与跳转
 - [How to move from one fragment to another fragment on click of an ImageView in Android?](https://stackoverflow.com/questions/23212162/how-to-move-from-one-fragment-to-another-fragment-on-click-of-an-imageview-in-an)
 - [Fragment transactions](https://developer.android.com/guide/fragments/transactions)
+- [Is there a way to check for popBackStack call in a fragment](https://stackoverflow.com/questions/52645932/is-there-a-way-to-check-for-popbackstack-call-in-a-fragment)
+- [Programmatically go back to the previous fragment in the backstack](https://stackoverflow.com/questions/10863572/programmatically-go-back-to-the-previous-fragment-in-the-backstack)
 
 ### 数据存储与操作
 - [保存键值对数据](https://developer.android.com/training/data-storage/shared-preferences?hl=zh-cn)
