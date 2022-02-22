@@ -42,7 +42,7 @@
 
             <TextView
                 android:id="@+id/learn_minutes"
-                android:text="100"
+                android:text="0"
                 android:textSize="15sp"
                 android:gravity="center_vertical|center"
                 android:textColor="@color/white"
@@ -65,7 +65,7 @@
 
             <TextView
                 android:id="@+id/running_minutes"
-                android:text="100"
+                android:text="0"
                 android:textSize="15sp"
                 android:gravity="center_vertical|center"
                 android:textColor="@color/white"
@@ -88,7 +88,7 @@
 
             <TextView
                 android:id="@+id/sleep_minutes"
-                android:text="100"
+                android:text="0"
                 android:textSize="15sp"
                 android:gravity="center_vertical|center"
                 android:textColor="@color/white"
@@ -110,7 +110,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:text="100"
+                android:text="0"
                 android:textSize="15sp"
                 android:gravity="center_vertical|center"
                 android:textColor="@color/white"
@@ -213,6 +213,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/server_url_setting"
                     android:background="@drawable/ic_outline_folder_50"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"

@@ -38,7 +38,7 @@ public class AppStatisticsService {
         final String day = formatter.format(date);
         final List<AppLog> appLogs = appLogService.getAppLogs(day);
         if (appLogs.isEmpty()) {
-            return null;
+            return DashboardStatistics.builder().build();
         }
         appLogs.sort(new AppLog());
 

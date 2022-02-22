@@ -2,5 +2,13 @@ package com.example.selfgrowth.http;
 
 public class HttpConfig {
 
-    public static final String ADDRESS = "http://192.168.0.101:8080/";
+    private static String address = "http://127.0.0.1:8080/";
+
+    public static void setServerUrl(String url) {
+        address = url;
+    }
+
+    public static String getServerUrl() {
+        return address;
+    }
 }
