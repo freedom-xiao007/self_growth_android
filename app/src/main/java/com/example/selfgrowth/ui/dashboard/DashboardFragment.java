@@ -37,13 +37,15 @@ public class DashboardFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initData(View view) {
         this.data = appStatisticsService.statistics(new Date(), requireContext());
-        if (data != null && data.getGroups().keySet().size() > 0) {
-            final String firstGroup = (String) data.getGroups().keySet().toArray()[0];
-            final DashboardItemListViewAdapter adapter = new DashboardItemListViewAdapter(requireContext(), data.getGroups().get(firstGroup).getApps());
-            final ListView listView = view.findViewById(R.id.dashboard_group_view_id);
-            listView.setAdapter(adapter);
-            initComponent(view);
+        if (data == null || data.getGroups() == null || data.getGroups().keySet().size() <= 0) {
+            ((TextView) view.findViewById(R.id.note)).setText("今日暂无统计数据");
+            return;
         }
+        final String firstGroup = (String) data.getGroups().keySet().toArray()[0];
+        final DashboardItemListViewAdapter adapter = new DashboardItemListViewAdapter(requireContext(), data.getGroups().get(firstGroup).getApps());
+        final ListView listView = view.findViewById(R.id.dashboard_group_view_id);
+        listView.setAdapter(adapter);
+        initComponent(view);
     }
 
     private void initComponent(View view) {
