@@ -36,7 +36,7 @@ public class TaskLogService {
         logs.add(GsonUtils.getGson().toJson(config));
 
         SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putStringSet(config.getGroup(), new HashSet<>(logs));
+        edit.putStringSet(day, new HashSet<>(logs));
         edit.apply();
         Log.d("add task log: ", config.toString());
     }
@@ -56,6 +56,9 @@ public class TaskLogService {
 
     public Set<String> list(final Date date) {
         final String day = DateUtils.toCustomDay(date);
-        return sharedPreferences.getStringSet(day, new HashSet<>());
+        if (sharedPreferences.contains(day)) {
+            return sharedPreferences.getStringSet(day, new HashSet<>(0));
+        }
+        return new HashSet<>(0);
     }
 }

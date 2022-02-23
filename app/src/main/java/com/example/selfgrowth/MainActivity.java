@@ -22,6 +22,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.selfgrowth.databinding.ActivityMainBinding;
+import com.example.selfgrowth.service.foregroud.TaskLogService;
 import com.example.selfgrowth.service.foregroud.TaskService;
 
 import java.lang.reflect.Field;
@@ -39,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
         AppLogService.getInstance().initSharedPreferences(this.getApplicationContext());
         // 初始化网络请求配置
         HttpConfig.init(this.getApplicationContext());
-        // 初始化任务相关服务
+        // 初始化任务配置服务
         TaskService.getInstance().init(this.getApplicationContext());
+        // 初始任务日志服务
+        TaskLogService.getInstance().init(this.getApplicationContext());
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

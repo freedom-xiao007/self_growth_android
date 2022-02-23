@@ -11,11 +11,9 @@ import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.utils.GsonUtils;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -26,6 +24,7 @@ public class TaskService {
     private SharedPreferences taskConfigDb;
     private SharedPreferences isSyncToWebServerDb;
     private final String syncServerKey = "setting";
+    private final TaskLogService taskLogService = TaskLogService.getInstance();
     /**
      * 是否同步到远程服务器
      */
@@ -109,6 +108,8 @@ public class TaskService {
         if (taskConfig == null) {
             return;
         }
+        taskLogService.add(taskConfig);
+
         if (taskConfig.getCycleType().equals(TaskCycleEnum.DEFAULT)) {
             delete(groupName, id);
             return;

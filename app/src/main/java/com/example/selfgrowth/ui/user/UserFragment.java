@@ -27,6 +27,7 @@ import com.example.selfgrowth.http.model.DashboardStatistics;
 import com.example.selfgrowth.http.model.LoginUser;
 import com.example.selfgrowth.http.request.UserRequest;
 import com.example.selfgrowth.service.foregroud.AppStatisticsService;
+import com.example.selfgrowth.service.foregroud.TaskLogService;
 import com.example.selfgrowth.ui.activity.AppFragment;
 import com.example.selfgrowth.ui.activity.AppHistoryFragment;
 import com.example.selfgrowth.ui.activity.AppUseLogListViewAdapter;
@@ -40,6 +41,7 @@ import java.util.Map;
 public class UserFragment extends Fragment {
 
     private final UserRequest userRequest = new UserRequest();
+    private final TaskLogService taskLogService = TaskLogService.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -103,9 +105,11 @@ public class UserFragment extends Fragment {
         long learnMinutes = groups.getOrDefault(LabelEnum.LEARN.getName(), DashboardStatistics.DashboardGroup.builder().build()).getMinutes();
         long runningMinutes = groups.getOrDefault(LabelEnum.RUNNING.getName(), DashboardStatistics.DashboardGroup.builder().build()).getMinutes();
         long sleepMinutes = groups.getOrDefault(LabelEnum.SLEEP.getName(), DashboardStatistics.DashboardGroup.builder().build()).getMinutes();
+        int taskComplete = taskLogService.list(new Date()).size();
         ((TextView)view.findViewById(R.id.learn_minutes)).setText(String.valueOf(learnMinutes));
         ((TextView)view.findViewById(R.id.running_minutes)).setText(String.valueOf(runningMinutes));
         ((TextView)view.findViewById(R.id.sleep_minutes)).setText(String.valueOf(sleepMinutes));
+        ((TextView)view.findViewById(R.id.task_complete)).setText(String.valueOf(taskComplete));
     }
 
     private View userInfo(LayoutInflater inflater, ViewGroup container) {

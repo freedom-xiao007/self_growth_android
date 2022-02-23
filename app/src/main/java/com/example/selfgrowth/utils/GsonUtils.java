@@ -362,7 +362,7 @@ public class GsonUtils {
         @SneakyThrows
         @Override
         public void write(final JsonWriter out, final String value) {
-            if (value.isEmpty()) {
+            if (value == null || value.isEmpty()) {
                 out.nullValue();
                 return;
             }
