@@ -2,6 +2,7 @@ package com.example.selfgrowth.http.request;
 
 import android.util.Log;
 
+import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.http.RetrofitClient;
 import com.example.selfgrowth.http.model.ApiResponse;
 
@@ -25,6 +26,11 @@ public abstract class Request {
      * @param call call
      */
     void sendRequest(Call<ApiResponse> call, Consumer<? super Object> success, Consumer<? super Object> failed) {
+        if (!HttpConfig.networkIsOpen()) {
+            Log.d("request", "network config is close");
+            return;
+        }
+
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

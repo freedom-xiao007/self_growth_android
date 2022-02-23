@@ -66,6 +66,9 @@ public class AppLogService {
         final String day = DateUtils.toCustomDay(date);
         List<AppLog> logs = sharedPreferences.getStringSet(day, new HashSet<>()).stream()
                 .map(log -> GsonUtils.getGson().fromJson(log, AppLog.class)).collect(Collectors.toList());
+        if (logs.size() <= limit) {
+            return logs;
+        }
         return logs.subList(0, limit);
     }
 }
