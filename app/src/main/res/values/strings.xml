@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">自我生长</string>
     <string name="nav_task">任务</string>
-    <string name="nav_activity">活动</string>
+    <string name="nav_calender">日历</string>
     <string name="nav_self">我的</string>
     <string name="login_app_name">自 我 生 长</string>
     <string name="login_button">登录</string>

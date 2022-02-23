@@ -12,9 +12,9 @@
         android:title="@string/nav_dashboard" />
 
     <item
-        android:id="@+id/navigation_activity"
-        android:icon="@drawable/application"
-        android:title="@string/nav_activity" />
+        android:id="@+id/navigation_calender"
+        android:icon="@drawable/ic_baseline_calendar_today_50"
+        android:title="@string/nav_calender" />
 
     <item
         android:id="@+id/navigation_user"
