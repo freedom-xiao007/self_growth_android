@@ -22,6 +22,6 @@ public class AppLog implements Comparator<AppLog> {
 
     @Override
     public int compare(AppLog o1, AppLog o2) {
-        return o2.getDate().after(o1.getDate()) ? -1 : 1;
+        return o2.getDate().after(o1.getDate()) ? 1 : -1;
     }
 }

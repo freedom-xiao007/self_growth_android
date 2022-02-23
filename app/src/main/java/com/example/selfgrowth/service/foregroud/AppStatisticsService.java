@@ -40,6 +40,7 @@ public class AppStatisticsService {
             return DashboardStatistics.builder().build();
         }
         appLogs.sort(new AppLog());
+        Collections.reverse(appLogs);
 
         final Map<String, AppInfo> packageName2AppInfo = getPackageName2AppInfoMap(context);
         final Map<String, AtomicLong> labelTime = new HashMap<>(4);
