@@ -169,6 +169,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/daily_dashboard"
                     android:background="@drawable/ic_dashboard_black_24dp"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
@@ -192,6 +193,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/week_dashboard"
                     android:background="@drawable/ic_dashboard_black_24dp"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
@@ -215,7 +217,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/month"
+                    android:id="@+id/month_dashboard"
                     android:background="@drawable/ic_dashboard_black_24dp"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
@@ -239,6 +241,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/year_dashboard"
                     android:background="@drawable/ic_dashboard_black_24dp"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"

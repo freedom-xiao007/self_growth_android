@@ -31,6 +31,7 @@ import com.example.selfgrowth.service.foregroud.TaskLogService;
 import com.example.selfgrowth.ui.activity.AppFragment;
 import com.example.selfgrowth.ui.activity.AppHistoryFragment;
 import com.example.selfgrowth.ui.activity.AppUseLogListViewAdapter;
+import com.example.selfgrowth.ui.dashboard.DailyDashboardFragment;
 import com.example.selfgrowth.ui.task.AddTaskFragment;
 import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
@@ -52,6 +53,7 @@ public class UserFragment extends Fragment {
         initServerUrlSetting(view);
         setRoute(view, R.id.app_setting, new AppFragment());
         setRoute(view, R.id.app_history, new AppHistoryFragment());
+        setRoute(view, R.id.daily_dashboard, new DailyDashboardFragment());
         return view;
     }
 
