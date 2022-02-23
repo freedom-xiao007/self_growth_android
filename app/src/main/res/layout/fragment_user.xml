@@ -320,6 +320,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/app_history"
                     android:background="@drawable/ic_outline_folder_50"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"

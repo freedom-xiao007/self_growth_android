@@ -90,7 +90,7 @@ public class AppStatisticsService {
                 .build();
     }
 
-    private Map<String, AppInfo> getPackageName2AppInfoMap(final Context context) {
+    public Map<String, AppInfo> getPackageName2AppInfoMap(final Context context) {
         final List<AppInfo> apps = AppUtils.getApps(context);
         final Map<String, AppInfo> appInfoMap = new HashMap<>(apps.size());
         for (AppInfo app: apps) {

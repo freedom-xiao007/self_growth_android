@@ -22,11 +22,13 @@ import com.example.selfgrowth.cache.UserCache;
 import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.http.RetrofitClient;
+import com.example.selfgrowth.http.model.AppInfo;
 import com.example.selfgrowth.http.model.DashboardStatistics;
 import com.example.selfgrowth.http.model.LoginUser;
 import com.example.selfgrowth.http.request.UserRequest;
 import com.example.selfgrowth.service.foregroud.AppStatisticsService;
 import com.example.selfgrowth.ui.activity.AppFragment;
+import com.example.selfgrowth.ui.activity.AppHistoryFragment;
 import com.example.selfgrowth.ui.activity.AppUseLogListViewAdapter;
 import com.example.selfgrowth.ui.task.AddTaskFragment;
 import com.example.selfgrowth.utils.AppUtils;
@@ -46,15 +48,16 @@ public class UserFragment extends Fragment {
         initUserInfo(view);
         initOverview(view);
         initServerUrlSetting(view);
-        initAppSetting(view);
+        setRoute(view, R.id.app_setting, new AppFragment());
+        setRoute(view, R.id.app_history, new AppHistoryFragment());
         return view;
     }
 
-    private void initAppSetting(final View view) {
-        view.findViewById(R.id.app_setting).setOnClickListener(v -> requireActivity()
+    private void setRoute(View view, int buttonId, Fragment fragment) {
+        view.findViewById(buttonId).setOnClickListener(v -> requireActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.user_info, new AppFragment())
+                .replace(R.id.user_info, fragment)
                 .addToBackStack(null)
                 .commit());
     }

@@ -11,10 +11,13 @@ import com.example.selfgrowth.utils.GsonUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class AppLogService {
 
@@ -57,5 +60,11 @@ public class AppLogService {
         List<AppLog> logs = new ArrayList<>(origin.size());
         origin.forEach(log -> logs.add(GsonUtils.getGson().fromJson(log, AppLog.class)));
         return logs;
+    }
+
+    public List<AppLog> getAppLogs(final Date date, final int limit) {
+        final String day = DateUtils.toCustomDay(date);
+        return sharedPreferences.getStringSet(day, new HashSet<>()).stream().sorted().limit(limit)
+                .map(log -> GsonUtils.getGson().fromJson(log, AppLog.class)).collect(Collectors.toList());
     }
 }

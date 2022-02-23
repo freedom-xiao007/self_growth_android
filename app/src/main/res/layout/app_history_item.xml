@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/app_info_item_background"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/shape"
+        android:alpha="0.1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text=""/>
+    <TextView
+        android:id="@+id/app_info_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center_vertical|left"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintTop_toTopOf="@+id/app_info_item_background"
+        app:layout_constraintBottom_toBottomOf="@+id/app_info_item_background"
+        app:layout_constraintLeft_toLeftOf="@+id/app_info_item_background"
+        app:layout_constraintRight_toRightOf="@+id/app_info_item_background"
+        android:text="应用名称"
+        app:drawableLeftCompat="@drawable/ic_dashboard_black_24dp" />
+
+    <TextView
+        android:id="@+id/app_info_package"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center_vertical|right"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingEnd="10dp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="@+id/app_info_item_background"
+        app:layout_constraintBottom_toBottomOf="@+id/app_info_item_background"
+        app:layout_constraintLeft_toLeftOf="@+id/app_info_item_background"
+        app:layout_constraintRight_toRightOf="@+id/app_info_item_background"
+        android:text="com.android.backupconfirm"/>
+
+    <TextView
+        android:id="@+id/label_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center_vertical|left"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingEnd="50dp"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintTop_toTopOf="@+id/app_info_item_background"
+        app:layout_constraintBottom_toBottomOf="@+id/app_info_item_background"
+        app:layout_constraintLeft_toLeftOf="@+id/app_info_item_background"
+        app:layout_constraintRight_toRightOf="@+id/app_info_item_background"
+        android:text="标签：学习"
+        app:drawableLeftCompat="@drawable/ic_baseline_label_24" />
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/label_spinner"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape"
+        android:alpha="0"
+        android:layout_marginTop="5dp"
+        app:textTint="@color/blue_1"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintTop_toTopOf="@+id/app_info_item_background"
+        app:layout_constraintBottom_toBottomOf="@+id/app_info_item_background"
+        app:layout_constraintLeft_toLeftOf="@+id/app_info_item_background"
+        app:layout_constraintRight_toRightOf="@+id/app_info_item_background"/>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center_vertical|right"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingRight="5dp"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintTop_toTopOf="@+id/app_info_item_background"
+        app:layout_constraintBottom_toBottomOf="@+id/app_info_item_background"
+        app:layout_constraintLeft_toLeftOf="@+id/app_info_item_background"
+        app:layout_constraintRight_toRightOf="@+id/app_info_item_background"
+        android:text="2021-12-12 22:22:22"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/navigation_activity"
-        android:name="com.example.selfgrowth.ui.activity.ActivityFragment"/>
+        android:name="com.example.selfgrowth.ui.activity.AppHistoryFragment"/>
 
     <fragment
         android:id="@+id/navigation_user"
