@@ -69,6 +69,8 @@
   - [实例讲解Android中的AutoCompleteTextView自动补全组件](https://m.xp.cn/b.php/54409.html)
 - [Android自定义View之PopupLayout（通用弹出式布局）](https://blog.csdn.net/CodingEnding/article/details/81489947)
 - [安卓layout布局三等分](https://blog.csdn.net/LY_Dengle/article/details/70172918)
+- [Android 退出确认弹窗(AlertDialog)](https://blog.csdn.net/qq_35988274/article/details/100513452)
+- [对话框](https://developer.android.com/guide/topics/ui/dialogs)
 
 ### 路由与跳转
 - [How to move from one fragment to another fragment on click of an ImageView in Android?](https://stackoverflow.com/questions/23212162/how-to-move-from-one-fragment-to-another-fragment-on-click-of-an-imageview-in-an)
