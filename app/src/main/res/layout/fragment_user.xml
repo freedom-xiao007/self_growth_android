@@ -170,7 +170,7 @@
 
                 <Button
                     android:id="@+id/daily_dashboard"
-                    android:background="@drawable/ic_dashboard_black_24dp"
+                    android:background="@drawable/ic_baseline_insert_chart_outlined_50"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"
@@ -194,7 +194,7 @@
 
                 <Button
                     android:id="@+id/week_dashboard"
-                    android:background="@drawable/ic_dashboard_black_24dp"
+                    android:background="@drawable/ic_baseline_insert_chart_outlined_50"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"
@@ -218,7 +218,7 @@
 
                 <Button
                     android:id="@+id/month_dashboard"
-                    android:background="@drawable/ic_dashboard_black_24dp"
+                    android:background="@drawable/ic_baseline_insert_chart_outlined_50"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"
@@ -242,7 +242,7 @@
 
                 <Button
                     android:id="@+id/year_dashboard"
-                    android:background="@drawable/ic_dashboard_black_24dp"
+                    android:background="@drawable/ic_baseline_check_circle_50"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"
@@ -301,7 +301,7 @@
 
                 <Button
                     android:id="@+id/app_setting"
-                    android:background="@drawable/ic_outline_folder_50"
+                    android:background="@drawable/application"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"
@@ -325,7 +325,7 @@
 
                 <Button
                     android:id="@+id/app_history"
-                    android:background="@drawable/ic_outline_folder_50"
+                    android:background="@drawable/application"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"
@@ -349,7 +349,7 @@
 
                 <Button
                     android:id="@+id/server_url_setting"
-                    android:background="@drawable/ic_outline_folder_50"
+                    android:background="@drawable/application"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"
@@ -372,7 +372,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:background="@drawable/ic_outline_folder_50"
+                    android:background="@drawable/application"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"

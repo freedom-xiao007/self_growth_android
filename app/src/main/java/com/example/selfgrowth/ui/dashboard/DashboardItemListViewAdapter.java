@@ -17,6 +17,7 @@ import com.example.selfgrowth.http.model.TaskConfig;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.ui.activity.AppUseLogListViewAdapter;
 import com.example.selfgrowth.ui.task.TaskFragment;
+import com.example.selfgrowth.utils.MyTimeUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.common.base.Strings;
 
@@ -62,7 +63,7 @@ public class DashboardItemListViewAdapter extends BaseAdapter {
         }
 
         viewHolder.name.setText(dataList.get(position).getName());
-        viewHolder.time.setText(showTime(dataList.get(position).getMinutes()));
+        viewHolder.time.setText(MyTimeUtils.toString(dataList.get(position).getMinutes()));
         viewHolder.time.setOnClickListener(v -> {
             View view = View.inflate(context, R.layout.app_use_log, null);
             AppUseLogListViewAdapter adapter = new AppUseLogListViewAdapter(view.getContext(), dataList.get(position).getLogs());
@@ -71,14 +72,6 @@ public class DashboardItemListViewAdapter extends BaseAdapter {
             popupLayout.show();
         });
         return convertView;
-    }
-
-    private String showTime(long minutes) {
-        long hours = minutes / 60;
-        if (hours > 0) {
-            return String.format("%d 小时 %d 分钟", hours, minutes % 60);
-        }
-        return String.format("%d 分钟", minutes);
     }
 
     /**

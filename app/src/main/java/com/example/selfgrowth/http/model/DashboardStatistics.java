@@ -1,5 +1,6 @@
 package com.example.selfgrowth.http.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -58,5 +59,13 @@ public class DashboardStatistics {
     public static class AppUseLog {
         private Date startTime;
         private Date endTime;
+    }
+
+    public static DashboardGroup emptyGroup() {
+        return DashboardGroup.builder()
+                .name("no")
+                .minutes(0L)
+                .apps(new ArrayList<>(0))
+                .build();
     }
 }

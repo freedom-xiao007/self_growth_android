@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.selfgrowth.http.model.AppLog;
 import com.example.selfgrowth.http.model.TaskConfig;
 import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.GsonUtils;
@@ -58,6 +59,17 @@ public class TaskLogService {
         final String day = DateUtils.toCustomDay(date);
         if (sharedPreferences.contains(day)) {
             return sharedPreferences.getStringSet(day, new HashSet<>(0));
+        }
+        return new HashSet<>(0);
+    }
+
+    public Set<TaskConfig> listLog(final Date date) {
+        final String day = DateUtils.toCustomDay(date);
+        if (sharedPreferences.contains(day)) {
+            return sharedPreferences.getStringSet(day, new HashSet<>(0))
+                    .stream()
+                    .map(log -> GsonUtils.getGson().fromJson(log, TaskConfig.class))
+                    .collect(Collectors.toSet());
         }
         return new HashSet<>(0);
     }
