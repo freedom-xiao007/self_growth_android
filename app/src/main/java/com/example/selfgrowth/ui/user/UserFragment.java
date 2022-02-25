@@ -20,6 +20,7 @@ import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
 import com.example.selfgrowth.enums.LabelEnum;
+import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.http.RetrofitClient;
 import com.example.selfgrowth.http.model.AppInfo;
@@ -32,6 +33,7 @@ import com.example.selfgrowth.ui.activity.AppFragment;
 import com.example.selfgrowth.ui.activity.AppHistoryFragment;
 import com.example.selfgrowth.ui.activity.AppUseLogListViewAdapter;
 import com.example.selfgrowth.ui.dashboard.DailyDashboardFragment;
+import com.example.selfgrowth.ui.dashboard.PeriodDashboardFragment;
 import com.example.selfgrowth.ui.task.AddTaskFragment;
 import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
@@ -54,6 +56,9 @@ public class UserFragment extends Fragment {
         setRoute(view, R.id.app_setting, new AppFragment());
         setRoute(view, R.id.app_history, new AppHistoryFragment());
         setRoute(view, R.id.daily_dashboard, new DailyDashboardFragment());
+        setRoute(view, R.id.week_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.WEEK));
+        setRoute(view, R.id.month_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.MONTH));
+        setRoute(view, R.id.year_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.YEAR));
         return view;
     }
 

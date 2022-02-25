@@ -242,7 +242,7 @@
 
                 <Button
                     android:id="@+id/year_dashboard"
-                    android:background="@drawable/ic_baseline_check_circle_50"
+                    android:background="@drawable/ic_baseline_insert_chart_outlined_50"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"

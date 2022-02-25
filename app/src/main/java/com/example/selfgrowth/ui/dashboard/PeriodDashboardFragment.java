@@ -16,41 +16,71 @@ import androidx.fragment.app.Fragment;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.http.model.DashboardResult;
+import com.example.selfgrowth.service.foregroud.AppStatisticsService;
 import com.example.selfgrowth.service.foregroud.DashboardService;
 import com.example.selfgrowth.service.foregroud.TaskLogService;
+import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.MyTimeUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class DailyDashboardFragment extends Fragment {
+public class PeriodDashboardFragment extends Fragment {
 
     private final TaskLogService taskLogService = TaskLogService.getInstance();
     private final DashboardService dashboardService = DashboardService.getInstance();
+    private final StatisticsTypeEnum statisticsType;
+
+
+    public PeriodDashboardFragment(final StatisticsTypeEnum type) {
+        this.statisticsType = type;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.daily_dashboard, container, false);
-        loadData(new Date(), view);
+        View view = inflater.inflate(R.layout.period_dashboard, container, false);
+        loadData(getDate(), view);
         return view;
+    }
+
+    private Date getDate() {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        switch (statisticsType) {
+            case WEEK:
+                calendar.add(Calendar.DAY_OF_YEAR, -7);
+                return calendar.getTime();
+            case MONTH:
+                calendar.add(Calendar.MONTH, -1);
+                return calendar.getTime();
+            case YEAR:
+                calendar.add(Calendar.YEAR, -1);
+                return calendar.getTime();
+            default:
+                calendar.set(Calendar.DAY_OF_YEAR, -1);
+                return calendar.getTime();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadData(final Date date, final View view) {
-        final DashboardResult result = dashboardService.getPeriodData(date, StatisticsTypeEnum.DAY, view);
+        final DashboardResult result = dashboardService.getPeriodData(date, statisticsType, view);
         ((TextView) view.findViewById(R.id.learn_minutes)).setText(MyTimeUtils.toString(result.getLearnTime()));
+        ((TextView) view.findViewById(R.id.learn_average)).setText(MyTimeUtils.toString(result.getLearnAverage()));
         ((TextView) view.findViewById(R.id.running_minutes)).setText(MyTimeUtils.toString(result.getRunningTime()));
+        ((TextView) view.findViewById(R.id.running_average)).setText(MyTimeUtils.toString(result.getRunningAverage()));
         ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
+        ((TextView) view.findViewById(R.id.sleep_average)).setText(MyTimeUtils.toString(result.getSleepAverage()));
         ((TextView)view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
 
-        final Map<String, Long> appTimes = result.getAppTimes();
         List<String> appUserTimes = new ArrayList<>(result.getAppTimes().size());
-        for (String appName: appTimes.keySet()) {
-            final long minutes = appTimes.get(appName);
+        for (String appName: result.getAppTimes().keySet()) {
+            final long minutes = result.getAppTimes().get(appName).longValue();
             appUserTimes.add(String.format("%s 使用时间： %s", appName, MyTimeUtils.toString(minutes)));
         }
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, appUserTimes);

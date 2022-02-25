@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,22 +25,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DashboardResult {
 
-    private long learnTime = 0;
-    private long learnAverage = 0;
-    private long runningTime = 0;
-    private long runningAverage = 0;
-    private long sleepTime = 0;
-    private long sleepAverage = 0;
-    private long taskComplete = 0;
+    private long learnTime;
+    private long learnAverage;
+    private long runningTime;
+    private long runningAverage;
+    private long sleepTime;
+    private long sleepAverage;
+    private long taskComplete;
 
-    private Map<String, AtomicLong> appTimes = new HashMap<>();
+    @Builder.Default
+    private Map<String, Long> appTimes = new HashMap<>();
 
-    private Map<String, AtomicInteger> learnDurations = new HashMap<>();
-    private Map<String, AtomicInteger> runningDurations = new HashMap<>();
-    private Map<String, AtomicInteger> sleepDurations = new HashMap<>();
+    @Builder.Default
+    private Map<String, Integer> learnDurations = new HashMap<>();
+    @Builder.Default
+    private Map<String, Integer> runningDurations = new HashMap<>();
+    @Builder.Default
+    private Map<String, Integer> sleepDurations = new HashMap<>();
 
-    private Map<LabelEnum, AtomicInteger> taskLabelStatistics = new HashMap<>();
+    @Builder.Default
+    private Map<LabelEnum, Integer> taskLabelStatistics = new HashMap<>();
 
+    @Builder.Default
     private List<String> readBooks = new ArrayList<>();
 
     public void addLearnTime(final long value) {
@@ -76,7 +80,12 @@ public class DashboardResult {
     }
 
     public void addAppTime(final String appName, final long speedTime) {
-        appTimes.computeIfAbsent(appName, k -> new AtomicLong(0)).getAndAdd(speedTime);
+        // todo 后面看看能不能不使用原子类型，而使用compute
+        if (!appTimes.containsKey(appName)) {
+            appTimes.put(appName, speedTime);
+            return;
+        }
+        appTimes.put(appName, speedTime + appTimes.get(appName));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -86,13 +95,25 @@ public class DashboardResult {
         final String key = String.join(":", start, end);
         switch (labelEnum) {
             case LEARN:
-                learnDurations.computeIfAbsent(key, k -> new AtomicInteger(0)).getAndAdd(1);
+                if (!learnDurations.containsKey(key)){
+                    learnDurations.put(key, 1);
+                    break;
+                }
+                learnDurations.put(key, learnDurations.get(key) + 1);
                 break;
             case RUNNING:
-                runningDurations.computeIfAbsent(key, k -> new AtomicInteger(0)).getAndAdd(1);
+                if (!runningDurations.containsKey(key)) {
+                    runningDurations.put(key, 1);
+                    break;
+                }
+                runningDurations.put(key, runningDurations.get(key) + 1);
                 break;
             case SLEEP:
-                sleepDurations.computeIfAbsent(key, k -> new AtomicInteger(0)).getAndAdd(1);
+                if (!sleepDurations.containsKey(key)) {
+                    sleepDurations.put(key, 1);
+                    break;
+                }
+                sleepDurations.put(key, sleepDurations.get(key) +1);
                 break;
             default:
                 break;
@@ -100,7 +121,11 @@ public class DashboardResult {
     }
 
     public void addTaskLog(final TaskConfig config) {
-        taskLabelStatistics.computeIfAbsent(config.getLabel(), k -> new AtomicInteger(0)).getAndAdd(1);
+        if (taskLabelStatistics.containsKey(config.getLabel())) {
+            taskLabelStatistics.put(config.getLabel(), taskLabelStatistics.get(config.getLabel()) + 1);
+        } else {
+            taskLabelStatistics.put(config.getLabel(), 1);
+        }
         if (config.getTaskTypeEnum().equals(TaskTypeEnum.BOOK)) {
             readBooks.add(config.getName());
         }
