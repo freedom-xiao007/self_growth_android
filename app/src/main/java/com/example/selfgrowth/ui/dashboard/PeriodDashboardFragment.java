@@ -1,5 +1,6 @@
 package com.example.selfgrowth.ui.dashboard;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,17 +17,26 @@ import androidx.fragment.app.Fragment;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.http.model.DashboardResult;
-import com.example.selfgrowth.service.foregroud.AppStatisticsService;
 import com.example.selfgrowth.service.foregroud.DashboardService;
 import com.example.selfgrowth.service.foregroud.TaskLogService;
-import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.MyTimeUtils;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PeriodDashboardFragment extends Fragment {
@@ -76,7 +86,7 @@ public class PeriodDashboardFragment extends Fragment {
         ((TextView) view.findViewById(R.id.running_average)).setText(MyTimeUtils.toString(result.getRunningAverage()));
         ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
         ((TextView) view.findViewById(R.id.sleep_average)).setText(MyTimeUtils.toString(result.getSleepAverage()));
-        ((TextView)view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
+        ((TextView) view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
 
         List<String> appUserTimes = new ArrayList<>(result.getAppTimes().size());
         for (String appName: result.getAppTimes().keySet()) {
@@ -86,11 +96,128 @@ public class PeriodDashboardFragment extends Fragment {
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, appUserTimes);
         ((ListView) view.findViewById(R.id.learn_app_info)).setAdapter(adapter1);
 
+        initLearnLineChart(view);
+
         List<String> taskNames = taskLogService.listLog(date)
                 .stream()
                 .map(log -> String.format("任务名称： %s     标签：%s    类型：%s", log.getName(), log.getLabel(), log.getTaskTypeEnum().getName()))
                 .collect(Collectors.toList());
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, taskNames);
         ((ListView) view.findViewById(R.id.task_info)).setAdapter(adapter2);
+    }
+
+    private void initLearnLineChart(final View view) {
+        BarChart chart = view.findViewById(R.id.chart1);
+
+        chart.getDescription().setEnabled(false);
+
+        // if more than 60 entries are displayed in the chart, no values will be
+        // drawn
+        chart.setMaxVisibleValueCount(24);
+
+        // scaling can now only be done on x- and y-axis separately
+        chart.setPinchZoom(false);
+
+        chart.setDrawGridBackground(false);
+        chart.setDrawBarShadow(false);
+
+        chart.setDrawValueAboveBar(false);
+        chart.setHighlightFullBarEnabled(false);
+
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setValueFormatter(new MyAxisValueFormatter());
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        leftAxis.setTextColor(Color.WHITE);
+        chart.getAxisRight().setEnabled(false);
+
+        XAxis xLabels = chart.getXAxis();
+        xLabels.setPosition(XAxis.XAxisPosition.TOP);
+        xLabels.setTextColor(Color.WHITE);
+        xLabels.setSpaceMax(1f);
+
+        // chart.setDrawXLabels(false);
+        // chart.setDrawYLabels(false);
+
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(false);
+        l.setFormSize(8f);
+        l.setFormToTextSpace(4f);
+        l.setXEntrySpace(6f);
+        l.setTextColor(Color.WHITE);
+
+        setData(100, 100, chart);
+    }
+
+    private void setData(final int count, final float range, final BarChart chart) {
+
+        ArrayList<BarEntry> values = new ArrayList<>();
+
+        for (int i = 0; i < 24; i++) {
+            float multi = (10 + 1);
+            float val = (float) (Math.random() * multi) + multi / 3;
+            if (i % 5 == 0) {
+                values.add(new BarEntry(i, new float[]{0, 0, 0}));
+            } else {
+                values.add(new BarEntry(i, new float[]{val,val, val}));
+            }
+        }
+
+        BarDataSet set1;
+
+        if (chart.getData() != null &&
+                chart.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) chart.getData().getDataSetByIndex(0);
+            set1.setValues(values);
+            chart.getData().notifyDataChanged();
+            chart.notifyDataSetChanged();
+        } else {
+            set1 = new BarDataSet(values, "时间分布");
+            set1.setDrawIcons(false);
+            set1.setColors(getColors());
+            set1.setStackLabels(new String[]{"学习", "运动", "睡觉"});
+
+            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+            dataSets.add(set1);
+
+            BarData data = new BarData(dataSets);
+//            data.setValueFormatter(myValueFormatter());
+            data.setValueTextColor(Color.WHITE);
+
+            chart.setData(data);
+        }
+
+        chart.setFitBars(true);
+        chart.invalidate();
+    }
+
+    private int[] getColors() {
+
+        // have as many colors as stack-values per entry
+        int[] colors = new int[3];
+
+        System.arraycopy(ColorTemplate.MATERIAL_COLORS, 0, colors, 0, 3);
+
+        return colors;
+    }
+
+//    private ValueFormatter myValueFormatter() {
+//        return new DecimalFormat("###,###,###,##0.0");
+//    }
+
+    public static class MyAxisValueFormatter extends ValueFormatter {
+
+        private final DecimalFormat mFormat;
+
+        public MyAxisValueFormatter() {
+            mFormat = new DecimalFormat("###,###,###,##0.0");
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return mFormat.format(value) + " $";
+        }
     }
 }

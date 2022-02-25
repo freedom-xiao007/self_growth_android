@@ -200,6 +200,10 @@
             android:id="@+id/learn_app_info"
             android:layout_width="match_parent"
             android:layout_height="200dp"/>
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart1"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
 
         <TextView
             android:text="任务详情"
