@@ -12,6 +12,7 @@ import android.provider.Settings;
 
 import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.service.foregroud.AppLogService;
+import com.example.selfgrowth.service.foregroud.DashboardService;
 import com.example.selfgrowth.service.foregroud.MonitorActivityService;
 
 import androidx.annotation.RequiresApi;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         TaskService.getInstance().init(this.getApplicationContext());
         // 初始任务日志服务
         TaskLogService.getInstance().init(this.getApplicationContext());
+        // 初始化仪表盘统计服务
+        DashboardService.getInstance().init(this.getApplicationContext());
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

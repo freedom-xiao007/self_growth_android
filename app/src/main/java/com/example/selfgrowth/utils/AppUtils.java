@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 
+import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.http.model.AppInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AppUtils {
 
@@ -33,4 +36,23 @@ public class AppUtils {
                     .build());
         }
         return apps;
-    }}
+    }
+
+    public static Map<String, AppInfo> getApps(final Context context, final LabelEnum label) {
+        final SharedPreferences preferences = context.getSharedPreferences(AppInfo.APP_INFO, Context.MODE_PRIVATE);
+        return context.getPackageManager().getInstalledPackages(0)
+                .stream()
+                .map(packageInfo -> createAppInfo(packageInfo, preferences, context))
+                .filter(appInfo -> appInfo.getLabel().equals(label.getName()))
+                .collect(Collectors.toMap(AppInfo::getAppName, appInfo -> appInfo));
+    }
+
+    private static AppInfo createAppInfo(final PackageInfo packageInfo, final SharedPreferences preferences, final Context context) {
+        final String appName = packageInfo.applicationInfo.loadLabel(context.getPackageManager()).toString();
+        return AppInfo.builder()
+                .appName(appName)
+                .packageName(packageInfo.packageName)
+                .label(preferences.getString(appName, "其他"))
+                .build();
+    }
+}

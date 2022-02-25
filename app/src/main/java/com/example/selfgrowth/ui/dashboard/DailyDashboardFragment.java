@@ -15,9 +15,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.enums.LabelEnum;
+import com.example.selfgrowth.enums.StatisticsTypeEnum;
+import com.example.selfgrowth.http.model.AppInfo;
+import com.example.selfgrowth.http.model.DashboardResult;
 import com.example.selfgrowth.http.model.DashboardStatistics;
 import com.example.selfgrowth.service.foregroud.AppStatisticsService;
+import com.example.selfgrowth.service.foregroud.DashboardService;
 import com.example.selfgrowth.service.foregroud.TaskLogService;
+import com.example.selfgrowth.utils.AppUtils;
 import com.example.selfgrowth.utils.MyTimeUtils;
 
 import java.util.ArrayList;
@@ -31,6 +36,7 @@ public class DailyDashboardFragment extends Fragment {
 
     private final AppStatisticsService appStatisticsService = AppStatisticsService.getInstance();
     private final TaskLogService taskLogService = TaskLogService.getInstance();
+    private final DashboardService dashboardService = DashboardService.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -42,34 +48,22 @@ public class DailyDashboardFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadData(final Date date, final View view) {
-        final DashboardStatistics data = appStatisticsService.statistics(new Date(), view.getContext());
-        if (data == null || data.getGroups() == null || data.getGroups().keySet().size() <= 0) {
-            ((TextView) view.findViewById(R.id.note)).setText("当日无统计数据");
-            return;
-        }
-        Map<String, DashboardStatistics.DashboardGroup> groups = data.getGroups();
-        DashboardStatistics.DashboardGroup learnGroup = groups.getOrDefault(LabelEnum.LEARN.getName(), DashboardStatistics.emptyGroup());
-        DashboardStatistics.DashboardGroup runningGroup = groups.getOrDefault(LabelEnum.RUNNING.getName(), DashboardStatistics.emptyGroup());
-        DashboardStatistics.DashboardGroup sleepGroup = groups.getOrDefault(LabelEnum.SLEEP.getName(), DashboardStatistics.emptyGroup());
-        long learnTime = Objects.requireNonNull(learnGroup).getMinutes();
-        long runningTime = Objects.requireNonNull(runningGroup).getMinutes();
-        long sleepTime = Objects.requireNonNull(sleepGroup).getMinutes();
-        int taskComplete = taskLogService.list(new Date()).size();
-        ((TextView) view.findViewById(R.id.learn_minutes)).setText(MyTimeUtils.toString(learnTime));
-        ((TextView) view.findViewById(R.id.running_minutes)).setText(MyTimeUtils.toString(runningTime));
-        ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(sleepTime));
-        ((TextView)view.findViewById(R.id.task_complete)).setText(String.valueOf(taskComplete));
+        final DashboardResult result = dashboardService.getPeriodData(date, StatisticsTypeEnum.DAY, view);
+        ((TextView) view.findViewById(R.id.learn_minutes)).setText(MyTimeUtils.toString(result.getLearnTime()));
+        ((TextView) view.findViewById(R.id.running_minutes)).setText(MyTimeUtils.toString(result.getRunningTime()));
+        ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
+        ((TextView)view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
 
-        List<String> appUserTimes = new ArrayList<>(learnGroup.getApps().size());
-        for (DashboardStatistics.DashboardApp app: learnGroup.getApps()) {
-            appUserTimes.add(String.format("%s 使用时间： %s", app.getName(), MyTimeUtils.toString(app.getMinutes())));
+        List<String> appUserTimes = new ArrayList<>(result.getAppTimes().size());
+        for (String appName: result.getAppTimes().keySet()) {
+            appUserTimes.add(String.format("%s 使用时间： %s", appName, MyTimeUtils.toString(Objects.requireNonNull(result.getAppTimes().get(appName)).get())));
         }
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, appUserTimes);
         ((ListView) view.findViewById(R.id.learn_app_info)).setAdapter(adapter1);
 
         List<String> taskNames = taskLogService.listLog(date)
                 .stream()
-                .map(log -> String.format("任务名称： %s", log.getName()))
+                .map(log -> String.format("任务名称： %s     标签：%s    类型：%s", log.getName(), log.getLabel(), log.getTaskTypeEnum().getName()))
                 .collect(Collectors.toList());
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, taskNames);
         ((ListView) view.findViewById(R.id.task_info)).setAdapter(adapter2);
