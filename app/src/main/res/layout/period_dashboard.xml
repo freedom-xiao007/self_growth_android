@@ -187,6 +187,31 @@
                 android:layout_height="50dp"/>
         </LinearLayout>
 
+        <TextView
+            android:text="学习/运动/睡觉次数分布"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:gravity="center_vertical|left"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/app_num_bar"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
+
+        <TextView
+            android:text="学习/运动/睡觉时间分布"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:gravity="center_vertical|left"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/app_time_bar"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
 
         <TextView
             android:text="学习详情"
@@ -200,10 +225,6 @@
             android:id="@+id/learn_app_info"
             android:layout_width="match_parent"
             android:layout_height="200dp"/>
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart1"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"/>
 
         <TextView
             android:text="任务详情"

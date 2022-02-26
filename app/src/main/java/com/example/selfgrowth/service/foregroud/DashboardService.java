@@ -37,21 +37,21 @@ public class DashboardService {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public DashboardResult getPeriodData(Date date, StatisticsTypeEnum statisticsType, final View view) {
+    public DashboardResult getPeriodData(Date date, StatisticsTypeEnum statisticsType, final View view, boolean refresh) {
         if (statisticsType.equals(StatisticsTypeEnum.DAY)) {
-            return getDayDate(date, view);
+            return getDayDate(date, view, refresh);
         }
 
         List<Date> dates = DateUtils.getPeriodDates(date, statisticsType);
         Date firstDay = dates.get(0);
-        DashboardResult periodData = getFromDb(firstDay, statisticsType);
+        DashboardResult periodData = getFromDb(firstDay, statisticsType, refresh);
         if (periodData != null) {
             return periodData;
         }
 
         periodData = new DashboardResult();
         for (Date dateItem: dates) {
-            DashboardResult dailyData = getDayDate(dateItem, view);
+            DashboardResult dailyData = getDayDate(dateItem, view, refresh);
             mergeDate(periodData, dailyData);
         }
 
@@ -65,11 +65,14 @@ public class DashboardService {
         periodData.addLearnTime(dailyData.getLearnTime());
         periodData.addRunningTime(dailyData.getRunningTime());
         periodData.addSleepTime(dailyData.getSleepTime());
+        periodData.addLearnHourCount(dailyData.getLearnHoursCount());
+        periodData.addRunningHourCount(dailyData.getRunningHoursCount());
+        periodData.addSleepHourCount(dailyData.getSleepHoursCount());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private DashboardResult getDayDate(final Date date, final View view) {
-        DashboardResult result = getFromDb(date, StatisticsTypeEnum.DAY);
+    private DashboardResult getDayDate(final Date date, final View view, boolean refresh) {
+        DashboardResult result = getFromDb(date, StatisticsTypeEnum.DAY, refresh);
         if (result != null) {
             return result;
         }
@@ -122,7 +125,11 @@ public class DashboardService {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private DashboardResult getFromDb(final Date date, final StatisticsTypeEnum type) {
+    private DashboardResult getFromDb(final Date date, final StatisticsTypeEnum type, boolean refresh) {
+        if (refresh) {
+            return null;
+        }
+
         final String day = DateUtils.toCustomDay(date);
         final String dbKey = String.join("::", day, type.name());
         if (!sharedPreferences.contains(dbKey)) {

@@ -10,6 +10,7 @@ import com.example.selfgrowth.enums.TaskTypeEnum;
 import com.example.selfgrowth.utils.DateUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,11 +38,19 @@ public class DashboardResult {
     private Map<String, Long> appTimes = new HashMap<>();
 
     @Builder.Default
-    private Map<String, Integer> learnDurations = new HashMap<>();
+    private Map<Integer, Integer> learnHoursTimes = new HashMap<>(24);
     @Builder.Default
-    private Map<String, Integer> runningDurations = new HashMap<>();
+    private Map<Integer, Integer> learnHoursCount = new HashMap<>(24);
+
     @Builder.Default
-    private Map<String, Integer> sleepDurations = new HashMap<>();
+    private Map<Integer, Integer> runningHoursTimes = new HashMap<>(24);
+    @Builder.Default
+    private Map<Integer, Integer> runningHoursCount = new HashMap<>(24);
+
+    @Builder.Default
+    private Map<Integer, Integer> sleepHoursTimes = new HashMap<>(24);
+    @Builder.Default
+    private Map<Integer, Integer> sleepHoursCount = new HashMap<>(24);
 
     @Builder.Default
     private Map<LabelEnum, Integer> taskLabelStatistics = new HashMap<>();
@@ -90,33 +99,37 @@ public class DashboardResult {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addAppLog(final DashboardStatistics.AppUseLog log, final LabelEnum labelEnum) {
-        final String start = DateUtils.hourString(log.getStartTime());
-        final String end = DateUtils.hourString(log.getEndTime());
-        final String key = String.join(":", start, end);
+        final Map<Integer, Integer> hourCount = DateUtils.getHourCount(log.getStartTime(), log.getEndTime());
         switch (labelEnum) {
             case LEARN:
-                if (!learnDurations.containsKey(key)){
-                    learnDurations.put(key, 1);
-                    break;
-                }
-                learnDurations.put(key, learnDurations.get(key) + 1);
+                mergeLearnCount(hourCount);
                 break;
             case RUNNING:
-                if (!runningDurations.containsKey(key)) {
-                    runningDurations.put(key, 1);
-                    break;
-                }
-                runningDurations.put(key, runningDurations.get(key) + 1);
+                mergeRunningCount(hourCount);
                 break;
             case SLEEP:
-                if (!sleepDurations.containsKey(key)) {
-                    sleepDurations.put(key, 1);
-                    break;
-                }
-                sleepDurations.put(key, sleepDurations.get(key) +1);
+                mergeSleepCount(hourCount);
                 break;
             default:
                 break;
+        }
+    }
+
+    private void mergeLearnCount(final Map<Integer, Integer> hourCount) {
+        for (Integer key: hourCount.keySet()) {
+            learnHoursCount.put(key, learnHoursCount.getOrDefault(key, 0) + hourCount.get(key));
+        }
+    }
+
+    private void mergeRunningCount(final Map<Integer, Integer> hourCount) {
+        for (Integer key: hourCount.keySet()) {
+            runningHoursCount.put(key, runningHoursCount.getOrDefault(key, 0) + hourCount.get(key));
+        }
+    }
+
+    private void mergeSleepCount(final Map<Integer, Integer> hourCount) {
+        for (Integer key: hourCount.keySet()) {
+            sleepHoursCount.put(key, sleepHoursCount.getOrDefault(key, 0) + hourCount.get(key));
         }
     }
 
@@ -128,6 +141,24 @@ public class DashboardResult {
         }
         if (config.getTaskTypeEnum().equals(TaskTypeEnum.BOOK)) {
             readBooks.add(config.getName());
+        }
+    }
+
+    public void addLearnHourCount(Map<Integer, Integer> learnHoursCount) {
+        for (Integer hour: learnHoursCount.keySet()) {
+            this.learnHoursCount.put(hour, this.learnHoursCount.getOrDefault(hour, 0) + learnHoursCount.get(hour));
+        }
+    }
+
+    public void addRunningHourCount(Map<Integer, Integer> runningHoursCount) {
+        for (Integer hour: runningHoursCount.keySet()) {
+            this.runningHoursCount.put(hour, this.runningHoursCount.getOrDefault(hour, 0) + runningHoursCount.get(hour));
+        }
+    }
+
+    public void addSleepHourCount(Map<Integer, Integer> sleepHoursCount) {
+        for (Integer hour: sleepHoursCount.keySet()) {
+            this.sleepHoursCount.put(hour, this.sleepHoursCount.getOrDefault(hour, 0) + sleepHoursCount.get(hour));
         }
     }
 }

@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PeriodDashboardFragment extends Fragment {
@@ -79,7 +80,7 @@ public class PeriodDashboardFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadData(final Date date, final View view) {
-        final DashboardResult result = dashboardService.getPeriodData(date, statisticsType, view);
+        final DashboardResult result = dashboardService.getPeriodData(date, statisticsType, view, true);
         ((TextView) view.findViewById(R.id.learn_minutes)).setText(MyTimeUtils.toString(result.getLearnTime()));
         ((TextView) view.findViewById(R.id.learn_average)).setText(MyTimeUtils.toString(result.getLearnAverage()));
         ((TextView) view.findViewById(R.id.running_minutes)).setText(MyTimeUtils.toString(result.getRunningTime()));
@@ -96,7 +97,7 @@ public class PeriodDashboardFragment extends Fragment {
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, appUserTimes);
         ((ListView) view.findViewById(R.id.learn_app_info)).setAdapter(adapter1);
 
-        initLearnLineChart(view);
+        initAppNumBar(view, result);
 
         List<String> taskNames = taskLogService.listLog(date)
                 .stream()
@@ -106,8 +107,8 @@ public class PeriodDashboardFragment extends Fragment {
         ((ListView) view.findViewById(R.id.task_info)).setAdapter(adapter2);
     }
 
-    private void initLearnLineChart(final View view) {
-        BarChart chart = view.findViewById(R.id.chart1);
+    private void initAppNumBar(final View view, final DashboardResult result) {
+        BarChart chart = view.findViewById(R.id.app_num_bar);
 
         chart.getDescription().setEnabled(false);
 
@@ -148,21 +149,19 @@ public class PeriodDashboardFragment extends Fragment {
         l.setXEntrySpace(6f);
         l.setTextColor(Color.WHITE);
 
-        setData(100, 100, chart);
+        setData(100, 100, chart, result);
     }
 
-    private void setData(final int count, final float range, final BarChart chart) {
-
-        ArrayList<BarEntry> values = new ArrayList<>();
-
+    private void setData(final int count, final float range, final BarChart chart, final DashboardResult result) {
+        final Map<Integer, Integer> learnHourCount = result.getLearnHoursCount();
+        final Map<Integer, Integer> runningHourCount = result.getRunningHoursCount();
+        final Map<Integer, Integer> sleepHourCount = result.getSleepHoursCount();
+        final ArrayList<BarEntry> values = new ArrayList<>();
         for (int i = 0; i < 24; i++) {
-            float multi = (10 + 1);
-            float val = (float) (Math.random() * multi) + multi / 3;
-            if (i % 5 == 0) {
-                values.add(new BarEntry(i, new float[]{0, 0, 0}));
-            } else {
-                values.add(new BarEntry(i, new float[]{val,val, val}));
-            }
+            final int learnValue = learnHourCount.getOrDefault(i, 0);
+            final int runningValue = runningHourCount.getOrDefault(i, 0);
+            final int sleepValue = sleepHourCount.getOrDefault(i, 0);
+            values.add(new BarEntry(i, new float[]{learnValue, runningValue, sleepValue}));
         }
 
         BarDataSet set1;

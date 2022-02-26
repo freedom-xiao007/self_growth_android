@@ -4,11 +4,16 @@ import com.example.selfgrowth.enums.StatisticsTypeEnum;
 
 import org.junit.Test;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class DateUtilsTest {
 
@@ -66,5 +71,15 @@ public class DateUtilsTest {
         Date date = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
         List<Date> res = DateUtils.getPeriodDates(date, StatisticsTypeEnum.YEAR);
         assert res.size() == 365;
+    }
+
+    @Test
+    public void getHourCountTest() throws ParseException {
+        Date start = DateUtils.parse("2022-01-10 09:00:00");
+        Date end = DateUtils.parse("2022-01-10 11:00:00");
+        Map<Integer, Integer> hourCount = DateUtils.getHourCount(start, end);
+        System.out.println(hourCount.toString());
+        assert hourCount.get(9).equals(1);
+        assert hourCount.get(10).equals(1);
     }
 }

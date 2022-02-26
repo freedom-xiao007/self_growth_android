@@ -2,11 +2,14 @@ package com.example.selfgrowth.utils;
 
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DateUtils {
 
@@ -103,5 +106,31 @@ public class DateUtils {
             dates.add(calendar.getTime());
         }
         return dates;
+    }
+
+    /**
+     * 返回开始到结束时间，各个小时出现的次数
+     *
+     * 如 2022-01-10 09:00:00 到 2022-01-11 10:00:00
+     * 有两个小时字段：9 和 10 ，各出现一次
+     * @param startTime start date
+     * @param endTime end date
+     * @return hour map
+     */
+    public static Map<Integer, Integer> getHourCount(final Date startTime, final Date endTime) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startTime);
+
+        final Map<Integer, Integer> hourCount = new HashMap<>(24);
+        while (calendar.getTime().before(endTime)) {
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            hourCount.put(hour, hourCount.getOrDefault(hour, 0) + 1);
+            calendar.add(Calendar.HOUR_OF_DAY, 1);
+        }
+        return hourCount;
+    }
+
+    public static Date parse(final String s) throws ParseException {
+        return dateFormat.parse(s);
     }
 }

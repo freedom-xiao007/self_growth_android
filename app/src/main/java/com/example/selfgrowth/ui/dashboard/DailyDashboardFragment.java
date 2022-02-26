@@ -41,7 +41,7 @@ public class DailyDashboardFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadData(final Date date, final View view) {
-        final DashboardResult result = dashboardService.getPeriodData(date, StatisticsTypeEnum.DAY, view);
+        final DashboardResult result = dashboardService.getPeriodData(date, StatisticsTypeEnum.DAY, view, true);
         ((TextView) view.findViewById(R.id.learn_minutes)).setText(MyTimeUtils.toString(result.getLearnTime()));
         ((TextView) view.findViewById(R.id.running_minutes)).setText(MyTimeUtils.toString(result.getRunningTime()));
         ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
