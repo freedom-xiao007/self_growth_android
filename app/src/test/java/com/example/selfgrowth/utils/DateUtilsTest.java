@@ -82,4 +82,15 @@ public class DateUtilsTest {
         assert hourCount.get(9).equals(1);
         assert hourCount.get(10).equals(1);
     }
-}
+
+
+    @Test
+    public void getHourSpeedTest() throws ParseException {
+        Date start = DateUtils.parse("2022-01-10 09:10:00");
+        Date end = DateUtils.parse("2022-01-10 11:15:00");
+        Map<Integer, Integer> hourCount = DateUtils.getHourSpeed(start, end);
+        System.out.println(hourCount.toString());
+        assert hourCount.get(9).equals(50);
+        assert hourCount.get(10).equals(60);
+        assert hourCount.get(11).equals(15);
+    }}

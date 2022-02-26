@@ -97,7 +97,8 @@ public class PeriodDashboardFragment extends Fragment {
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, appUserTimes);
         ((ListView) view.findViewById(R.id.learn_app_info)).setAdapter(adapter1);
 
-        initAppNumBar(view, result);
+        initHourCountBar(view, result);
+        initHourSpeedBar(view, result);
 
         List<String> taskNames = taskLogService.listLog(date)
                 .stream()
@@ -107,21 +108,16 @@ public class PeriodDashboardFragment extends Fragment {
         ((ListView) view.findViewById(R.id.task_info)).setAdapter(adapter2);
     }
 
-    private void initAppNumBar(final View view, final DashboardResult result) {
-        BarChart chart = view.findViewById(R.id.app_num_bar);
-
+    private void initHourSpeedBar(View view, DashboardResult result) {
+        BarChart chart = view.findViewById(R.id.app_time_bar);
         chart.getDescription().setEnabled(false);
-
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
         chart.setMaxVisibleValueCount(24);
-
         // scaling can now only be done on x- and y-axis separately
         chart.setPinchZoom(false);
-
         chart.setDrawGridBackground(false);
         chart.setDrawBarShadow(false);
-
         chart.setDrawValueAboveBar(false);
         chart.setHighlightFullBarEnabled(false);
 
@@ -149,10 +145,90 @@ public class PeriodDashboardFragment extends Fragment {
         l.setXEntrySpace(6f);
         l.setTextColor(Color.WHITE);
 
-        setData(100, 100, chart, result);
+        setHourSpeedData(100, 100, chart, result);
     }
 
-    private void setData(final int count, final float range, final BarChart chart, final DashboardResult result) {
+    private void setHourSpeedData(final int count, final float range, final BarChart chart, final DashboardResult result) {
+        final Map<Integer, Integer> learnHourSpeed = result.getLearnHourSpeed();
+        final Map<Integer, Integer> runningHourSpeed = result.getRunningHourSpeed();
+        final Map<Integer, Integer> sleepHourSpeed = result.getSleepHourSpeed();
+        final ArrayList<BarEntry> values = new ArrayList<>();
+        for (int i = 0; i < 24; i++) {
+            final int learnValue = learnHourSpeed.getOrDefault(i, 0);
+            final int runningValue = runningHourSpeed.getOrDefault(i, 0);
+            final int sleepValue = sleepHourSpeed.getOrDefault(i, 0);
+            values.add(new BarEntry(i, new float[]{learnValue, runningValue, sleepValue}));
+        }
+
+        BarDataSet set1;
+
+        if (chart.getData() != null &&
+                chart.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) chart.getData().getDataSetByIndex(0);
+            set1.setValues(values);
+            chart.getData().notifyDataChanged();
+            chart.notifyDataSetChanged();
+        } else {
+            set1 = new BarDataSet(values, "时间分布");
+            set1.setDrawIcons(false);
+            set1.setColors(getColors());
+            set1.setStackLabels(new String[]{"学习", "运动", "睡觉"});
+
+            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+            dataSets.add(set1);
+
+            BarData data = new BarData(dataSets);
+//            data.setValueFormatter(myValueFormatter());
+            data.setValueTextColor(Color.WHITE);
+
+            chart.setData(data);
+        }
+
+        chart.setFitBars(true);
+        chart.invalidate();
+    }
+
+    private void initHourCountBar(final View view, final DashboardResult result) {
+        BarChart chart = view.findViewById(R.id.app_num_bar);
+        chart.getDescription().setEnabled(false);
+        // if more than 60 entries are displayed in the chart, no values will be
+        // drawn
+        chart.setMaxVisibleValueCount(24);
+        // scaling can now only be done on x- and y-axis separately
+        chart.setPinchZoom(false);
+        chart.setDrawGridBackground(false);
+        chart.setDrawBarShadow(false);
+        chart.setDrawValueAboveBar(false);
+        chart.setHighlightFullBarEnabled(false);
+
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setValueFormatter(new MyAxisValueFormatter());
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        leftAxis.setTextColor(Color.WHITE);
+        chart.getAxisRight().setEnabled(false);
+
+        XAxis xLabels = chart.getXAxis();
+        xLabels.setPosition(XAxis.XAxisPosition.TOP);
+        xLabels.setTextColor(Color.WHITE);
+        xLabels.setSpaceMax(1f);
+
+        // chart.setDrawXLabels(false);
+        // chart.setDrawYLabels(false);
+
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(false);
+        l.setFormSize(8f);
+        l.setFormToTextSpace(4f);
+        l.setXEntrySpace(6f);
+        l.setTextColor(Color.WHITE);
+
+        setHourNumData(100, 100, chart, result);
+    }
+
+    private void setHourNumData(final int count, final float range, final BarChart chart, final DashboardResult result) {
         final Map<Integer, Integer> learnHourCount = result.getLearnHoursCount();
         final Map<Integer, Integer> runningHourCount = result.getRunningHoursCount();
         final Map<Integer, Integer> sleepHourCount = result.getSleepHoursCount();
@@ -201,10 +277,6 @@ public class PeriodDashboardFragment extends Fragment {
 
         return colors;
     }
-
-//    private ValueFormatter myValueFormatter() {
-//        return new DecimalFormat("###,###,###,##0.0");
-//    }
 
     public static class MyAxisValueFormatter extends ValueFormatter {
 

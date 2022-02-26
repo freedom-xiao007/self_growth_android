@@ -130,6 +130,34 @@ public class DateUtils {
         return hourCount;
     }
 
+    /**
+     * 返回开始到结束时间，各个小时节点的分钟数
+     *
+     * 如 2022-01-10 09:10:00 到 2022-01-11 10:10:00
+     * 有两个小时字段：9 和 10 ，9 经历了50分钟， 10 经历了 10 分钟
+     * @param startTime start date
+     * @param endTime end date
+     * @return hour map
+     */
+    public static Map<Integer, Integer> getHourSpeed(final Date startTime, final Date endTime) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startTime);
+
+        final Map<Integer, Integer> hourSpeed = new HashMap<>(24);
+        while (calendar.getTime().before(endTime)) {
+            final Date before = calendar.getTime();
+            final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            calendar.add(Calendar.HOUR_OF_DAY, 1);
+            calendar.set(Calendar.MINUTE, 0);
+            if (calendar.getTime().before(endTime)) {
+                hourSpeed.put(hour, 60 - before.getMinutes());
+            } else {
+                hourSpeed.put(hour, endTime.getMinutes());
+            }
+        }
+        return hourSpeed;
+    }
+
     public static Date parse(final String s) throws ParseException {
         return dateFormat.parse(s);
     }

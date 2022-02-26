@@ -10,7 +10,6 @@ import com.example.selfgrowth.enums.TaskTypeEnum;
 import com.example.selfgrowth.utils.DateUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,17 +37,17 @@ public class DashboardResult {
     private Map<String, Long> appTimes = new HashMap<>();
 
     @Builder.Default
-    private Map<Integer, Integer> learnHoursTimes = new HashMap<>(24);
+    private Map<Integer, Integer> learnHourSpeed = new HashMap<>(24);
     @Builder.Default
     private Map<Integer, Integer> learnHoursCount = new HashMap<>(24);
 
     @Builder.Default
-    private Map<Integer, Integer> runningHoursTimes = new HashMap<>(24);
+    private Map<Integer, Integer> runningHourSpeed = new HashMap<>(24);
     @Builder.Default
     private Map<Integer, Integer> runningHoursCount = new HashMap<>(24);
 
     @Builder.Default
-    private Map<Integer, Integer> sleepHoursTimes = new HashMap<>(24);
+    private Map<Integer, Integer> sleepHourSpeed = new HashMap<>(24);
     @Builder.Default
     private Map<Integer, Integer> sleepHoursCount = new HashMap<>(24);
 
@@ -100,36 +99,46 @@ public class DashboardResult {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addAppLog(final DashboardStatistics.AppUseLog log, final LabelEnum labelEnum) {
         final Map<Integer, Integer> hourCount = DateUtils.getHourCount(log.getStartTime(), log.getEndTime());
+        final Map<Integer, Integer> hourSpeed = DateUtils.getHourSpeed(log.getStartTime(), log.getEndTime());
         switch (labelEnum) {
             case LEARN:
-                mergeLearnCount(hourCount);
+                mergeLearnTime(hourCount, hourSpeed);
                 break;
             case RUNNING:
-                mergeRunningCount(hourCount);
+                mergeRunningTime(hourCount, hourSpeed);
                 break;
             case SLEEP:
-                mergeSleepCount(hourCount);
+                mergeSleepTime(hourCount, hourSpeed);
                 break;
             default:
                 break;
         }
     }
 
-    private void mergeLearnCount(final Map<Integer, Integer> hourCount) {
+    private void mergeLearnTime(final Map<Integer, Integer> speed, final Map<Integer, Integer> hourCount) {
         for (Integer key: hourCount.keySet()) {
-            learnHoursCount.put(key, learnHoursCount.getOrDefault(key, 0) + hourCount.get(key));
+            learnHoursCount.put(key, 1);
+        }
+        for (Integer key: speed.keySet()) {
+            learnHourSpeed.put(key, learnHourSpeed.getOrDefault(key, 0) + speed.get(key));
         }
     }
 
-    private void mergeRunningCount(final Map<Integer, Integer> hourCount) {
+    private void mergeRunningTime(final Map<Integer, Integer> speed, final Map<Integer, Integer> hourCount) {
         for (Integer key: hourCount.keySet()) {
-            runningHoursCount.put(key, runningHoursCount.getOrDefault(key, 0) + hourCount.get(key));
+            runningHoursCount.put(key, 1);
+        }
+        for (Integer key: speed.keySet()) {
+            runningHourSpeed.put(key, runningHourSpeed.getOrDefault(key, 0) + speed.get(key));
         }
     }
 
-    private void mergeSleepCount(final Map<Integer, Integer> hourCount) {
+    private void mergeSleepTime(final Map<Integer, Integer> speed, final Map<Integer, Integer> hourCount) {
         for (Integer key: hourCount.keySet()) {
-            sleepHoursCount.put(key, sleepHoursCount.getOrDefault(key, 0) + hourCount.get(key));
+            sleepHoursCount.put(key, 1);
+        }
+        for (Integer key: speed.keySet()) {
+            sleepHourSpeed.put(key, sleepHourSpeed.getOrDefault(key, 0) + speed.get(key));
         }
     }
 
@@ -159,6 +168,24 @@ public class DashboardResult {
     public void addSleepHourCount(Map<Integer, Integer> sleepHoursCount) {
         for (Integer hour: sleepHoursCount.keySet()) {
             this.sleepHoursCount.put(hour, this.sleepHoursCount.getOrDefault(hour, 0) + sleepHoursCount.get(hour));
+        }
+    }
+
+    public void addLearnHourSpeed(Map<Integer, Integer> learnHourSpeed) {
+        for (Integer hour: learnHourSpeed.keySet()) {
+            this.learnHourSpeed.put(hour, this.learnHourSpeed.getOrDefault(hour, 0) + learnHourSpeed.get(hour));
+        }
+    }
+
+    public void addRunningHourSpeed(Map<Integer, Integer> runningHourSpeed) {
+        for (Integer hour: runningHourSpeed.keySet()) {
+            this.runningHourSpeed.put(hour, this.runningHourSpeed.getOrDefault(hour, 0) + runningHourSpeed.get(hour));
+        }
+    }
+
+    public void addSleepHourSpeed(Map<Integer, Integer> sleepHourSpeed) {
+        for (Integer hour: sleepHourSpeed.keySet()) {
+            this.sleepHourSpeed.put(hour, this.sleepHourSpeed.getOrDefault(hour, 0) + sleepHourSpeed.get(hour));
         }
     }
 }
