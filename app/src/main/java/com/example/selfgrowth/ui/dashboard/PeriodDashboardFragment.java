@@ -221,7 +221,7 @@ public class PeriodDashboardFragment extends Fragment {
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
         l.setFormSize(8f);
-        l.setFormToTextSpace(4f);
+        l.setFormToTextSpace(2f);
         l.setXEntrySpace(6f);
         l.setTextColor(Color.WHITE);
 
