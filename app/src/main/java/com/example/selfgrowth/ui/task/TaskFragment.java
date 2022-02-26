@@ -39,7 +39,7 @@ public class TaskFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        autoLogin();
+//        autoLogin();
         View view = inflater.inflate(R.layout.fragment_task, container, false);
         view.findViewById(R.id.add_task_jump).setOnClickListener(v -> requireActivity()
                 .getSupportFragmentManager()
