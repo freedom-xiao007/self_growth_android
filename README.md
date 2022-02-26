@@ -71,6 +71,7 @@
 - [安卓layout布局三等分](https://blog.csdn.net/LY_Dengle/article/details/70172918)
 - [Android 退出确认弹窗(AlertDialog)](https://blog.csdn.net/qq_35988274/article/details/100513452)
 - [对话框](https://developer.android.com/guide/topics/ui/dialogs)
+- [图表库：MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
 
 ### 路由与跳转
 - [How to move from one fragment to another fragment on click of an ImageView in Android?](https://stackoverflow.com/questions/23212162/how-to-move-from-one-fragment-to-another-fragment-on-click-of-an-imageview-in-an)
@@ -104,6 +105,7 @@
 
 ### 其他
 - [Android 泛型](https://www.jianshu.com/p/8d7b353ca94b)
+- [Android 使用记录访问权限](https://blog.csdn.net/qq_24531461/article/details/67635016)
 
 ## V1.0.0版本开发规划 单机版本
 ### 功能清单
