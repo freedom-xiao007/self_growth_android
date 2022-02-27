@@ -18,6 +18,7 @@ import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.http.model.DashboardResult;
 import com.example.selfgrowth.service.foregroud.DashboardService;
 import com.example.selfgrowth.service.foregroud.TaskLogService;
+import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.MyTimeUtils;
 
 import java.util.ArrayList;
@@ -45,7 +46,8 @@ public class DailyDashboardFragment extends Fragment {
         ((TextView) view.findViewById(R.id.learn_minutes)).setText(MyTimeUtils.toString(result.getLearnTime()));
         ((TextView) view.findViewById(R.id.running_minutes)).setText(MyTimeUtils.toString(result.getRunningTime()));
         ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
-        ((TextView)view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
+        ((TextView) view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
+        ((TextView) view.findViewById(R.id.date)).setText(DateUtils.dayString(date));
 
         final Map<String, Long> appTimes = result.getAppTimes();
         List<String> appUserTimes = new ArrayList<>(result.getAppTimes().size());

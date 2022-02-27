@@ -32,6 +32,8 @@ public class DashboardResult {
     private long sleepTime;
     private long sleepAverage;
     private long taskComplete;
+    private String startDate;
+    private String endDate;
 
     @Builder.Default
     private Map<String, Long> appTimes = new HashMap<>();

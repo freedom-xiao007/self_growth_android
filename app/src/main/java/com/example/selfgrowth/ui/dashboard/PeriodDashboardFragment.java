@@ -19,6 +19,7 @@ import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.http.model.DashboardResult;
 import com.example.selfgrowth.service.foregroud.DashboardService;
 import com.example.selfgrowth.service.foregroud.TaskLogService;
+import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.MyTimeUtils;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -88,6 +89,7 @@ public class PeriodDashboardFragment extends Fragment {
         ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
         ((TextView) view.findViewById(R.id.sleep_average)).setText(MyTimeUtils.toString(result.getSleepAverage()));
         ((TextView) view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
+        ((TextView) view.findViewById(R.id.date)).setText(String.join(" - ", result.getStartDate(), result.getEndDate()));
 
         List<String> appUserTimes = new ArrayList<>(result.getAppTimes().size());
         for (String appName: result.getAppTimes().keySet()) {

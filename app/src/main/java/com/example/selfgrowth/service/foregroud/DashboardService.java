@@ -50,6 +50,8 @@ public class DashboardService {
         }
 
         periodData = new DashboardResult();
+        periodData.setStartDate(DateUtils.dayString(dates.get(0)));
+        periodData.setEndDate(DateUtils.dayString(dates.get(dates.size() - 1)));
         for (Date dateItem: dates) {
             DashboardResult dailyData = getDayDate(dateItem, view, refresh);
             mergeDate(periodData, dailyData);

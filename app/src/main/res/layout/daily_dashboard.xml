@@ -12,6 +12,15 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/date"
+            android:drawableLeft="@drawable/ic_baseline_access_time_50"
+            android:text="2022-02-09"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:gravity="center_vertical|left"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <TextView
             android:text="数据总览"
             android:textColor="@color/white"
             android:textSize="35sp"
