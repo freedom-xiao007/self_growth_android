@@ -60,7 +60,7 @@ public class AppStatisticsService {
                 record.start(log.getDate(), packageName2AppInfo.get(packageName));
                 return;
             }
-            if (record.continueRecord(packageName)) {
+            if (record.continueRecord(packageName, log.getDate())) {
                 return;
             }
 
@@ -157,7 +157,11 @@ public class AppStatisticsService {
             return Duration.between(start.toInstant(), end.toInstant()).toMinutes();
         }
 
-        public boolean continueRecord(String packageName) {
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        public boolean continueRecord(String packageName, Date current) {
+            if (Duration.between(start.toInstant(), current.toInstant()).toMinutes() > 1) {
+                return false;
+            }
             return packageName.equals(appInfo.getPackageName());
         }
 
