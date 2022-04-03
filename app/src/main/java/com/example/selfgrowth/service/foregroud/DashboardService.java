@@ -9,9 +9,9 @@ import androidx.annotation.RequiresApi;
 
 import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
-import com.example.selfgrowth.http.model.DashboardResult;
-import com.example.selfgrowth.http.model.DashboardStatistics;
-import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.model.DashboardResult;
+import com.example.selfgrowth.model.DashboardStatistics;
+import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.GsonUtils;
 

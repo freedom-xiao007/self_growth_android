@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.model.AppInfo;
+import com.example.selfgrowth.model.AppInfo;
 import com.example.selfgrowth.utils.AppUtils;
 
 import org.angmarch.views.NiceSpinner;

@@ -3,12 +3,11 @@ package com.example.selfgrowth.http.request;
 import android.util.Log;
 
 import com.example.selfgrowth.http.api.TaskApi;
-import com.example.selfgrowth.http.model.ApiResponse;
-import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.model.ApiResponse;
+import com.example.selfgrowth.model.TaskConfig;
 
 import java.util.function.Consumer;
 
-import lombok.extern.slf4j.Slf4j;
 import retrofit2.Call;
 
 public class TaskRequest extends Request {

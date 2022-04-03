@@ -1,8 +1,8 @@
 package com.example.selfgrowth.http.request;
 
 import com.example.selfgrowth.http.api.ActivityApi;
-import com.example.selfgrowth.http.model.ActivityModel;
-import com.example.selfgrowth.http.model.ApiResponse;
+import com.example.selfgrowth.model.ActivityModel;
+import com.example.selfgrowth.model.ApiResponse;
 
 import java.util.function.Consumer;
 

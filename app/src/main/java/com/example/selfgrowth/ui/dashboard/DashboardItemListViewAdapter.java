@@ -4,22 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.model.DashboardStatistics;
-import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.model.DashboardStatistics;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.ui.activity.AppUseLogListViewAdapter;
-import com.example.selfgrowth.ui.task.TaskFragment;
 import com.example.selfgrowth.utils.MyTimeUtils;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.common.base.Strings;
 
 import java.util.List;
 

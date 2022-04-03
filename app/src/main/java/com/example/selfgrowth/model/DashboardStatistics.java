@@ -1,4 +1,4 @@
-package com.example.selfgrowth.http.model;
+package com.example.selfgrowth.model;
 
 import com.example.selfgrowth.ui.dashboard.DailyLogModel;
 

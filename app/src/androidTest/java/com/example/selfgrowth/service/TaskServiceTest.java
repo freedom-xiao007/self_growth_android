@@ -11,7 +11,7 @@ import com.example.selfgrowth.enums.TaskCycleEnum;
 import com.example.selfgrowth.enums.TaskLearnTypeEnum;
 import com.example.selfgrowth.enums.TaskTypeEnum;
 import com.example.selfgrowth.http.HttpConfig;
-import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.service.foregroud.TaskService;
 
 import org.junit.Before;

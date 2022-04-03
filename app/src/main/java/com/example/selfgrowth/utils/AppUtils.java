@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 
 import com.example.selfgrowth.enums.LabelEnum;
-import com.example.selfgrowth.http.model.AppInfo;
+import com.example.selfgrowth.model.AppInfo;
 
 import java.util.ArrayList;
 import java.util.List;

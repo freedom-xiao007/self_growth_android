@@ -1,7 +1,6 @@
 package com.example.selfgrowth.ui.activity;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.model.AppInfo;
-import com.example.selfgrowth.http.model.DashboardStatistics;
+import com.example.selfgrowth.model.DashboardStatistics;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.utils.DateUtils;
-
-import org.angmarch.views.NiceSpinner;
 
 import java.util.List;
 

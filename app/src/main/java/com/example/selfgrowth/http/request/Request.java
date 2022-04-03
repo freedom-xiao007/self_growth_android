@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.http.RetrofitClient;
-import com.example.selfgrowth.http.model.ApiResponse;
+import com.example.selfgrowth.model.ApiResponse;
 
 import java.util.function.Consumer;
 

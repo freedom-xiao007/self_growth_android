@@ -1,7 +1,7 @@
 package com.example.selfgrowth.http.request;
 
 import com.example.selfgrowth.http.api.TaskLabelApi;
-import com.example.selfgrowth.http.model.ApiResponse;
+import com.example.selfgrowth.model.ApiResponse;
 
 import java.util.function.Consumer;
 

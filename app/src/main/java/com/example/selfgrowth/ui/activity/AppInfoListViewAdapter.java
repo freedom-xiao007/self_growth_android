@@ -9,12 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.model.AppInfo;
-import com.example.selfgrowth.http.model.DashboardStatistics;
+import com.example.selfgrowth.model.AppInfo;
 import com.example.selfgrowth.http.request.TaskRequest;
 
 import org.angmarch.views.NiceSpinner;
-import org.angmarch.views.OnSpinnerItemSelectedListener;
 
 import java.util.List;
 

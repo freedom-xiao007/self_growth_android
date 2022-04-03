@@ -6,14 +6,13 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.selfgrowth.http.model.AppInfo;
-import com.example.selfgrowth.http.model.AppLog;
-import com.example.selfgrowth.http.model.DashboardStatistics;
+import com.example.selfgrowth.model.AppInfo;
+import com.example.selfgrowth.model.AppLog;
+import com.example.selfgrowth.model.DashboardStatistics;
 import com.example.selfgrowth.ui.dashboard.DailyLogModel;
 import com.example.selfgrowth.utils.AppUtils;
 import com.example.selfgrowth.utils.DateUtils;
 
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +20,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class AppStatisticsService {

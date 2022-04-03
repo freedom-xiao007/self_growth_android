@@ -17,13 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
-import com.example.selfgrowth.http.model.DashboardResult;
+import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.service.foregroud.DashboardService;
 import com.example.selfgrowth.service.foregroud.TaskLogService;
 import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.MyTimeUtils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;

@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
-import com.example.selfgrowth.http.model.DashboardResult;
+import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.service.foregroud.DashboardService;
 import com.example.selfgrowth.service.foregroud.TaskLogService;
 import com.example.selfgrowth.utils.DateUtils;
@@ -40,7 +40,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 // todo 日期选择的部分看怎么抽取一下，形成一个公用的
 public class PeriodDashboardFragment extends Fragment {

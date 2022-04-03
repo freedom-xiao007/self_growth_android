@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.selfgrowth.enums.TaskCycleEnum;
-import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.utils.GsonUtils;
 import com.google.android.material.snackbar.Snackbar;

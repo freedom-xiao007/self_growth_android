@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.selfgrowth.http.model.AppLog;
-import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.GsonUtils;
 

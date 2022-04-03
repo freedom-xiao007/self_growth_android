@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,18 +22,15 @@ import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.http.RetrofitClient;
-import com.example.selfgrowth.http.model.AppInfo;
-import com.example.selfgrowth.http.model.DashboardStatistics;
-import com.example.selfgrowth.http.model.LoginUser;
+import com.example.selfgrowth.model.DashboardStatistics;
+import com.example.selfgrowth.model.LoginUser;
 import com.example.selfgrowth.http.request.UserRequest;
 import com.example.selfgrowth.service.foregroud.AppStatisticsService;
 import com.example.selfgrowth.service.foregroud.TaskLogService;
 import com.example.selfgrowth.ui.activity.AppFragment;
 import com.example.selfgrowth.ui.activity.AppHistoryFragment;
-import com.example.selfgrowth.ui.activity.AppUseLogListViewAdapter;
 import com.example.selfgrowth.ui.dashboard.DailyDashboardFragment;
 import com.example.selfgrowth.ui.dashboard.PeriodDashboardFragment;
-import com.example.selfgrowth.ui.task.AddTaskFragment;
 import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
 

@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.model.DashboardStatistics;
+import com.example.selfgrowth.model.DashboardStatistics;
 import com.example.selfgrowth.service.foregroud.AppStatisticsService;
 
 import org.angmarch.views.NiceSpinner;

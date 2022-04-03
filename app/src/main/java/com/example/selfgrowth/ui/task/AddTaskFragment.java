@@ -1,6 +1,5 @@
 package com.example.selfgrowth.ui.task;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +18,7 @@ import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.TaskCycleEnum;
 import com.example.selfgrowth.enums.TaskLearnTypeEnum;
 import com.example.selfgrowth.enums.TaskTypeEnum;
-import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.service.foregroud.TaskService;
 
 import org.angmarch.views.NiceSpinner;

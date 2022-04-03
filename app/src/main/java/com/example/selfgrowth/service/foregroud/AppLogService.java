@@ -4,19 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.selfgrowth.http.model.AppInfo;
-import com.example.selfgrowth.http.model.AppLog;
+import com.example.selfgrowth.model.AppInfo;
+import com.example.selfgrowth.model.AppLog;
 import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.GsonUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class AppLogService {

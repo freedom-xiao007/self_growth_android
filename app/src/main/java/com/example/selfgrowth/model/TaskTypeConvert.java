@@ -1,4 +1,4 @@
-package com.example.selfgrowth.http.model;
+package com.example.selfgrowth.model;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -6,31 +6,24 @@ import java.util.Map;
 
 import lombok.SneakyThrows;
 
-/**
- * 任务周期枚举
- */
-public class CycleTypeConvert {
+public class TaskTypeConvert {
 
-    private final static Map<String, Integer> convertKey = initKey();
-    private final static Map<Integer, String> convertValue = initValue();
+    public static final Map<String, Integer> convertKey = initKey();
+    public static final Map<Integer, String> convertValue = initValue();
 
     private static Map<String, Integer> initKey() {
         return ImmutableMap.<String, Integer>builder()
-                .put("单次", 0)
-                .put("每日", 1)
-                .put("每周", 2)
-                .put("每月", 3)
-                .put("每年", 4)
+                .put("输入", 0)
+                .put("输出", 1)
+                .put("日常", 2)
                 .build();
     }
 
     private static Map<Integer, String> initValue() {
         return ImmutableMap.<Integer, String>builder()
-                .put(0, "单次")
-                .put(1, "每日")
-                .put(2, "每周")
-                .put(3, "每月")
-                .put(4, "每年")
+                .put(0, "输入")
+                .put(1, "输出")
+                .put(2, "日常")
                 .build();
     }
 

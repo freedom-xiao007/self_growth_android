@@ -16,8 +16,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
-import com.example.selfgrowth.http.model.LoginUser;
-import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.model.LoginUser;
+import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.http.request.UserRequest;
 import com.example.selfgrowth.service.foregroud.TaskService;
 import com.example.selfgrowth.utils.AppUtils;

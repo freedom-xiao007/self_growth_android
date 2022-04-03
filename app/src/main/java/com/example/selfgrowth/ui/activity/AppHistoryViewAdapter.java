@@ -9,8 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.model.AppHistory;
-import com.example.selfgrowth.http.model.AppInfo;
+import com.example.selfgrowth.model.AppHistory;
+import com.example.selfgrowth.model.AppInfo;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.utils.DateUtils;
 

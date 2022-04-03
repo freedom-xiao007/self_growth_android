@@ -9,10 +9,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.model.TaskConfig;
+import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.service.foregroud.TaskService;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
