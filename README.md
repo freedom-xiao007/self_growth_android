@@ -1,7 +1,11 @@
-# Self Growth Android : 自我生成手机应用使用情况统计Android客户端
+# Self Growth Android 
 ***
 
 **自我生长：成为更好的自己**
+
+**自我生成手机应用使用情况统计Android客户端**
+
+初始版本功能完善与开发中
 
 ## 简介
 自律性辅助软件，成为更好的自己
