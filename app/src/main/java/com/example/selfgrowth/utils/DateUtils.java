@@ -4,6 +4,7 @@ import com.example.selfgrowth.enums.StatisticsTypeEnum;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -79,6 +80,9 @@ public class DateUtils {
         final int days = cal.getActualMaximum(Calendar.DAY_OF_YEAR);
         final List<Date> res = new ArrayList<>(days);
         for (int i=0; i < days; i++) {
+            if (new Date().before(cal.getTime())) {
+                break;
+            }
             res.add(cal.getTime());
             cal.add(Calendar.DAY_OF_YEAR, 1);
         }
@@ -92,6 +96,9 @@ public class DateUtils {
         final int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         final List<Date> res = new ArrayList<>(days);
         for (int i=0; i < days; i++) {
+            if (new Date().before(cal.getTime())) {
+                break;
+            }
             res.add(cal.getTime());
             cal.add(Calendar.DAY_OF_MONTH, 1);
         }
@@ -99,19 +106,22 @@ public class DateUtils {
     }
 
     private static List<Date> getPeriodDatesOfWeek(final Date date) {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.setFirstDayOfWeek(Calendar.MONDAY);
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
         if (dayOfWeek == 1) {
             dayOfWeek = 8;
         }
-        calendar.add(Calendar.DATE, calendar.getFirstDayOfWeek() - dayOfWeek);
+        cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - dayOfWeek);
         List<Date> dates = new ArrayList<>(7);
-        dates.add(calendar.getTime());
+        dates.add(cal.getTime());
         for (int i=0; i < 6; i++) {
-            calendar.add(Calendar.DAY_OF_YEAR, 1);
-            dates.add(calendar.getTime());
+            if (new Date().before(cal.getTime())) {
+                break;
+            }
+            cal.add(Calendar.DAY_OF_YEAR, 1);
+            dates.add(cal.getTime());
         }
         return dates;
     }

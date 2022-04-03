@@ -85,7 +85,11 @@ public class PeriodDashboardFragment extends Fragment {
 
         TextView dateText = ((TextView) view.findViewById(R.id.date));
         final List<Date> periodDate = DateUtils.getPeriodDates(date, statisticsType);
-        dateText.setText(String.join(" - ", DateUtils.dateShow(periodDate.get(0)), DateUtils.dateShow(periodDate.get(periodDate.size()-1))));
+        if (periodDate.isEmpty()) {
+            dateText.setText(String.join(" - ", DateUtils.dateShow(date), DateUtils.dateShow(date)));
+        } else {
+            dateText.setText(String.join(" - ", DateUtils.dateShow(periodDate.get(0)), DateUtils.dateShow(periodDate.get(periodDate.size() - 1))));
+        }
         dateText.setOnClickListener(view1 -> {
             DatePickerDialog dialog=new DatePickerDialog(requireContext(),null, yearCache, monthCache, dayCache);
             //把日期对话框显示在界面上

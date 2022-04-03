@@ -43,6 +43,9 @@ public class DashboardService {
         }
 
         List<Date> dates = DateUtils.getPeriodDates(date, statisticsType);
+        if (dates.size() < 2) {
+            return new DashboardResult();
+        }
         Date firstDay = dates.get(0);
         DashboardResult periodData = getFromDb(firstDay, statisticsType, refresh);
         if (periodData != null) {
