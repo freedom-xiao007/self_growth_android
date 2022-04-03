@@ -34,7 +34,7 @@ public class DateUtils {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return String.format(Locale.CANADA, "%d年%d月%d日", calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     /**

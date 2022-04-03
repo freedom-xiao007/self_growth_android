@@ -1,5 +1,6 @@
 package com.example.selfgrowth.ui.dashboard;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,12 +42,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+// todo 日期选择的部分看怎么抽取一下，形成一个公用的
 public class PeriodDashboardFragment extends Fragment {
 
     private final TaskLogService taskLogService = TaskLogService.getInstance();
     private final DashboardService dashboardService = DashboardService.getInstance();
     private final StatisticsTypeEnum statisticsType;
-
+    private int yearCache;
+    private int monthCache;
+    private int dayCache;
 
     public PeriodDashboardFragment(final StatisticsTypeEnum type) {
         this.statisticsType = type;
@@ -56,27 +60,16 @@ public class PeriodDashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.period_dashboard, container, false);
-        loadData(getDate(), view);
+        initDateCache();
+        loadData(new Date(), view);
         return view;
     }
 
-    private Date getDate() {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        switch (statisticsType) {
-            case WEEK:
-                calendar.add(Calendar.DAY_OF_YEAR, -7);
-                return calendar.getTime();
-            case MONTH:
-                calendar.add(Calendar.MONTH, -1);
-                return calendar.getTime();
-            case YEAR:
-                calendar.add(Calendar.YEAR, -1);
-                return calendar.getTime();
-            default:
-                calendar.set(Calendar.DAY_OF_YEAR, -1);
-                return calendar.getTime();
-        }
+    private void initDateCache() {
+        Calendar calendar=Calendar.getInstance();
+        yearCache = calendar.get(Calendar.YEAR);
+        monthCache = calendar.get(Calendar.MONTH);
+        dayCache = calendar.get(Calendar.DAY_OF_MONTH);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -89,7 +82,23 @@ public class PeriodDashboardFragment extends Fragment {
         ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
         ((TextView) view.findViewById(R.id.sleep_average)).setText(MyTimeUtils.toString(result.getSleepAverage()));
         ((TextView) view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
-        ((TextView) view.findViewById(R.id.date)).setText(String.join(" - ", result.getStartDate(), result.getEndDate()));
+
+        TextView dateText = ((TextView) view.findViewById(R.id.date));
+        final List<Date> periodDate = DateUtils.getPeriodDates(date, statisticsType);
+        dateText.setText(String.join(" - ", DateUtils.dateShow(periodDate.get(0)), DateUtils.dateShow(periodDate.get(periodDate.size()-1))));
+        dateText.setOnClickListener(view1 -> {
+            DatePickerDialog dialog=new DatePickerDialog(requireContext(),null, yearCache, monthCache, dayCache);
+            //把日期对话框显示在界面上
+            dialog.show();
+            dialog.setOnDateSetListener((datePicker, year, month, day) -> {
+                yearCache = year;
+                monthCache = month;
+                dayCache = day;
+                Calendar selectDate = Calendar.getInstance();
+                selectDate.set(year, month, day);
+                loadData(selectDate.getTime(), view);
+            });
+        });
 
         List<String> appUserTimes = new ArrayList<>(result.getAppTimes().size());
         for (String appName: result.getAppTimes().keySet()) {

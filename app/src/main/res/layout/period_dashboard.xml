@@ -16,7 +16,7 @@
             android:drawableLeft="@drawable/ic_baseline_access_time_50"
             android:text="2022-02-09 - 2022-00-12"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:gravity="center_vertical|left"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
