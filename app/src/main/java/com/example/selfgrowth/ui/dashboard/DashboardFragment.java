@@ -13,13 +13,16 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
+import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.model.DashboardStatistics;
 import com.example.selfgrowth.service.foregroud.AppStatisticsService;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class DashboardFragment extends Fragment {
 
@@ -31,6 +34,7 @@ public class DashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         initData(view);
+        initListen(view);
         return view;
     }
 
@@ -41,28 +45,76 @@ public class DashboardFragment extends Fragment {
             ((TextView) view.findViewById(R.id.note)).setText("今日暂无统计数据");
             return;
         }
-        final String firstGroup = (String) data.getGroups().keySet().toArray()[0];
-        final DashboardItemListViewAdapter adapter = new DashboardItemListViewAdapter(requireContext(), data.getGroups().get(firstGroup).getApps());
-        final ListView listView = view.findViewById(R.id.dashboard_group_view_id);
-        listView.setAdapter(adapter);
-        initComponent(view);
+
+        TextView groupShow = view.findViewById(R.id.dashboard_group_name);
+        groupShow.setText("类型：所有");
+        NiceSpinner spinnerOfGroup = view.findViewById(R.id.dashboard_group_spinner);
+        List<String> labels = new ArrayList<>(LabelEnum.values().length + 1);
+        labels.add("所有");
+        for (LabelEnum label: LabelEnum.values()) {
+            labels.add(label.getName());
+        }
+        spinnerOfGroup.attachDataSource(labels);
+
+        todayOverview(view);
     }
 
-    private void initComponent(View view) {
+    private void initListen(View view) {
+        NiceSpinner spinnerOfGroup = view.findViewById(R.id.dashboard_group_spinner);
+        TextView groupShow = view.findViewById(R.id.dashboard_group_name);
+        spinnerOfGroup.setOnSpinnerItemSelectedListener((parent, view1, position, id) -> {
+            String name = (String) parent.getItemAtPosition(position);
+            if (name.equals("所有")) {
+                todayOverview(view);
+                return;
+            }
+
+            List<DashboardStatistics.DashboardApp> appData;
+            DashboardStatistics.DashboardGroup groupData = data.getGroups().get(name);
+            if (groupData == null) {
+                appData = new ArrayList<>(0);
+            } else {
+                appData = groupData.getApps();
+            }
+            ListView listView = view.findViewById(R.id.dashboard_group_view_id);
+            final DashboardItemListViewAdapter adapter = new DashboardItemListViewAdapter(requireContext(), appData);
+            listView.setAdapter(adapter);
+            groupShow.setText("类型：" + name);
+        });
+    }
+
+    private void todayOverview(View view) {
         if (data == null) {
             return;
         }
 
-        TextView groupShow = view.findViewById(R.id.dashboard_group_name);
-        groupShow.setText("类型：" +data.getGroups().keySet().toArray()[0].toString());
-        NiceSpinner spinnerOfGroup = view.findViewById(R.id.dashboard_group_spinner);
-        spinnerOfGroup.attachDataSource(Arrays.asList(data.getGroups().keySet().toArray()));
-        spinnerOfGroup.setOnSpinnerItemSelectedListener((parent, view1, position, id) -> {
-            String name = (String) parent.getItemAtPosition(position);
-            ListView listView = view.findViewById(R.id.dashboard_group_view_id);
-            final DashboardItemListViewAdapter adapter = new DashboardItemListViewAdapter(requireContext(), data.getGroups().get(name).getApps());
-            listView.setAdapter(adapter);
-            groupShow.setText("类型：" + name);
-        });
+        DashboardStatistics.DashboardGroup learnData = data.getGroups().getOrDefault(LabelEnum.LEARN.getName(), null);
+        DashboardStatistics.DashboardGroup runningData = data.getGroups().getOrDefault(LabelEnum.RUNNING.getName(), null);
+        DashboardStatistics.DashboardGroup sleepData = data.getGroups().getOrDefault(LabelEnum.SLEEP.getName(), null);
+
+        List<DashboardStatistics.DashboardApp> data = new ArrayList<>(20);
+        if (learnData == null) {
+            data.add(DashboardStatistics.DashboardApp.builder()
+                    .name("学习总时长:")
+                    .minutes(0)
+                    .build());
+        } else {
+            data.add(DashboardStatistics.DashboardApp.builder()
+                    .name("学习总时长:")
+                    .minutes(learnData.getMinutes())
+                    .build());
+            data.addAll(learnData.getApps());
+        }
+        data.add(DashboardStatistics.DashboardApp.builder()
+                .name("运动总时长:")
+                .minutes(runningData == null ? 0 : runningData.getMinutes())
+                .build());
+        data.add(DashboardStatistics.DashboardApp.builder()
+                .name("睡觉总时长:")
+                .minutes(sleepData == null ? 0 : sleepData.getMinutes())
+                .build());
+        final DashboardItemListViewAdapter adapter = new DashboardItemListViewAdapter(requireContext(), data);
+        final ListView listView = view.findViewById(R.id.dashboard_group_view_id);
+        listView.setAdapter(adapter);
     }
 }
