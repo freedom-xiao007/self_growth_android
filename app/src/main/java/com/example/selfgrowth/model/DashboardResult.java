@@ -7,7 +7,6 @@ import androidx.annotation.RequiresApi;
 import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.enums.TaskTypeEnum;
-import com.example.selfgrowth.ui.dashboard.DailyLogModel;
 import com.example.selfgrowth.utils.DateUtils;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.selfgrowth.ui.dashboard;
+package com.example.selfgrowth.model;
 
 import com.example.selfgrowth.enums.LabelEnum;
 

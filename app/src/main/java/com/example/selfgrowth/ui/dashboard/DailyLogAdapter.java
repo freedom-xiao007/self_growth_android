@@ -10,6 +10,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.selfgrowth.R;
+import com.example.selfgrowth.model.DailyLogModel;
+import com.example.selfgrowth.utils.VectorDrawableUtils;
 import com.github.vipulasri.timelineview.TimelineView;
 
 import java.util.List;

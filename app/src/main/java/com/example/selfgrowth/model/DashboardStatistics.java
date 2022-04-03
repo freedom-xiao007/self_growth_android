@@ -1,7 +1,5 @@
 package com.example.selfgrowth.model;
 
-import com.example.selfgrowth.ui.dashboard.DailyLogModel;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.selfgrowth.ui.dashboard;
+package com.example.selfgrowth.utils;
 
 import android.content.Context;
 import android.graphics.PorterDuff;

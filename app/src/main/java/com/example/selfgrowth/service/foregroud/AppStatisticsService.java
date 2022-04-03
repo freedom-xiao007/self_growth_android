@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi;
 import com.example.selfgrowth.model.AppInfo;
 import com.example.selfgrowth.model.AppLog;
 import com.example.selfgrowth.model.DashboardStatistics;
-import com.example.selfgrowth.ui.dashboard.DailyLogModel;
+import com.example.selfgrowth.model.DailyLogModel;
 import com.example.selfgrowth.utils.AppUtils;
 import com.example.selfgrowth.utils.DateUtils;
 
