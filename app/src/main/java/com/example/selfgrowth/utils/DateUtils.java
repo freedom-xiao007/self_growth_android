@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DateUtils {
@@ -27,6 +28,13 @@ public class DateUtils {
 
     public static String dayString(final Date date) {
         return dayFormat.format(date);
+    }
+
+    public static String dateShow(final Date date) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return String.format(Locale.CANADA, "%d年%d月%d日", calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     /**

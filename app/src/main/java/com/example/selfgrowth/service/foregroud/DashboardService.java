@@ -82,7 +82,7 @@ public class DashboardService {
             return result;
         }
 
-        final DashboardStatistics data = appStatisticsService.statistics(new Date(), view.getContext());
+        final DashboardStatistics data = appStatisticsService.statistics(date, view.getContext());
         if (data == null || data.getGroups() == null || data.getGroups().keySet().size() <= 0) {
             return new DashboardResult();
         }
