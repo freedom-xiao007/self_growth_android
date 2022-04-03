@@ -111,6 +111,7 @@
 ### 其他
 - [Android 泛型](https://www.jianshu.com/p/8d7b353ca94b)
 - [Android 使用记录访问权限](https://blog.csdn.net/qq_24531461/article/details/67635016)
+- [解决 Caused by: org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:](https://www.jianshu.com/p/cd75a805ad60)
 
 ## V1.0.0版本开发规划 单机版本
 ### 功能清单
