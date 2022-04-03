@@ -32,6 +32,8 @@ public class DashboardResult {
     private long sleepTime;
     private long sleepAverage;
     private long taskComplete;
+    private int blogs;
+    private int books;
     private String startDate;
     private String endDate;
 
@@ -58,6 +60,9 @@ public class DashboardResult {
 
     @Builder.Default
     private List<String> readBooks = new ArrayList<>();
+
+    @Builder.Default
+    private List<String> writeBlogs = new ArrayList<>();
 
     public void addLearnTime(final long value) {
         this.learnTime += value;
@@ -151,7 +156,11 @@ public class DashboardResult {
             taskLabelStatistics.put(config.getLabel(), 1);
         }
         if (config.getTaskTypeEnum().equals(TaskTypeEnum.BOOK)) {
+            books += 1;
             readBooks.add(config.getName());
+        } else if (config.getTaskTypeEnum().equals(TaskTypeEnum.NOTE)) {
+            blogs += 1;
+            writeBlogs.add(config.getName());
         }
     }
 
@@ -189,5 +198,25 @@ public class DashboardResult {
         for (Integer hour: sleepHourSpeed.keySet()) {
             this.sleepHourSpeed.put(hour, this.sleepHourSpeed.getOrDefault(hour, 0) + sleepHourSpeed.get(hour));
         }
+    }
+
+    public void addAppTimes(Map<String, Long> appTimes) {
+        for (String app: appTimes.keySet()) {
+            this.appTimes.put(app, this.appTimes.getOrDefault(app, 0L) + appTimes.get(app));
+        }
+    }
+
+    public void addCompleteTask(long taskComplete) {
+        this.taskComplete += taskComplete;
+    }
+
+    public void addWriteBlogs(int blogs, List<String> writeBlogs) {
+        this.blogs += blogs;
+        this.writeBlogs.addAll(writeBlogs);
+    }
+
+    public void addReadBooks(int books, List<String> readBooks) {
+        this.books += books;
+        this.readBooks.addAll(readBooks);
     }
 }

@@ -196,6 +196,54 @@
                 android:layout_height="50dp"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:text="笔记/博客数"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center_vertical|left"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"/>
+            <TextView
+                android:id="@+id/blogs"
+                android:text="365"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center_vertical|right"
+                android:paddingEnd="10dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:text="阅读书籍数"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center_vertical|left"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"/>
+            <TextView
+                android:id="@+id/books"
+                android:text="365"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:gravity="center_vertical|right"
+                android:paddingEnd="10dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"/>
+        </LinearLayout>
+
         <TextView
             android:text="学习/运动/睡觉次数分布"
             android:textColor="@color/white"
@@ -231,12 +279,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
         <ListView
-            android:id="@+id/learn_app_info"
+            android:id="@+id/learn_detail"
             android:layout_width="match_parent"
             android:layout_height="200dp"/>
 
         <TextView
-            android:text="任务详情"
+            android:text="笔记/博客详情"
             android:textColor="@color/white"
             android:textSize="35sp"
             android:gravity="center_vertical|left"
@@ -244,7 +292,20 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
         <ListView
-            android:id="@+id/task_info"
+            android:id="@+id/blogs_detail"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <TextView
+            android:text="阅读书籍详情"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:gravity="center_vertical|left"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <ListView
+            android:id="@+id/books_detail"
             android:layout_width="match_parent"
             android:layout_height="200dp"/>
 

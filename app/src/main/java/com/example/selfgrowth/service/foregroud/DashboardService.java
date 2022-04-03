@@ -76,6 +76,10 @@ public class DashboardService {
         periodData.addLearnHourSpeed(dailyData.getLearnHourSpeed());
         periodData.addRunningHourSpeed(dailyData.getRunningHourSpeed());
         periodData.addSleepHourSpeed(dailyData.getSleepHourSpeed());
+        periodData.addAppTimes(dailyData.getAppTimes());
+        periodData.addCompleteTask(dailyData.getTaskComplete());
+        periodData.addWriteBlogs(dailyData.getBlogs(), dailyData.getWriteBlogs());
+        periodData.addReadBooks(dailyData.getBooks(), dailyData.getReadBooks());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

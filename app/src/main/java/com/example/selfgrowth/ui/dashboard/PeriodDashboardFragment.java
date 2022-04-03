@@ -82,6 +82,8 @@ public class PeriodDashboardFragment extends Fragment {
         ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
         ((TextView) view.findViewById(R.id.sleep_average)).setText(MyTimeUtils.toString(result.getSleepAverage()));
         ((TextView) view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
+        ((TextView) view.findViewById(R.id.blogs)).setText(String.valueOf(result.getBlogs()));
+        ((TextView) view.findViewById(R.id.books)).setText(String.valueOf(result.getBooks()));
 
         TextView dateText = ((TextView) view.findViewById(R.id.date));
         final List<Date> periodDate = DateUtils.getPeriodDates(date, statisticsType);
@@ -110,17 +112,18 @@ public class PeriodDashboardFragment extends Fragment {
             appUserTimes.add(String.format("%s 使用时间： %s", appName, MyTimeUtils.toString(minutes)));
         }
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, appUserTimes);
-        ((ListView) view.findViewById(R.id.learn_app_info)).setAdapter(adapter1);
+        ((ListView) view.findViewById(R.id.learn_detail)).setAdapter(adapter1);
 
         initHourCountBar(view, result);
         initHourSpeedBar(view, result);
 
-        List<String> taskNames = taskLogService.listLog(date)
-                .stream()
-                .map(log -> String.format("任务名称： %s     标签：%s    类型：%s", log.getName(), log.getLabel(), log.getTaskTypeEnum().getName()))
-                .collect(Collectors.toList());
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, taskNames);
-        ((ListView) view.findViewById(R.id.task_info)).setAdapter(adapter2);
+        List<String> blogs = result.getWriteBlogs();
+        ArrayAdapter<String> blogsAdapter = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, blogs);
+        ((ListView) view.findViewById(R.id.blogs_detail)).setAdapter(blogsAdapter);
+
+        List<String> books = result.getWriteBlogs();
+        ArrayAdapter<String> booksAdapter = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, books);
+        ((ListView) view.findViewById(R.id.books_detail)).setAdapter(booksAdapter);
     }
 
     private void initHourSpeedBar(View view, DashboardResult result) {
