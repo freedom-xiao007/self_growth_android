@@ -1,21 +1,28 @@
-# Self Growth 自我生成手机应用使用情况统计Android客户端
+# Self Growth Android : 自我生成手机应用使用情况统计Android客户端
 ***
 
 **自我生长：成为更好的自己**
 
 ## 简介
-用户获取手机当前的正在使用的应用，将其上报到服务端
+自律性辅助软件，成为更好的自己
+
+定时的检测收集当前手机的顶层应用，将其记录到本地存储中，用于统计和展示手机APP的使用情况
+
+有简单的任务清单功能，提供辅助的任务规划安排
 
 ## 功能简介
 客户端主要功能定位是：
 
 - [x] 收集手机当前应用使用情况
-- [x] 今日当前截止手机应用使用情况
 - [x] 任务列表
+- [x] 今日当前截止手机应用使用情况
+- [x] 统计展示一定时间周期内的APP和任务数据
 
-核心功能主要是能收集当前手机正在使用的APP情况，上报到服务端
+数据均是存储在本地，在无网络的情况下，完全可以正常使用所有功能
 
-更多的管理和展示，目前规划到Web端
+任务相关的模块在登录后，可以和Web进行同步使用
+
+数据在登录的情况下，可选择同步到服务器，用于数据丢失恢复和跨手机设备同步
 
 ## 工程运行说明
 本工程开发基于下面的版本：
@@ -24,30 +31,17 @@
 - Android SDK 11
 - Java 8
 
-注：高版本的 Android Studio 也能正常运行，但由于当前还没有Lombok相应的支持，其相关的Get等方法在编辑器中会被标红，但不影响运行
+注：高版本的 Android Studio 也能正常运行，但由于当前还没有Lombok相应的支持，其相关的Get等方法在编辑器中会被标红，但不影响运行,使用本地强行安装的方式可解决
 
 ## 手机应用情况本地存储统计策略
 ### 活动
 频率：每十秒记录一次当前的顶层手机应用Activity
 
-放入文件中，文件中约定的格式如下：
+当前使用SharedPreferences进行数据的存储
 
-```text
-时间戳 时间日期（yyyy-mm-dd HH:MM:SS格式） activity名称
-```
+目前对于每天的时间约定稍微有些不同，如下：
 
-每天都有一个实时的用于记录更新的文件：date_current.log
-
-- date:获取当前时间日期，到天，如 2021_02_21,注意，22点后按照第二天算，也就是不是0点到第二天，而是10点到第二天，恩，早点睡觉比较好
-- current：用于实时更新的标识
-- 一天最多有：10 * 60 * 24 = 14400条数据
-- 22点后第一次记录时，复制当前文件到离线文档记录，清空当前文件所用内容
-- 22点后自动进行一次当天数据统计，将情况进行汇总，记录下总的时间和各个记录，详情的结构请参考类：{@link DashboardStatistics}
-- 每次记录，进行一次实时统计，并将统计结果保存，在应用重启后可以进行加载（如果数据不对，需要提供按钮，进行数据重新统计）
-
-离线活动记录文档：date_save.log 最多一周的，每天22点进行一次清理，将老的日志清理调
-
-当天统计的就读current.log,历史统计查看就读当前的
+获取当前时间日期，到天，如 2021_02_21,注意，22点后按照第二天算，也就是不是0点到第二天，而是10点到第二天，恩，早点睡觉比较好
 
 ### 任务
 
@@ -78,6 +72,7 @@
 - [Android 退出确认弹窗(AlertDialog)](https://blog.csdn.net/qq_35988274/article/details/100513452)
 - [对话框](https://developer.android.com/guide/topics/ui/dialogs)
 - [图表库：MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
+- [Android输入法弹出时界面被挤压的问题](https://blog.csdn.net/Sunxiaolin2016/article/details/111947770)
 
 ### 路由与跳转
 - [How to move from one fragment to another fragment on click of an ImageView in Android?](https://stackoverflow.com/questions/23212162/how-to-move-from-one-fragment-to-another-fragment-on-click-of-an-imageview-in-an)
