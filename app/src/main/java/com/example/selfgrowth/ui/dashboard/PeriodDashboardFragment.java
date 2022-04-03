@@ -115,14 +115,86 @@ public class PeriodDashboardFragment extends Fragment {
 
         initHourCountBar(view, result);
         initHourSpeedBar(view, result);
+        setFrequentlyInfo(view, result);
 
         List<String> blogs = result.getWriteBlogs();
         ArrayAdapter<String> blogsAdapter = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, blogs);
         ((ListView) view.findViewById(R.id.blogs_detail)).setAdapter(blogsAdapter);
 
-        List<String> books = result.getWriteBlogs();
+        List<String> books = result.getReadBooks();
         ArrayAdapter<String> booksAdapter = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, books);
         ((ListView) view.findViewById(R.id.books_detail)).setAdapter(booksAdapter);
+    }
+
+    private void setFrequentlyInfo(View view, DashboardResult result) {
+        Map<Integer, Integer> learnCount = result.getLearnHoursCount();
+        Map<Integer, Integer> runningCount = result.getRunningHoursCount();
+        Map<Integer, Integer> sleepCount = result.getSleepHoursCount();
+        Map<Integer, Integer> learnSpeed = result.getLearnHourSpeed();
+        Map<Integer, Integer> runningSpeed = result.getRunningHourSpeed();
+        Map<Integer, Integer> sleepSpeed = result.getSleepHourSpeed();
+        List<Integer> learnFre = hourFre(result.getLearnHoursCount(), result.getLearnHourSpeed());
+        List<Integer> runningFre = hourFre(result.getRunningHoursCount(), result.getRunningHourSpeed());
+        List<Integer> sleepFre = hourFre(result.getSleepHoursCount(), result.getSleepHourSpeed());
+        StringBuilder learnStr = new StringBuilder("学习常用时点：");
+        StringBuilder runningStr = new StringBuilder("运动常用时点：");
+        StringBuilder sleepStr = new StringBuilder("睡觉常用时点：");
+
+        for (int hour: learnFre) {
+            if (countIsMax(learnCount.getOrDefault(hour, 0), runningCount.getOrDefault(hour, 0), sleepCount.getOrDefault(hour, 0)) &&
+                speedIsMax(learnSpeed.getOrDefault(hour, 0), runningSpeed.getOrDefault(hour, 0), sleepSpeed.getOrDefault(hour, 0))) {
+                learnStr.append(hour).append(",");
+            }
+        }
+
+        for (int hour: runningFre) {
+            if (countIsMax(runningCount.getOrDefault(hour, 0), learnCount.getOrDefault(hour, 0), sleepCount.getOrDefault(hour, 0)) &&
+                    speedIsMax(runningSpeed.getOrDefault(hour, 0), learnSpeed.getOrDefault(hour, 0), sleepSpeed.getOrDefault(hour, 0))) {
+                runningStr.append(hour).append(",");
+            }
+        }
+
+        for (int hour: sleepFre) {
+            if (countIsMax(sleepCount.getOrDefault(hour, 0), runningCount.getOrDefault(hour, 0), learnCount.getOrDefault(hour, 0)) &&
+                    speedIsMax(sleepSpeed.getOrDefault(hour, 0), runningSpeed.getOrDefault(hour, 0), learnSpeed.getOrDefault(hour, 0))) {
+                sleepStr.append(hour).append(",");
+            }
+        }
+
+        ((TextView) view.findViewById(R.id.fre_learn)).setText(learnStr.toString());
+        ((TextView) view.findViewById(R.id.fre_running)).setText(runningStr.toString());
+        ((TextView) view.findViewById(R.id.fre_sleep)).setText(sleepStr.toString());
+    }
+
+    private boolean countIsMax(Integer v1, Integer v2, Integer v3) {
+        return isMax(v1, v2, v3);
+    }
+
+    private boolean speedIsMax(Integer v1, Integer v2, Integer v3) {
+        return isMax(v1, v2, v3);
+    }
+
+    private boolean isMax(Integer v1, Integer v2, Integer v3) {
+        return v1 > v2 && v1 > v3;
+    }
+
+    private List<Integer> hourFre(Map<Integer, Integer> hoursCount, Map<Integer, Integer> hourSpeed) {
+        int countAmount = 0;
+        int speedAmount = 0;
+        for (int hour: hoursCount.keySet()) {
+            countAmount += hoursCount.getOrDefault(hour, 0);
+            speedAmount += hourSpeed.getOrDefault(hour, 0);
+        }
+        int countAverage = countAmount / 24;
+        int speedAverage = speedAmount / 24;
+
+        List<Integer> fre = new ArrayList<>(24);
+        for (int hour: hoursCount.keySet()) {
+            if (hoursCount.getOrDefault(hour, 0) >= countAverage && hourSpeed.getOrDefault(hour, 0) >= speedAverage) {
+                fre.add(hour);
+            }
+        }
+        return fre;
     }
 
     private void initHourSpeedBar(View view, DashboardResult result) {

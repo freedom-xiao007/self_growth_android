@@ -255,10 +255,11 @@
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/app_num_bar"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="350dp"/>
+
 
         <TextView
-            android:text="学习/运动/睡觉时间分布"
+            android:text="学习/运动/睡觉时段时长统计"
             android:textColor="@color/white"
             android:textSize="35sp"
             android:gravity="center_vertical|left"
@@ -268,7 +269,35 @@
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/app_time_bar"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="350dp"/>
+
+        <TextView
+            android:id="@+id/fre_learn"
+            android:text="学习常用时点：1,2,3,4,5,6,7,8,9,10,11,12时"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:gravity="center_vertical|left"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <TextView
+            android:id="@+id/fre_running"
+            android:text="运动常用时点：1,2,3,4,5,6,7,8,9,10,11,12时"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:gravity="center_vertical|left"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <TextView
+            android:id="@+id/fre_sleep"
+            android:text="睡觉常用时点：1,2,3,4,5,6,7,8,9,10,11,12时"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:gravity="center_vertical|left"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
 
         <TextView
             android:text="学习详情"
