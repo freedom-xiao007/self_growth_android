@@ -1,5 +1,6 @@
 package com.example.selfgrowth.ui.dashboard;
 
+import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,8 +23,10 @@ import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.MyTimeUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -47,7 +50,21 @@ public class DailyDashboardFragment extends Fragment {
         ((TextView) view.findViewById(R.id.running_minutes)).setText(MyTimeUtils.toString(result.getRunningTime()));
         ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
         ((TextView) view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
-        ((TextView) view.findViewById(R.id.date)).setText(DateUtils.dayString(date));
+        TextView dateText = (TextView) view.findViewById(R.id.date);
+        dateText.setText(DateUtils.dayString(date));
+        dateText.setOnClickListener(view1 -> {
+            //获取日历的一个实例，里面包含了当前的年月日
+            Calendar calendar=Calendar.getInstance();
+            //构建一个日期对话框，该对话框已经集成了日期选择器
+            //DatePickerDialog的第二个构造参数指定了日期监听器
+            DatePickerDialog dialog=new DatePickerDialog(requireContext(),null,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+            //把日期对话框显示在界面上
+            dialog.show();
+            dialog.setOnDateSetListener((datePicker, year, month, day) -> dateText.setText(String.format(Locale.CANADA, "%d年%d月%d日", year, month, day)));
+        });
 
         final Map<String, Long> appTimes = result.getAppTimes();
         List<String> appUserTimes = new ArrayList<>(result.getAppTimes().size());
