@@ -31,11 +31,21 @@
 ## 工程运行说明
 本工程开发基于下面的版本：
 
-- Android Studio 2020.3.1 path4
 - Android SDK 11
 - Java 8
 
 注：高版本的 Android Studio 也能正常运行，但由于当前还没有Lombok相应的支持，其相关的Get等方法在编辑器中会被标红，但不影响运行,使用本地强行安装的方式可解决
+
+## 相关的工程与软件
+因为本软件是基于检测手机软件进行相关的数据统计的，某些活动可能没有合适的APP，所以写了一些纯展示的APP，用于配合该APP使用
+
+* 读纸质书
+  * github: [readbook app download](https://github.com/lw1243925457/ReadBookEmptyApp/releases/download/V0/readbook.apk)
+  * gitee: [readbook app download](https://gitee.com/free-love/ReadBookEmptyApp/attach_files/1017157/download/ReadBook.apk)
+  
+* 代码编程
+  * github: [coding app download](https://github.com/lw1243925457/CodeEmptyApp/releases/download/V0/coding.apk)
+  * gitee: [coding app download](https://gitee.com/free-love/CodeEmptyApp/attach_files/1017159/download/coding.apk)
 
 ## 手机应用情况本地存储统计策略
 ### 活动
