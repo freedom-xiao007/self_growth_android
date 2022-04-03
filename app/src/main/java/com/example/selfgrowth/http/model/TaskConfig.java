@@ -5,6 +5,8 @@ import com.example.selfgrowth.enums.TaskCycleEnum;
 import com.example.selfgrowth.enums.TaskLearnTypeEnum;
 import com.example.selfgrowth.enums.TaskTypeEnum;
 
+import java.util.Date;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,4 +23,5 @@ public class TaskConfig {
     private String group;
     private TaskTypeEnum taskTypeEnum;
     private Boolean isComplete;
+    private Date completeDate;
 }

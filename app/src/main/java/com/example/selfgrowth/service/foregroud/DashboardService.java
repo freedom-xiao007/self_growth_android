@@ -95,6 +95,8 @@ public class DashboardService {
         }
 
         result = new DashboardResult();
+        result.setDailyLogs(data.getDailyLogs());
+
         Map<String, DashboardStatistics.DashboardGroup> groups = data.getGroups();
         DashboardStatistics.DashboardGroup learnGroup = groups.getOrDefault(LabelEnum.LEARN.getName(), DashboardStatistics.emptyGroup());
         DashboardStatistics.DashboardGroup runningGroup = groups.getOrDefault(LabelEnum.RUNNING.getName(), DashboardStatistics.emptyGroup());
@@ -123,6 +125,7 @@ public class DashboardService {
 
         for (TaskConfig config: taskLogService.listLog(date)) {
             result.addTaskLog(config);
+            result.addTaskLogToDailyLog(config);
         }
 
         saveToDb(result, date, StatisticsTypeEnum.DAY);

@@ -1,5 +1,7 @@
 package com.example.selfgrowth.http.model;
 
+import com.example.selfgrowth.ui.dashboard.DailyLogModel;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +24,8 @@ public class DashboardStatistics {
      * 分组和分组对应的统计
      */
     Map<String, DashboardGroup> groups;
+
+    List<DailyLogModel> dailyLogs;
 
     /**
      * 各个分组统计下，具体的APP使用情况

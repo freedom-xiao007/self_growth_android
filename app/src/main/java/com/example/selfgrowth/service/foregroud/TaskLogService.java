@@ -30,6 +30,8 @@ public class TaskLogService {
     }
 
     public void add(final TaskConfig config) {
+        config.setCompleteDate(new Date());
+
         final String day = DateUtils.toCustomDay(new Date());
         final Set<String> origin = sharedPreferences.getStringSet(day, new HashSet<>());
         final List<String> logs = new ArrayList<>(origin.size() + 1);

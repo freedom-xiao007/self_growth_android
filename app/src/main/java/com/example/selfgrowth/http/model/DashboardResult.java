@@ -7,9 +7,11 @@ import androidx.annotation.RequiresApi;
 import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.enums.TaskTypeEnum;
+import com.example.selfgrowth.ui.dashboard.DailyLogModel;
 import com.example.selfgrowth.utils.DateUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +38,8 @@ public class DashboardResult {
     private int books;
     private String startDate;
     private String endDate;
+
+    private List<DailyLogModel> dailyLogs;
 
     @Builder.Default
     private Map<String, Long> appTimes = new HashMap<>();
@@ -120,6 +124,12 @@ public class DashboardResult {
             default:
                 break;
         }
+    }
+
+    public void addTaskLogToDailyLog(final TaskConfig config) {
+        dailyLogs.add(new DailyLogModel("完成任务:" + config.getName(),
+                DateUtils.dateString(config.getCompleteDate() == null ? new Date() : config.getCompleteDate()),
+                DailyLogModel.DailyLogType.TASK_COMPLETE, config.getLabel()));
     }
 
     private void mergeLearnTime(final Map<Integer, Integer> speed, final Map<Integer, Integer> hourCount) {

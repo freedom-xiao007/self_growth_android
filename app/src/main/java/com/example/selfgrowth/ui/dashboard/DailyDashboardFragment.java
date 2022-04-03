@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.selfgrowth.R;
+import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.http.model.DashboardResult;
 import com.example.selfgrowth.service.foregroud.DashboardService;
@@ -24,9 +25,9 @@ import com.example.selfgrowth.utils.MyTimeUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DailyDashboardFragment extends Fragment {
@@ -60,7 +61,7 @@ public class DailyDashboardFragment extends Fragment {
         ((TextView) view.findViewById(R.id.running_minutes)).setText(MyTimeUtils.toString(result.getRunningTime()));
         ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
         ((TextView) view.findViewById(R.id.task_complete)).setText(String.valueOf(result.getTaskComplete()));
-        TextView dateText = (TextView) view.findViewById(R.id.date);
+        TextView dateText = view.findViewById(R.id.date);
         dateText.setText(DateUtils.dateShow(date));
         dateText.setOnClickListener(view1 -> {
             DatePickerDialog dialog=new DatePickerDialog(requireContext(),null, yearCache, monthCache, dayCache);
@@ -76,20 +77,15 @@ public class DailyDashboardFragment extends Fragment {
             });
         });
 
-        final Map<String, Long> appTimes = result.getAppTimes();
-        List<String> appUserTimes = new ArrayList<>(result.getAppTimes().size());
-        for (String appName: appTimes.keySet()) {
-            final long minutes = appTimes.get(appName);
-            appUserTimes.add(String.format("%s 使用时间： %s", appName, MyTimeUtils.toString(minutes)));
-        }
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, appUserTimes);
-        ((ListView) view.findViewById(R.id.learn_app_info)).setAdapter(adapter1);
-
-        List<String> taskNames = taskLogService.listLog(date)
+        List<DailyLogModel> dailyLogs = result.getDailyLogs()
                 .stream()
-                .map(log -> String.format("任务名称： %s     标签：%s    类型：%s", log.getName(), log.getLabel(), log.getTaskTypeEnum().getName()))
+                .filter(item -> !item.getLabel().equals(LabelEnum.DEFAULT))
+                .sorted(Comparator.comparing(DailyLogModel::getDate))
                 .collect(Collectors.toList());
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(view.getContext(), R.layout.string_listview, R.id.textView, taskNames);
-        ((ListView) view.findViewById(R.id.task_info)).setAdapter(adapter2);
+        DailyLogAdapter adapter = new DailyLogAdapter(dailyLogs);
+        RecyclerView timelineView = view.findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManage = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
+        timelineView.setLayoutManager(layoutManage);
+        timelineView.setAdapter(adapter);
     }
 }

@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 import com.example.selfgrowth.http.model.AppInfo;
 import com.example.selfgrowth.http.model.AppLog;
 import com.example.selfgrowth.http.model.DashboardStatistics;
+import com.example.selfgrowth.ui.dashboard.DailyLogModel;
 import com.example.selfgrowth.utils.AppUtils;
 import com.example.selfgrowth.utils.DateUtils;
 
@@ -46,6 +47,7 @@ public class AppStatisticsService {
         final Map<String, AtomicLong> labelTime = new HashMap<>(4);
         final Map<String, Map<String, AtomicLong>> appTime = new HashMap<>(4);
         final Map<String, List<DashboardStatistics.AppUseLog>> appUserLogs = new HashMap<>();
+        final List<DailyLogModel> dailyLogs = new ArrayList<>(200);
 
         final AppRecord record = new AppRecord();
         appLogs.forEach(log -> {
@@ -74,6 +76,13 @@ public class AppStatisticsService {
                             .endTime(record.getEnd())
                             .build());
 
+            dailyLogs.add(new DailyLogModel("开始:" + record.getAppName(),
+                    DateUtils.dateString(record.getStart()),
+                    DailyLogModel.DailyLogType.ACTIVITY_BEGIN, record.getLabel()));
+            dailyLogs.add(new DailyLogModel("结束:" + record.getAppName(),
+                    DateUtils.dateString(record.getEnd()),
+                    DailyLogModel.DailyLogType.ACTIVITY_END, record.getLabel()));
+
             record.start(log.getDate(), packageName2AppInfo.get(packageName));
         });
 
@@ -86,8 +95,16 @@ public class AppStatisticsService {
                         .endTime(record.getEnd())
                         .build());
 
+        dailyLogs.add(new DailyLogModel("开始:" + record.getAppName(),
+                DateUtils.dateString(record.getStart()),
+                DailyLogModel.DailyLogType.ACTIVITY_BEGIN, record.getLabel()));
+        dailyLogs.add(new DailyLogModel("结束:" + record.getAppName(),
+                DateUtils.dateString(record.getEnd()),
+                DailyLogModel.DailyLogType.ACTIVITY_END, record.getLabel()));
+
         return DashboardStatistics.builder()
                 .groups(createDashboardGroups(labelTime, appTime, appUserLogs))
+                .dailyLogs(dailyLogs)
                 .build();
     }
 
@@ -159,9 +176,9 @@ public class AppStatisticsService {
 
         @RequiresApi(api = Build.VERSION_CODES.O)
         public boolean continueRecord(String packageName, Date current) {
-            if (Duration.between(start.toInstant(), current.toInstant()).toMinutes() > 1) {
-                return false;
-            }
+//            if (Duration.between(start.toInstant(), current.toInstant()).toMinutes() > 1) {
+//                return false;
+//            }
             return packageName.equals(appInfo.getPackageName());
         }
 

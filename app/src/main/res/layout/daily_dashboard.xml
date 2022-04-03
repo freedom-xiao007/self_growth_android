@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/daily_dashboard"
     android:background="@drawable/background"
     android:layout_width="match_parent"
@@ -125,34 +126,21 @@
                 android:layout_height="50dp"/>
         </LinearLayout>
 
-
         <TextView
-            android:text="学习详情"
+            android:text="时间轴总览"
             android:textColor="@color/white"
             android:textSize="35sp"
             android:gravity="center_vertical|left"
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
-        <ListView
-            android:id="@+id/learn_app_info"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
-
-
-
-        <TextView
-            android:text="任务详情"
-            android:textColor="@color/white"
-            android:textSize="35sp"
-            android:gravity="center_vertical|left"
-            android:layout_marginTop="50dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-        <ListView
-            android:id="@+id/task_info"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"/>
-
+            android:layout_height="500dp"
+            android:padding="@dimen/padding"
+            android:clipToPadding="false"
+            tools:listitem="@layout/daily_log_timeline"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
     </LinearLayout>
 </ScrollView>
