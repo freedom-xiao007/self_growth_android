@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
+import com.example.selfgrowth.enums.TaskCycleEnum;
 import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.service.foregroud.TaskService;
@@ -84,7 +85,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
             });
             popupLayout.show();
         });
-        viewHolder.cycle.setText(item.getCycleType().getName());
+        viewHolder.cycle.setText(item.getCycleType().equals(TaskCycleEnum.DEFAULT) ? "" : item.getCycleType().getName());
         viewHolder.status.setText(isComplete ? "已完成" : "未完成");
         viewHolder.complete.setVisibility(isComplete ? View.GONE : View.VISIBLE);
         viewHolder.complete.setOnClickListener(v -> {

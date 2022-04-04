@@ -77,8 +77,6 @@ public class DateUtils {
 
     public static List<Date> getPeriodDates(final Date date, final TaskCycleEnum statisticsType) {
         switch (statisticsType) {
-            case DAILY:
-                return Collections.singletonList(date);
             case WEEK:
                 return getPeriodDatesOfWeek(date);
             case MONTH:
@@ -86,7 +84,7 @@ public class DateUtils {
             case YEAR:
                 return getPeriodDatesOfYear(date);
             default:
-                throw new RuntimeException("不支持该类型：" + statisticsType.getName());
+                return Collections.singletonList(date);
         }
     }
 
