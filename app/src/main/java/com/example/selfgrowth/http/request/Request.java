@@ -27,7 +27,7 @@ public abstract class Request {
      */
     void sendRequest(Call<ApiResponse> call, Consumer<? super Object> success, Consumer<? super Object> failed) {
         if (!HttpConfig.networkIsOpen()) {
-            Log.d("request", "network config is close");
+            Log.w("request", "network config is close");
             return;
         }
 

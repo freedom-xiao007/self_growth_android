@@ -68,8 +68,8 @@ public class TaskService {
 
         if (isSyncToWebServer) {
             taskRequest.update(config,
-                    s -> Snackbar.make(view, "任务添加到服务器成功", Snackbar.LENGTH_LONG).setAction("Action", null).show(),
-                    f -> Snackbar.make(view, "任务添加服务器其失败：" + f, Snackbar.LENGTH_LONG).setAction("Action", null).show());
+                    s -> Snackbar.make(view, "任务同步到服务器成功", Snackbar.LENGTH_LONG).setAction("Action", null).show(),
+                    f -> Snackbar.make(view, "任务同步到服务器失败：" + f, Snackbar.LENGTH_LONG).setAction("Action", null).show());
         }
     }
 

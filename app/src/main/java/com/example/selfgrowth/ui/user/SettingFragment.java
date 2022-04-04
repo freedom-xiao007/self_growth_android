@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
+import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.service.foregroud.AppLogService;
 import com.example.selfgrowth.service.foregroud.TaskService;
 import com.google.android.material.snackbar.Snackbar;
@@ -27,8 +28,21 @@ public class SettingFragment extends Fragment {
 
         boolean taskSyncOpen = taskService.syncIsOpen();
         boolean appSyncOpen = appLogService.syncIsOpen();
+        ((TextView) view.findViewById(R.id.net_switch_status)).setText(HttpConfig.isOpenNetwork() ? "已开启" : "已关闭");
         ((TextView) view.findViewById(R.id.task_switch_status)).setText(taskSyncOpen ? "已开启" : "已关闭");
         ((TextView) view.findViewById(R.id.app_switch_status)).setText(appSyncOpen ? "已开启" : "已关闭");
+
+        CompoundButton netSwitch = view.findViewById(R.id.net_sync_switch);
+        netSwitch.setChecked(HttpConfig.isOpenNetwork());
+        netSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                HttpConfig.openNetwork();
+                Snackbar.make(view, "开启网络同步", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            } else {
+                HttpConfig.closeNetwork();
+                Snackbar.make(view, "关闭网络同步", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            }
+        });
 
         CompoundButton taskSwitch = view.findViewById(R.id.task_sync_switch);
         taskSwitch.setChecked(taskSyncOpen);

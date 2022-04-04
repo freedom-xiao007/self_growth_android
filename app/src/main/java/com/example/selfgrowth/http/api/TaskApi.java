@@ -30,4 +30,10 @@ public interface TaskApi {
 
     @GET("v1/task/allGroups")
     Call<ApiResponse> allGroups();
+
+    /**
+     * 任务更新（新增和修改）
+     **/
+    @POST("api/task/update")
+    Call<ApiResponse> update(@Body TaskConfig taskConfig);
 }
