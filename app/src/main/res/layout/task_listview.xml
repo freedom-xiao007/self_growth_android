@@ -44,6 +44,19 @@
         android:text="任务名称"
         app:drawableLeftCompat="@drawable/task_item" />
     <TextView
+        android:id="@+id/task_cycle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center_vertical|center"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toTopOf="@+id/task_list_background"
+        app:layout_constraintBottom_toBottomOf="@+id/task_list_background"
+        app:layout_constraintLeft_toLeftOf="@+id/task_list_background"
+        app:layout_constraintRight_toRightOf="@+id/task_list_background"/>
+    <TextView
         android:id="@+id/task_status"
         android:layout_width="50dp"
         android:layout_height="50dp"

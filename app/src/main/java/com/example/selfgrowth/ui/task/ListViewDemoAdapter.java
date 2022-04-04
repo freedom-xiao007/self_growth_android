@@ -84,6 +84,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
             });
             popupLayout.show();
         });
+        viewHolder.cycle.setText(item.getCycleType().getName());
         viewHolder.status.setText(isComplete ? "已完成" : "未完成");
         viewHolder.complete.setVisibility(isComplete ? View.GONE : View.VISIBLE);
         viewHolder.complete.setOnClickListener(v -> {
@@ -100,6 +101,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
         private final TextView id;
         private final TextView name;
         private final TextView status;
+        private final TextView cycle;
         private final CheckBox complete;
 
         /**
@@ -110,6 +112,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
             id = view.findViewById(R.id.task_id);
             name = view.findViewById(R.id.task_name);
             status = view.findViewById(R.id.task_status);
+            cycle = view.findViewById(R.id.task_cycle);
             complete = view.findViewById(R.id.task_complete);
         }
     }
