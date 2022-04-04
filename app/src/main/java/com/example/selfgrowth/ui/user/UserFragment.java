@@ -55,6 +55,7 @@ public class UserFragment extends Fragment {
         setRoute(view, R.id.week_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.WEEK));
         setRoute(view, R.id.month_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.MONTH));
         setRoute(view, R.id.year_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.YEAR));
+        setRoute(view, R.id.data_sync_setting, new SettingFragment());
         return view;
     }
 

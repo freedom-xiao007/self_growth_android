@@ -46,6 +46,15 @@ public class TaskService {
         isSyncToWebServerDb.edit().putBoolean(syncServerKey, true).apply();
     }
 
+    public void closeSyncToWebServer() {
+        isSyncToWebServer = false;
+        isSyncToWebServerDb.edit().putBoolean(syncServerKey, true).apply();
+    }
+
+    public boolean syncIsOpen() {
+        return isSyncToWebServer;
+    }
+
     public void add(final TaskConfig config, final View view) {
         final Set<String> origin = taskConfigDb.getStringSet(config.getGroup(), new HashSet<>());
         final List<String> tasks = new ArrayList<>(origin.size() + 1);
@@ -58,7 +67,7 @@ public class TaskService {
         Snackbar.make(view, "任务添加成功", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
         if (isSyncToWebServer) {
-            taskRequest.add(config,
+            taskRequest.update(config,
                     s -> Snackbar.make(view, "任务添加到服务器成功", Snackbar.LENGTH_LONG).setAction("Action", null).show(),
                     f -> Snackbar.make(view, "任务添加服务器其失败：" + f, Snackbar.LENGTH_LONG).setAction("Action", null).show());
         }

@@ -372,6 +372,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/data_sync_setting"
                     android:background="@drawable/application"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"

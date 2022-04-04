@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center_vertical|left"
+                android:text="任务自动同步服务器"
+                app:drawableLeftCompat="@drawable/ic_baseline_settings_50"/>
+            <TextView
+                android:id="@+id/task_switch_status"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center_vertical|center"
+                android:text="已关闭"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintHorizontal_bias="0.8"/>
+            <Switch
+                android:id="@+id/task_sync_switch"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintHorizontal_bias="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center_vertical|left"
+                android:text="APP数据同步服务器"
+                app:drawableLeftCompat="@drawable/ic_baseline_settings_50"/>
+            <TextView
+                android:id="@+id/app_switch_status"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center_vertical|center"
+                android:text="已关闭"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintHorizontal_bias="0.8"/>
+            <Switch
+                android:id="@+id/app_sync_switch"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintHorizontal_bias="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

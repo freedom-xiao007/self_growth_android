@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/task_list_manage"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -67,6 +68,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        tools:listitem="@layout/task_listview"
         android:layout_marginTop="70dp"
         android:scrollbars="none"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
