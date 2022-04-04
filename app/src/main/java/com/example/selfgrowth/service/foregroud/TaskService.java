@@ -12,6 +12,7 @@ import com.example.selfgrowth.utils.GsonUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -86,17 +87,22 @@ public class TaskService {
     }
 
     public List<TaskConfig> query(final String groupName, final String taskName) {
-        return taskConfigDb.getStringSet(groupName, new HashSet<>()).stream().filter(config -> {
-            if (taskName == null || taskName.isEmpty()) {
-                return true;
-            }
-            final TaskConfig task = GsonUtils.getGson().fromJson(config, TaskConfig.class);
-            return task.getName().startsWith(taskName);
-        }).map(config -> {
-            TaskConfig task = GsonUtils.getGson().fromJson(config, TaskConfig.class);
-            task.setIsComplete(taskLogService.hasLog(new Date(), task.getGroup(), task.getName(), task.getCycleType()));
-            return task;
-        }).collect(Collectors.toList());
+        return taskConfigDb.getStringSet(groupName, new HashSet<>())
+                .stream()
+                .filter(config -> {
+                    if (taskName == null || taskName.isEmpty()) {
+                        return true;
+                    }
+                    final TaskConfig task = GsonUtils.getGson().fromJson(config, TaskConfig.class);
+                    return task.getName().startsWith(taskName);
+                })
+                .map(config -> {
+                    TaskConfig task = GsonUtils.getGson().fromJson(config, TaskConfig.class);
+                    task.setIsComplete(taskLogService.hasLog(new Date(), task.getGroup(), task.getName(), task.getCycleType()));
+                    return task;
+                })
+                .sorted(Comparator.comparing(TaskConfig::getIsComplete))
+                .collect(Collectors.toList());
     }
 
     public List<String> getAllGroup() {
