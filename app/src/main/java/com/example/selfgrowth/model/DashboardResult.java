@@ -9,6 +9,7 @@ import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.enums.TaskTypeEnum;
 import com.example.selfgrowth.utils.DateUtils;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -108,6 +109,9 @@ public class DashboardResult {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addAppLog(final DashboardStatistics.AppUseLog log, final LabelEnum labelEnum) {
+        if (Duration.between(log.getStartTime().toInstant(), log.getEndTime().toInstant()).toMinutes() < 1) {
+            return;
+        }
         final Map<Integer, Integer> hourCount = DateUtils.getHourCount(log.getStartTime(), log.getEndTime());
         final Map<Integer, Integer> hourSpeed = DateUtils.getHourSpeed(log.getStartTime(), log.getEndTime());
         switch (labelEnum) {
