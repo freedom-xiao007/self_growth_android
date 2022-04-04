@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.selfgrowth.enums.TaskCycleEnum;
 import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.GsonUtils;
@@ -73,5 +74,26 @@ public class TaskLogService {
                     .collect(Collectors.toSet());
         }
         return new HashSet<>(0);
+    }
+
+    public Boolean hasLog(Date date, String group, String name, TaskCycleEnum cycleType) {
+        List<Date> periodDate = DateUtils.getPeriodDates(date, cycleType);
+        for (Date day: periodDate) {
+            if (hasCompleteLog(day, group, name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasCompleteLog(Date date, String group, String name) {
+        final String day = DateUtils.toCustomDay(date);
+        if (sharedPreferences.contains(day)) {
+            return sharedPreferences.getStringSet(day, new HashSet<>(0))
+                    .stream()
+                    .map(log -> GsonUtils.getGson().fromJson(log, TaskConfig.class))
+                    .anyMatch(log -> log.getGroup().equals(group) && log.getName().equals(name));
+        }
+        return false;
     }
 }

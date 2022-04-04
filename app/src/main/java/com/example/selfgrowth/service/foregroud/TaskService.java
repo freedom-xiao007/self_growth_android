@@ -12,6 +12,7 @@ import com.example.selfgrowth.utils.GsonUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -91,7 +92,11 @@ public class TaskService {
             }
             final TaskConfig task = GsonUtils.getGson().fromJson(config, TaskConfig.class);
             return task.getName().startsWith(taskName);
-        }).map(config -> GsonUtils.getGson().fromJson(config, TaskConfig.class)).collect(Collectors.toList());
+        }).map(config -> {
+            TaskConfig task = GsonUtils.getGson().fromJson(config, TaskConfig.class);
+            task.setIsComplete(taskLogService.hasLog(new Date(), task.getGroup(), task.getName(), task.getCycleType()));
+            return task;
+        }).collect(Collectors.toList());
     }
 
     public List<String> getAllGroup() {

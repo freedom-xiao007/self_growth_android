@@ -1,12 +1,15 @@
 package com.example.selfgrowth.utils;
 
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
+import com.example.selfgrowth.enums.TaskCycleEnum;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +64,21 @@ public class DateUtils {
 
     public static List<Date> getPeriodDates(final Date date, final StatisticsTypeEnum statisticsType) {
         switch (statisticsType) {
+            case WEEK:
+                return getPeriodDatesOfWeek(date);
+            case MONTH:
+                return getPeriodDatesOfMonth(date);
+            case YEAR:
+                return getPeriodDatesOfYear(date);
+            default:
+                throw new RuntimeException("不支持该类型：" + statisticsType.getName());
+        }
+    }
+
+    public static List<Date> getPeriodDates(final Date date, final TaskCycleEnum statisticsType) {
+        switch (statisticsType) {
+            case DAILY:
+                return Collections.singletonList(date);
             case WEEK:
                 return getPeriodDatesOfWeek(date);
             case MONTH:
