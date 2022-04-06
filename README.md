@@ -59,7 +59,7 @@
 #### 初始化设置
 如下图，进入我的页面，进行手机初始化应用设置：
 
-![初始化应用.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6178d599563f4259bff59955aca843f7~tplv-k3u1fbpfcp-watermark.image?)
+![初始化应用.png](./picture/初始化应用.png)
 
 #### 今日情况实时统计
 在切换应用进行使用时，检测到应用切换事件，定时间隔保存当前应用到本地
@@ -72,7 +72,7 @@
 
 点击类型可以需要其他类型，右图就可以看看今天花费在其他应用上的时间
 
-![今日数据.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bc49b6f137384ce8a45a1d40c87aa280~tplv-k3u1fbpfcp-watermark.image?)
+![今日数据.png](./picture/今日数据.png)
 
 #### 历史数据统计回顾
 每日的数据收集后，能够进行周期性的统计，目前提供：
@@ -88,12 +88,12 @@
 
 如下图，左图是每日统计，右图是每周统计，点击日期可以进行切换选择
 
-![周期数据统计.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3b9c71447d6c455fb24d7765b9555b89~tplv-k3u1fbpfcp-watermark.image?)
+![周期数据统计.png](./picture/周期数据统计.png)
 
 ### 2 任务清单
 任务这块就是一个简单的任务清单功能，提供一个简单的分组
 
-![任务清单](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3580a240eeb845639b61cf5428e44840~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp?)
+![任务清单.png](./picture/任务清单.png)
 
 ## 工程运行说明
 本工程开发基于下面的版本：
