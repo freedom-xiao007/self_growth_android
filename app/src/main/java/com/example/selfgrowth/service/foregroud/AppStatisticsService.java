@@ -12,6 +12,7 @@ import com.example.selfgrowth.model.DashboardStatistics;
 import com.example.selfgrowth.model.DailyLogModel;
 import com.example.selfgrowth.utils.AppUtils;
 import com.example.selfgrowth.utils.DateUtils;
+import com.example.selfgrowth.utils.MyTimeUtils;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -64,6 +66,11 @@ public class AppStatisticsService {
                 return;
             }
 
+            final long interval = Duration.between(record.getStart().toInstant(), record.getEnd().toInstant()).toMinutes();
+            if (interval < 1) {
+                return;
+            }
+
             final long speedTime = record.cal(log.getDate());
             final String label = record.getLabel();
             labelTime.computeIfAbsent(label, k -> new AtomicLong()).getAndAdd(speedTime);
@@ -77,9 +84,9 @@ public class AppStatisticsService {
             dailyLogs.add(new DailyLogModel("开始:" + record.getAppName(),
                     DateUtils.dateString(record.getStart()),
                     DailyLogModel.DailyLogType.ACTIVITY_BEGIN, record.getLabel()));
-            dailyLogs.add(new DailyLogModel("结束:" + record.getAppName(),
-                    DateUtils.dateString(record.getEnd()),
-                    DailyLogModel.DailyLogType.ACTIVITY_END, record.getLabel()));
+            dailyLogs.add(new DailyLogModel(String.format(Locale.CHINA, "结束: %s, 一共%d分钟", record.getAppName(), interval),
+                          DateUtils.dateString(record.getEnd()),
+                          DailyLogModel.DailyLogType.ACTIVITY_END, record.getLabel()));
 
             record.start(log.getDate(), packageName2AppInfo.get(packageName));
         });
