@@ -28,9 +28,14 @@
 
 数据均是存储在本地，在无网络的情况下，完全可以正常使用所有功能
 
-任务相关的模块在登录后，可以和Web进行同步使用
+任务相关的模块在登录后，可以和Web进行同步使用,数据在登录的情况下，可选择同步到服务器，用于数据丢失恢复和跨手机设备同步(有空下个版本开发中)
 
-数据在登录的情况下，可选择同步到服务器，用于数据丢失恢复和跨手机设备同步(有空下个版本开发中)
+本应用处于后台运行即可，运行期间监听手机切换应用事件，定时记录最顶部应用数据
+
+## 下载链接
+
+- github下载地址：[self-growth.apk](https://github.com/lw1243925457/self_growth_android/releases/download/V1.0.0/self-growth.apk)
+- gitee下载地址：[self-growth.apk](https://gitee.com/free-love/self_growth_android/attach_files/1019329/download/self-growth.apk)
 
 ## 详细功能与使用说明
 目前为 V1.0.0 本地单机版本，无网络状态下依旧能够运行
@@ -54,7 +59,7 @@
 #### 初始化设置
 如下图，进入我的页面，进行手机初始化应用设置：
 
-![初始化设置应用]()
+![初始化应用.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6178d599563f4259bff59955aca843f7~tplv-k3u1fbpfcp-watermark.image?)
 
 #### 今日情况实时统计
 在切换应用进行使用时，检测到应用切换事件，定时间隔保存当前应用到本地
@@ -67,7 +72,7 @@
 
 点击类型可以需要其他类型，右图就可以看看今天花费在其他应用上的时间
 
-![今日数据]()
+![今日数据.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bc49b6f137384ce8a45a1d40c87aa280~tplv-k3u1fbpfcp-watermark.image?)
 
 #### 历史数据统计回顾
 每日的数据收集后，能够进行周期性的统计，目前提供：
@@ -83,12 +88,12 @@
 
 如下图，左图是每日统计，右图是每周统计，点击日期可以进行切换选择
 
-![数据统计展示]()
+![周期数据统计.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3b9c71447d6c455fb24d7765b9555b89~tplv-k3u1fbpfcp-watermark.image?)
 
 ### 2 任务清单
 任务这块就是一个简单的任务清单功能，提供一个简单的分组
 
-![任务清单]()
+![dd8284b0d306643759c437d9d646e29.jpg](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3580a240eeb845639b61cf5428e44840~tplv-k3u1fbpfcp-watermark.image?)
 
 ## 工程运行说明
 本工程开发基于下面的版本：
@@ -99,8 +104,8 @@
 ## 工程源代码仓库
 目前在github和gitee上都有
 
-- github：[]()
-- gitee:[]()
+- github：[https://github.com/lw1243925457/self_growth_android](https://github.com/lw1243925457/self_growth_android)
+- gitee:[https://gitee.com/free-love/self_growth_android](https://gitee.com/free-love/self_growth_android)
 
 ## 相关的工程与软件
 因为本软件是基于检测手机软件进行相关的数据统计的，某些活动可能没有合适的APP，所以写了一些纯展示的APP，用于配合该APP使用
