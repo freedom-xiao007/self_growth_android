@@ -93,7 +93,7 @@
 ### 2 任务清单
 任务这块就是一个简单的任务清单功能，提供一个简单的分组
 
-![dd8284b0d306643759c437d9d646e29.jpg](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3580a240eeb845639b61cf5428e44840~tplv-k3u1fbpfcp-watermark.image?)
+![dd8284b0d306643759c437d9d646e29.jpg](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3580a240eeb845639b61cf5428e44840~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp?)
 
 ## 工程运行说明
 本工程开发基于下面的版本：
