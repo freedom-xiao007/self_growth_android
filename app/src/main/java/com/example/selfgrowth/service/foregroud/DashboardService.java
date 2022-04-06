@@ -60,7 +60,7 @@ public class DashboardService {
             mergeDate(periodData, dailyData);
         }
 
-        periodData.calAverage(statisticsType);
+        periodData.calAverage(dates.size());
 
         saveToDb(periodData, firstDay, statisticsType);
         return periodData;

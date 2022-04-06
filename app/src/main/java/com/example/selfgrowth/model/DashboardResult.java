@@ -80,19 +80,7 @@ public class DashboardResult {
         this.sleepTime += value;
     }
 
-    public void calAverage(final StatisticsTypeEnum type) {
-        int days = 1;
-        switch (type) {
-            case WEEK:
-                days = 7;
-                break;
-            case MONTH:
-                days = 30;
-                break;
-            case YEAR:
-                days = 365;
-                break;
-        }
+    public void calAverage(final int days) {
         learnAverage = learnTime / days;
         runningAverage = runningTime / days;
         sleepAverage = sleepTime / days;
