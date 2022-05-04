@@ -7,90 +7,6 @@
     android:background="@drawable/background"
     tools:context=".ui.dashboard.DashboardFragment">
 
-    <TextView
-        android:id="@+id/dashboard_background"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/shape"
-        android:alpha="0.1"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text=""/>
-    <TextView
-        android:id="@+id/dashboard_cycle_name"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:gravity="center_vertical|left"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintTop_toTopOf="@+id/dashboard_background"
-        app:layout_constraintBottom_toBottomOf="@+id/dashboard_background"
-        app:layout_constraintLeft_toLeftOf="@+id/dashboard_background"
-        app:layout_constraintRight_toRightOf="@+id/dashboard_background"
-        android:text="统计周期: Daily"/>
-    <org.angmarch.views.NiceSpinner
-        android:id="@+id/dashboard_cycle_spinner"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:background="@drawable/shape"
-        android:alpha="0"
-        android:layout_marginTop="5dp"
-        app:textTint="@color/blue_1"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintTop_toTopOf="@+id/dashboard_background"
-        app:layout_constraintBottom_toBottomOf="@+id/dashboard_background"
-        app:layout_constraintLeft_toLeftOf="@+id/dashboard_background"
-        app:layout_constraintRight_toRightOf="@+id/dashboard_background"/>
-    <TextView
-        android:id="@+id/dashboard_group_name"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:gravity="center_vertical|left"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintTop_toTopOf="@+id/dashboard_background"
-        app:layout_constraintBottom_toBottomOf="@+id/dashboard_background"
-        app:layout_constraintLeft_toLeftOf="@+id/dashboard_background"
-        app:layout_constraintRight_toRightOf="@+id/dashboard_background"
-        android:text="类型: 总览"/>
-    <org.angmarch.views.NiceSpinner
-        android:id="@+id/dashboard_group_spinner"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:background="@drawable/shape"
-        android:alpha="0"
-        android:layout_marginTop="5dp"
-        app:textTint="@color/blue_1"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintTop_toTopOf="@+id/dashboard_background"
-        app:layout_constraintBottom_toBottomOf="@+id/dashboard_background"
-        app:layout_constraintLeft_toLeftOf="@+id/dashboard_background"
-        app:layout_constraintRight_toRightOf="@+id/dashboard_background"/>
-    <TextView
-        android:id="@+id/note"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:gravity="center_vertical|right"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintTop_toTopOf="@+id/dashboard_background"
-        app:layout_constraintBottom_toBottomOf="@+id/dashboard_background"
-        app:layout_constraintLeft_toLeftOf="@+id/dashboard_background"
-        app:layout_constraintRight_toRightOf="@+id/dashboard_background"
-        android:text=""/>
-
     <ListView
         android:id="@+id/dashboard_group_view_id"
         android:layout_width="match_parent"
@@ -101,6 +17,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="10dp"
         android:scrollbars="none"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
