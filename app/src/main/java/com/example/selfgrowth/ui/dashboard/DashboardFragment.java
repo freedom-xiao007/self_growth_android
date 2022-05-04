@@ -14,13 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.enums.LabelEnum;
+import com.example.selfgrowth.enums.StatisticsTypeEnum;
+import com.example.selfgrowth.model.DailyLogModel;
+import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.model.DashboardStatistics;
 import com.example.selfgrowth.service.foregroud.AppStatisticsService;
+import com.example.selfgrowth.service.foregroud.DashboardService;
 import com.example.selfgrowth.ui.task.TaskListFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -28,14 +34,16 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DashboardFragment extends Fragment {
 
-    CollectionAdapter collectionAdapter;
-    ViewPager2 viewPager;
-    private final List<String> tabs = Arrays.asList("总览", "其他", "时间轴");
+    private CollectionAdapter collectionAdapter;
+    private ViewPager2 viewPager;
+    private final List<String> tabs = Arrays.asList("总览", "其他", "时间线");
     private final int activeColor = Color.parseColor("#FFFFFF");
     private final int normalColor = Color.parseColor("#666666");
     private final int normalSize = 20;
@@ -102,6 +110,7 @@ public class DashboardFragment extends Fragment {
     public static class SubTabFragment extends Fragment {
 
         private final AppStatisticsService appStatisticsService = AppStatisticsService.getInstance();
+        private final DashboardService dashboardService = DashboardService.getInstance();
         private final String type;
         private DashboardStatistics data;
 
@@ -112,9 +121,30 @@ public class DashboardFragment extends Fragment {
         @RequiresApi(api = Build.VERSION_CODES.O)
         public View onCreateView(@NonNull LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-            initData(view);
+            View view;
+            if (type.equals("时间线")) {
+                view = inflater.inflate(R.layout.recycler_view, container, false);
+                initTimelineView(view);
+            } else {
+                view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+                initData(view);
+            }
             return view;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        private void initTimelineView(View view) {
+            final DashboardResult result = dashboardService.getPeriodData(new Date(), StatisticsTypeEnum.DAY, view, true);
+            List<DailyLogModel> dailyLogs = result.getDailyLogs()
+                    .stream()
+                    .filter(item -> !item.getLabel().equals(LabelEnum.DEFAULT))
+                    .sorted(Comparator.comparing(DailyLogModel::getDate))
+                    .collect(Collectors.toList());
+            DailyLogAdapter adapter = new DailyLogAdapter(dailyLogs);
+            RecyclerView timelineView = view.findViewById(R.id.recyclerView);
+            LinearLayoutManager layoutManage = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
+            timelineView.setLayoutManager(layoutManage);
+            timelineView.setAdapter(adapter);
         }
 
         @RequiresApi(api = Build.VERSION_CODES.O)
