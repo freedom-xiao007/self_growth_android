@@ -22,7 +22,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
     private final TaskRequest taskRequest = new TaskRequest();
     private final Context context;
     private final List<TaskConfig> dataList;
-    private final TaskFragment taskFragment;
+    private final TaskListFragment taskFragment;
     private final String groupName;
     private final TaskService taskService = TaskService.getInstance();
 
@@ -33,7 +33,7 @@ public class ListViewDemoAdapter extends BaseAdapter {
      * @param taskFragment
      * @param groupName
      */
-    public ListViewDemoAdapter(Context context, List<TaskConfig> dataList, TaskFragment taskFragment, String groupName) {
+    public ListViewDemoAdapter(Context context, List<TaskConfig> dataList, TaskListFragment taskFragment, String groupName) {
         this.context = context;
         this.dataList = dataList;
         this.taskFragment = taskFragment;

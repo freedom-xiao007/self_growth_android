@@ -23,24 +23,6 @@
         app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="0" />
 
-    <AutoCompleteTextView
-        android:id="@+id/add_task_group"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:drawablePadding="15dp"
-        android:drawableStart="@drawable/ic_baseline_brush_50"
-        android:hint="请输入任务组名称"
-        android:textColorHint="@color/gray"
-        android:textColor="@color/white"
-        android:completionThreshold="1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintHorizontal_bias="0.5" />
-
     <EditText
         android:id="@+id/add_task_name"
         android:layout_width="300dp"
