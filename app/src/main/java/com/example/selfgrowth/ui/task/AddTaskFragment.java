@@ -75,6 +75,7 @@ public class AddTaskFragment extends Fragment {
         }));
 
         view.findViewById(R.id.add_task_button).setOnClickListener(v -> {
+            final String taskGroup = ((EditText)view.findViewById(R.id.add_task_group)).getText().toString();
             final String taskName = ((EditText)view.findViewById(R.id.add_task_name)).getText().toString();
             final String desc = ((EditText)view.findViewById(R.id.add_task_dsc)).getText().toString();
             final TaskConfig taskConfig = TaskConfig.builder()
@@ -83,7 +84,7 @@ public class AddTaskFragment extends Fragment {
                     .label(label)
                     .cycleType(cycle)
                     .learnType(learnType)
-                    .group(currentGroup)
+                    .group(taskGroup.isEmpty() ? currentGroup : taskGroup)
                     .taskTypeEnum(taskType)
                     .isComplete(false)
                     .build();
