@@ -12,7 +12,7 @@ import com.example.selfgrowth.enums.TaskLearnTypeEnum;
 import com.example.selfgrowth.enums.TaskTypeEnum;
 import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.model.TaskConfig;
-import com.example.selfgrowth.service.foregroud.TaskService;
+import com.example.selfgrowth.service.backend.TaskService;
 
 import org.junit.Before;
 import org.junit.Test;

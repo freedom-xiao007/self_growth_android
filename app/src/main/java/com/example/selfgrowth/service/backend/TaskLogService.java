@@ -1,4 +1,4 @@
-package com.example.selfgrowth.service.foregroud;
+package com.example.selfgrowth.service.backend;
 
 import android.content.Context;
 import android.content.SharedPreferences;

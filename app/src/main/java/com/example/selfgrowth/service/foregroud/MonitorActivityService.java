@@ -19,6 +19,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.request.ActivityRequest;
+import com.example.selfgrowth.service.backend.AppLogService;
 
 public class MonitorActivityService extends Service {
 

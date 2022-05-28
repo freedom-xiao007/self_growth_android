@@ -15,7 +15,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.service.foregroud.TaskService;
+import com.example.selfgrowth.service.backend.TaskService;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

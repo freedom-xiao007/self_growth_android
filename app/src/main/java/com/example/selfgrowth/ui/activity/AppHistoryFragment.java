@@ -15,8 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.model.AppHistory;
 import com.example.selfgrowth.model.AppInfo;
-import com.example.selfgrowth.service.foregroud.AppLogService;
-import com.example.selfgrowth.service.foregroud.AppStatisticsService;
+import com.example.selfgrowth.service.backend.AppLogService;
+import com.example.selfgrowth.service.backend.AppStatisticsService;
 import com.example.selfgrowth.utils.AppUtils;
 
 

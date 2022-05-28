@@ -13,7 +13,7 @@ import com.example.selfgrowth.R;
 import com.example.selfgrowth.enums.TaskCycleEnum;
 import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.http.request.TaskRequest;
-import com.example.selfgrowth.service.foregroud.TaskService;
+import com.example.selfgrowth.service.backend.TaskService;
 
 import java.util.List;
 

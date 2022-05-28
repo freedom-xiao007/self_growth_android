@@ -11,8 +11,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 
 import com.example.selfgrowth.http.HttpConfig;
-import com.example.selfgrowth.service.foregroud.AppLogService;
-import com.example.selfgrowth.service.foregroud.DashboardService;
+import com.example.selfgrowth.service.backend.AppLogService;
+import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.service.foregroud.MonitorActivityService;
 
 import androidx.annotation.RequiresApi;
@@ -23,8 +23,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.selfgrowth.databinding.ActivityMainBinding;
-import com.example.selfgrowth.service.foregroud.TaskLogService;
-import com.example.selfgrowth.service.foregroud.TaskService;
+import com.example.selfgrowth.service.backend.TaskLogService;
+import com.example.selfgrowth.service.backend.TaskService;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

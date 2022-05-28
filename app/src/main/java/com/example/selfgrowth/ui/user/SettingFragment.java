@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.HttpConfig;
-import com.example.selfgrowth.service.foregroud.AppLogService;
-import com.example.selfgrowth.service.foregroud.TaskService;
+import com.example.selfgrowth.service.backend.AppLogService;
+import com.example.selfgrowth.service.backend.TaskService;
 import com.google.android.material.snackbar.Snackbar;
 
 public class SettingFragment extends Fragment {

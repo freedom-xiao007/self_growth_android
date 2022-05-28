@@ -17,7 +17,7 @@ import com.example.selfgrowth.enums.TaskCycleEnum;
 import com.example.selfgrowth.enums.TaskLearnTypeEnum;
 import com.example.selfgrowth.enums.TaskTypeEnum;
 import com.example.selfgrowth.model.TaskConfig;
-import com.example.selfgrowth.service.foregroud.TaskService;
+import com.example.selfgrowth.service.backend.TaskService;
 
 import org.angmarch.views.NiceSpinner;
 

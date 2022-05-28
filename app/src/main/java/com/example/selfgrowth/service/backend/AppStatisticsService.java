@@ -1,4 +1,4 @@
-package com.example.selfgrowth.service.foregroud;
+package com.example.selfgrowth.service.backend;
 
 import android.content.Context;
 import android.os.Build;
@@ -12,7 +12,6 @@ import com.example.selfgrowth.model.DashboardStatistics;
 import com.example.selfgrowth.model.DailyLogModel;
 import com.example.selfgrowth.utils.AppUtils;
 import com.example.selfgrowth.utils.DateUtils;
-import com.example.selfgrowth.utils.MyTimeUtils;
 
 import java.time.Duration;
 import java.util.ArrayList;
