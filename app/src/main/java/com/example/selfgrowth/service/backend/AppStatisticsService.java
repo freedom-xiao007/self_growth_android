@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class AppStatisticsService {
@@ -42,7 +43,7 @@ public class AppStatisticsService {
         appLogs.sort(new AppLog());
         Collections.reverse(appLogs);
 
-        final Map<String, AppInfo> packageName2AppInfo = getPackageName2AppInfoMap(context);
+        final Map<String, AppInfo> packageName2AppInfo = AppUtils.getPackageName2AppInfoMap(context);
         final Map<String, AtomicLong> labelTime = new HashMap<>(4);
         final Map<String, Map<String, AtomicLong>> appTime = new HashMap<>(4);
         final Map<String, List<DashboardStatistics.AppUseLog>> appUserLogs = new HashMap<>();
@@ -61,7 +62,7 @@ public class AppStatisticsService {
                 record.start(log.getDate(), packageName2AppInfo.get(packageName));
                 return;
             }
-            if (record.continueRecord(packageName, log.getDate())) {
+            if (record.continueRecord(packageName)) {
                 return;
             }
 
@@ -112,22 +113,15 @@ public class AppStatisticsService {
                 .build();
     }
 
-    public Map<String, AppInfo> getPackageName2AppInfoMap(final Context context) {
-        final List<AppInfo> apps = AppUtils.getApps(context);
-        final Map<String, AppInfo> appInfoMap = new HashMap<>(apps.size());
-        for (AppInfo app: apps) {
-            appInfoMap.put(app.getPackageName(), app);
-        }
-        return appInfoMap;
-    }
+
 
     private Map<String, DashboardStatistics.DashboardGroup> createDashboardGroups(Map<String, AtomicLong> labelTime, Map<String, Map<String, AtomicLong>> appTime, Map<String, List<DashboardStatistics.AppUseLog>> appUserLogs) {
         final Map<String, DashboardStatistics.DashboardGroup> dashboardGroupMap = new HashMap<>(labelTime.size());
         for (String label : labelTime.keySet()) {
             dashboardGroupMap.put(label, DashboardStatistics.DashboardGroup.builder()
                     .name(label)
-                    .minutes(labelTime.get(label).get())
-                    .apps(createDashboardApps(appTime.get(label), appUserLogs))
+                    .minutes(Objects.requireNonNull(labelTime.get(label)).get())
+                    .apps(createDashboardApps(Objects.requireNonNull(appTime.get(label)), appUserLogs))
                     .build());
         }
         return dashboardGroupMap;
@@ -138,14 +132,14 @@ public class AppStatisticsService {
         for (String app: appTime.keySet()) {
             apps.add(DashboardStatistics.DashboardApp.builder()
                     .name(app)
-                    .minutes(appTime.get(app).get())
+                    .minutes(Objects.requireNonNull(appTime.get(app)).get())
                     .logs(appUserLogs.get(app))
                     .build());
         }
         return apps;
     }
 
-    private class AppRecord {
+    private static class AppRecord {
         private Date start = null;
         private Date end = null;
         private AppInfo appInfo;
@@ -179,10 +173,7 @@ public class AppStatisticsService {
         }
 
         @RequiresApi(api = Build.VERSION_CODES.O)
-        public boolean continueRecord(String packageName, Date current) {
-//            if (Duration.between(start.toInstant(), current.toInstant()).toMinutes() > 1) {
-//                return false;
-//            }
+        public boolean continueRecord(String packageName) {
             return packageName.equals(appInfo.getPackageName());
         }
 

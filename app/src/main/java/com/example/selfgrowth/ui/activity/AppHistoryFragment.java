@@ -16,9 +16,7 @@ import com.example.selfgrowth.R;
 import com.example.selfgrowth.model.AppHistory;
 import com.example.selfgrowth.model.AppInfo;
 import com.example.selfgrowth.service.backend.AppLogService;
-import com.example.selfgrowth.service.backend.AppStatisticsService;
 import com.example.selfgrowth.utils.AppUtils;
-
 
 import java.util.Date;
 import java.util.List;
@@ -27,7 +25,6 @@ import java.util.stream.Collectors;
 
 public class AppHistoryFragment extends Fragment {
 
-    private final AppStatisticsService appStatisticsService = AppStatisticsService.getInstance();
     private final AppLogService appLogService = AppLogService.getInstance();
 
     @Nullable
@@ -39,7 +36,7 @@ public class AppHistoryFragment extends Fragment {
         List<AppInfo> apps = AppUtils.getApps(view.getContext());
         apps.forEach(app -> app.setLabel(preferences));
 
-        Map<String, AppInfo> packageName2AppInfo = appStatisticsService.getPackageName2AppInfoMap(requireContext());
+        Map<String, AppInfo> packageName2AppInfo = AppUtils.getPackageName2AppInfoMap(requireContext());
         List<AppHistory> history = appLogService.getAppLogs(new Date(), 30).stream().map(log -> {
             final String packageName = log.getPackageName();
             final AppInfo appInfo = packageName2AppInfo.get(packageName);

@@ -19,13 +19,20 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.http.request.ActivityRequest;
+import com.example.selfgrowth.model.AppInfo;
 import com.example.selfgrowth.service.backend.AppLogService;
+import com.example.selfgrowth.utils.AppUtils;
+
+import java.util.Map;
+import java.util.Objects;
 
 public class MonitorActivityService extends Service {
 
     private String beforeActivity;
     private final ActivityRequest activityRequest = new ActivityRequest();
     private final AppLogService appLogService = AppLogService.getInstance();
+    private String beforeAppName;
+    private Map<String, AppInfo> package2AppName;
 
     /*
      * @param intent
@@ -54,6 +61,7 @@ public class MonitorActivityService extends Service {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             setForegroundService();
         }
+        package2AppName = AppUtils.getPackageName2AppInfoMap(getApplicationContext());
     }
 
     /**
@@ -75,8 +83,8 @@ public class MonitorActivityService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "232");
         builder.setSmallIcon(R.drawable.ic_launcher_foreground) //设置通知图标
                 .setContentTitle("正在监控手机活动并上报")//设置通知标题
-                .setContentText("正在监控手机活动并上报")//设置通知内容
-                .setAutoCancel(true) //用户触摸时，自动关闭
+                .setContentText(String.format("进行中：%s", ""))//设置通知内容
+                .setAutoCancel(false) //用户触摸时，自动关闭
                 .setOngoing(true);//设置处于运行状态
         //向系统注册通知渠道，注册后不能改变重要性以及其他通知行为
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -89,7 +97,20 @@ public class MonitorActivityService extends Service {
             @Override
             public void run() {
                 Log.d("Monitor Detect", "定时检测顶层应用");
-                getTopActivity();
+                String currentApp = getTopActivity();
+                if (!currentApp.equals(beforeAppName)) {
+                    beforeAppName = currentApp;
+                    builder.setSmallIcon(R.drawable.ic_launcher_foreground) //设置通知图标
+                            .setContentTitle("正在监控手机活动并上报")//设置通知标题
+                            .setContentText(String.format("进行中：%s", currentApp))//设置通知内容
+                            .setAutoCancel(false) //用户触摸时，自动关闭
+                            .setOngoing(true);//设置处于运行状态
+                    //向系统注册通知渠道，注册后不能改变重要性以及其他通知行为
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    notificationManager.createNotificationChannel(channel);
+                    //将服务置于启动状态 NOTIFICATION_ID指的是创建的通知的ID
+                    startForeground(232,builder.build());
+                }
                 handler.postDelayed(this, 10000);
             }
         };
@@ -99,7 +120,7 @@ public class MonitorActivityService extends Service {
     /**
      * 获取手机顶层Activity
      */
-    public void getTopActivity()
+    public String getTopActivity()
     {
         long endTime = System.currentTimeMillis();
         long beginTime = endTime - 10000;
@@ -122,7 +143,7 @@ public class MonitorActivityService extends Service {
 
         if (beforeActivity == null) {
             Toast.makeText(MonitorActivityService.this.getApplicationContext(),"活动为空",Toast.LENGTH_SHORT).show();
-            return;
+            return "无有效应用在使用";
         }
         appLogService.add(beforeActivity);
         activityRequest.uploadRecord(beforeActivity,
@@ -131,6 +152,7 @@ public class MonitorActivityService extends Service {
                     Toast.makeText(MonitorActivityService.this.getApplicationContext(),"上传失败",Toast.LENGTH_SHORT).show();
                     Log.w("Activity", "上传失败:" + failed);
                 });
+        return Objects.requireNonNull(package2AppName.getOrDefault(beforeActivity, AppInfo.builder().appName(beforeActivity).build())).getAppName();
     }
 }
 

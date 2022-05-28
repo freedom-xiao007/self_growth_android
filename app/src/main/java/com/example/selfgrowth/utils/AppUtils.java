@@ -8,6 +8,7 @@ import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.model.AppInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,6 +37,15 @@ public class AppUtils {
                     .build());
         }
         return apps;
+    }
+
+    public static Map<String, AppInfo> getPackageName2AppInfoMap(final Context context) {
+        final List<AppInfo> apps = AppUtils.getApps(context);
+        final Map<String, AppInfo> appInfoMap = new HashMap<>(apps.size());
+        for (AppInfo app: apps) {
+            appInfoMap.put(app.getPackageName(), app);
+        }
+        return appInfoMap;
     }
 
     public static Map<String, AppInfo> getApps(final Context context, final LabelEnum label) {
