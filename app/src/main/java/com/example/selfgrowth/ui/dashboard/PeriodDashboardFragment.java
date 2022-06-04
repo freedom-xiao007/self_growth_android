@@ -73,7 +73,6 @@ public class PeriodDashboardFragment extends Fragment {
         }
     }
 
-    private final TaskLogService taskLogService = TaskLogService.getInstance();
     private final DashboardService dashboardService = DashboardService.getInstance();
     private final StatisticsTypeEnum statisticsType;
     private int yearCache;
@@ -99,12 +98,12 @@ public class PeriodDashboardFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        init(new Date(), view);
+        init(new Date(), view, true);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void init(Date date, View view) {
-        final DashboardResult result = dashboardService.getPeriodData(date, statisticsType, view, true);
+    private void init(Date date, View view, boolean refresh) {
+        final DashboardResult result = dashboardService.getPeriodData(date, statisticsType, view, refresh);
         CollectionAdapter collectionAdapter = new CollectionAdapter(this, result);
         ViewPager2 viewPager = view.findViewById(R.id.pager);
         viewPager.setAdapter(collectionAdapter);
@@ -147,7 +146,7 @@ public class PeriodDashboardFragment extends Fragment {
                 dayCache = day;
                 Calendar selectDate = Calendar.getInstance();
                 selectDate.set(year, month, day);
-                init(selectDate.getTime(), view);
+                init(selectDate.getTime(), view, false);
             });
         });
     }

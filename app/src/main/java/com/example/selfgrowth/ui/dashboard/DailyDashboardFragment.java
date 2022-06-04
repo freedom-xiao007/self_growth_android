@@ -43,7 +43,7 @@ public class DailyDashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.daily_dashboard, container, false);
         initDateCache();
-        loadData(new Date(), view);
+        loadData(new Date(), view, true);
         return view;
     }
 
@@ -55,8 +55,8 @@ public class DailyDashboardFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void loadData(final Date date, final View view) {
-        final DashboardResult result = dashboardService.getPeriodData(date, StatisticsTypeEnum.DAY, view, true);
+    private void loadData(final Date date, final View view, final boolean refresh) {
+        final DashboardResult result = dashboardService.getPeriodData(date, StatisticsTypeEnum.DAY, view, refresh);
         ((TextView) view.findViewById(R.id.learn_minutes)).setText(MyTimeUtils.toString(result.getLearnTime()));
         ((TextView) view.findViewById(R.id.running_minutes)).setText(MyTimeUtils.toString(result.getRunningTime()));
         ((TextView) view.findViewById(R.id.sleep_minutes)).setText(MyTimeUtils.toString(result.getSleepTime()));
@@ -73,19 +73,21 @@ public class DailyDashboardFragment extends Fragment {
                 dayCache = day;
                 Calendar selectDate = Calendar.getInstance();
                 selectDate.set(year, month, day);
-                loadData(selectDate.getTime(), view);
+                loadData(selectDate.getTime(), view, false);
             });
         });
 
-        List<DailyLogModel> dailyLogs = result.getDailyLogs()
-                .stream()
-                .filter(item -> !item.getLabel().equals(LabelEnum.DEFAULT))
-                .sorted(Comparator.comparing(DailyLogModel::getDate))
-                .collect(Collectors.toList());
-        DailyLogAdapter adapter = new DailyLogAdapter(dailyLogs);
-        RecyclerView timelineView = view.findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManage = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
-        timelineView.setLayoutManager(layoutManage);
-        timelineView.setAdapter(adapter);
+        if (result.getDailyLogs() != null) {
+            List<DailyLogModel> dailyLogs = result.getDailyLogs()
+                    .stream()
+                    .filter(item -> !item.getLabel().equals(LabelEnum.DEFAULT))
+                    .sorted(Comparator.comparing(DailyLogModel::getDate))
+                    .collect(Collectors.toList());
+            DailyLogAdapter adapter = new DailyLogAdapter(dailyLogs);
+            RecyclerView timelineView = view.findViewById(R.id.recyclerView);
+            LinearLayoutManager layoutManage = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
+            timelineView.setLayoutManager(layoutManage);
+            timelineView.setAdapter(adapter);
+        }
     }
 }

@@ -146,12 +146,6 @@ public class MonitorActivityService extends Service {
             return "无有效应用在使用";
         }
         appLogService.add(beforeActivity);
-        activityRequest.uploadRecord(beforeActivity,
-                success -> {},
-                failed -> {
-                    Toast.makeText(MonitorActivityService.this.getApplicationContext(),"上传失败",Toast.LENGTH_SHORT).show();
-                    Log.w("Activity", "上传失败:" + failed);
-                });
         return Objects.requireNonNull(package2AppName.getOrDefault(beforeActivity, AppInfo.builder().appName(beforeActivity).build())).getAppName();
     }
 }
