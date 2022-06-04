@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.model.AppHistory;
 import com.example.selfgrowth.model.AppInfo;
-import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.utils.DateUtils;
 
 import org.angmarch.views.NiceSpinner;
@@ -20,7 +19,6 @@ import java.util.List;
 
 public class AppHistoryViewAdapter extends BaseAdapter {
 
-    private final TaskRequest taskRequest = new TaskRequest();
     private final Context context;
     private final List<AppHistory> dataList;
 

@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.example.selfgrowth.R;
-import com.example.selfgrowth.http.request.ActivityRequest;
 import com.example.selfgrowth.model.AppInfo;
 import com.example.selfgrowth.service.backend.AppLogService;
 import com.example.selfgrowth.utils.AppUtils;
@@ -29,7 +28,6 @@ import java.util.Objects;
 public class MonitorActivityService extends Service {
 
     private String beforeActivity;
-    private final ActivityRequest activityRequest = new ActivityRequest();
     private final AppLogService appLogService = AppLogService.getInstance();
     private String beforeAppName;
     private Map<String, AppInfo> package2AppName;

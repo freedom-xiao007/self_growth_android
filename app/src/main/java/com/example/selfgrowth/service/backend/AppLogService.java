@@ -23,32 +23,10 @@ public class AppLogService {
         return instance;
     }
 
-    private final int cacheSize = 30;
-    private List<AppLog> logCache = new ArrayList<>(cacheSize);
     private SharedPreferences sharedPreferences;
-    private final String syncServerKey = "isSync";
-    /**
-     * 是否同步到远程服务器
-     */
-    private boolean isSyncToWebServer;
-
-    public boolean syncIsOpen() {
-        return isSyncToWebServer;
-    }
-
-    public void openSyncToWebServer() {
-        isSyncToWebServer = true;
-        sharedPreferences.edit().putBoolean(syncServerKey, true).apply();
-    }
-
-    public void closeSyncToWebServer() {
-        isSyncToWebServer = false;
-        sharedPreferences.edit().putBoolean(syncServerKey, true).apply();
-    }
 
     public void add(final String packageName) {
         AppLog appLog = new AppLog(new Date(), packageName);
-        logCache.add(appLog);
         save(appLog);
     }
 

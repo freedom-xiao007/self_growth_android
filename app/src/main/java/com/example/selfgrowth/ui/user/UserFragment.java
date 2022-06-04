@@ -30,6 +30,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 public class UserFragment extends Fragment {
 
@@ -106,9 +107,9 @@ public class UserFragment extends Fragment {
         if (groups == null) {
             return;
         }
-        long learnMinutes = groups.getOrDefault(LabelEnum.LEARN.getName(), DashboardStatistics.DashboardGroup.builder().build()).getMinutes();
-        long runningMinutes = groups.getOrDefault(LabelEnum.RUNNING.getName(), DashboardStatistics.DashboardGroup.builder().build()).getMinutes();
-        long sleepMinutes = groups.getOrDefault(LabelEnum.SLEEP.getName(), DashboardStatistics.DashboardGroup.builder().build()).getMinutes();
+        long learnMinutes = Objects.requireNonNull(groups.getOrDefault(LabelEnum.LEARN.getName(), DashboardStatistics.DashboardGroup.builder().build())).getMinutes();
+        long runningMinutes = Objects.requireNonNull(groups.getOrDefault(LabelEnum.RUNNING.getName(), DashboardStatistics.DashboardGroup.builder().build())).getMinutes();
+        long sleepMinutes = Objects.requireNonNull(groups.getOrDefault(LabelEnum.SLEEP.getName(), DashboardStatistics.DashboardGroup.builder().build())).getMinutes();
         int taskComplete = taskLogService.list(new Date()).size();
         ((TextView)view.findViewById(R.id.learn_minutes)).setText(String.valueOf(learnMinutes));
         ((TextView)view.findViewById(R.id.running_minutes)).setText(String.valueOf(runningMinutes));

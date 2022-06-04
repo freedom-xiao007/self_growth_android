@@ -12,14 +12,12 @@ import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.enums.TaskCycleEnum;
 import com.example.selfgrowth.model.TaskConfig;
-import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.service.backend.TaskService;
 
 import java.util.List;
 
 public class ListViewDemoAdapter extends BaseAdapter {
 
-    private final TaskRequest taskRequest = new TaskRequest();
     private final Context context;
     private final List<TaskConfig> dataList;
     private final TaskListFragment taskFragment;
@@ -30,8 +28,8 @@ public class ListViewDemoAdapter extends BaseAdapter {
      * 构造器
      * @param context 上下文对象
      * @param dataList 数据
-     * @param taskFragment
-     * @param groupName
+     * @param taskFragment fragment
+     * @param groupName group name
      */
     public ListViewDemoAdapter(Context context, List<TaskConfig> dataList, TaskListFragment taskFragment, String groupName) {
         this.context = context;

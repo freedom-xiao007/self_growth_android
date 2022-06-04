@@ -29,15 +29,12 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.selfgrowth.databinding.ActivityMainBinding;
 import com.example.selfgrowth.service.backend.TaskLogService;
 import com.example.selfgrowth.service.backend.TaskService;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class MainActivity extends AppCompatActivity {
-
-    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         DashboardService.getInstance().init(this.getApplicationContext());
 
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.selfgrowth.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Passing each menu ID as a set of Ids because each

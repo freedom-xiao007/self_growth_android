@@ -41,8 +41,6 @@ import java.util.stream.Collectors;
 
 public class DashboardFragment extends Fragment {
 
-    private CollectionAdapter collectionAdapter;
-    private ViewPager2 viewPager;
     private final List<String> tabs = Arrays.asList("总览", "其他", "时间线");
     private final int activeColor = Color.parseColor("#FFFFFF");
     private final int normalColor = Color.parseColor("#666666");
@@ -56,10 +54,9 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        collectionAdapter = new CollectionAdapter(this);
-        viewPager = view.findViewById(R.id.pager);
+        CollectionAdapter collectionAdapter = new CollectionAdapter(this);
+        ViewPager2 viewPager = view.findViewById(R.id.pager);
         viewPager.setAdapter(collectionAdapter);
-
 
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         TabLayoutMediator mediator = new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {

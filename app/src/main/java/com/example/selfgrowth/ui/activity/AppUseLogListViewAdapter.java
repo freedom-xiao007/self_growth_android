@@ -9,14 +9,12 @@ import android.widget.TextView;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.model.DashboardStatistics;
-import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.utils.DateUtils;
 
 import java.util.List;
 
 public class AppUseLogListViewAdapter extends BaseAdapter {
 
-    private final TaskRequest taskRequest = new TaskRequest();
     private final Context context;
     private final List<DashboardStatistics.AppUseLog> dataList;
 

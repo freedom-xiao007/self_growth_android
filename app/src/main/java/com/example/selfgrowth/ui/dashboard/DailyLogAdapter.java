@@ -34,6 +34,7 @@ public class DailyLogAdapter extends RecyclerView.Adapter<DailyLogAdapter.TimeLi
         return TimelineView.getTimeLineViewType(position, getItemCount());
     }
 
+    @NonNull
     @Override
     public TimeLineViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater flater = LayoutInflater.from(parent.getContext());

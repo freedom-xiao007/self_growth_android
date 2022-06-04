@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.model.DashboardStatistics;
-import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.ui.activity.AppUseLogListViewAdapter;
 import com.example.selfgrowth.utils.MyTimeUtils;
 
@@ -19,7 +18,6 @@ import java.util.List;
 
 public class DashboardItemListViewAdapter extends BaseAdapter {
 
-    private final TaskRequest taskRequest = new TaskRequest();
     private final Context context;
     private final List<DashboardStatistics.DashboardApp> dataList;
 

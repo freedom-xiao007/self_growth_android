@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.example.selfgrowth.enums.TaskCycleEnum;
 import com.example.selfgrowth.model.TaskConfig;
-import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.utils.GsonUtils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,15 +21,8 @@ import java.util.stream.Collectors;
 
 public class TaskService {
 
-    private final TaskRequest taskRequest = new TaskRequest();
     private SharedPreferences taskConfigDb;
-    private SharedPreferences isSyncToWebServerDb;
-    private final String syncServerKey = "setting";
     private final TaskLogService taskLogService = TaskLogService.getInstance();
-    /**
-     * 是否同步到远程服务器
-     */
-    private boolean isSyncToWebServer;
 
     private static final TaskService instance = new TaskService();
     public static TaskService getInstance() {
@@ -39,22 +31,6 @@ public class TaskService {
 
     public void init(final Context applicationContext) {
         this.taskConfigDb = applicationContext.getSharedPreferences("TASK_SERVICE", Context.MODE_PRIVATE);
-        isSyncToWebServerDb = applicationContext.getSharedPreferences("isSyncToWebServer", Context.MODE_PRIVATE);
-        isSyncToWebServer = isSyncToWebServerDb.getBoolean(syncServerKey, false);
-    }
-
-    public void openSyncToWebServer() {
-        isSyncToWebServer = true;
-        isSyncToWebServerDb.edit().putBoolean(syncServerKey, true).apply();
-    }
-
-    public void closeSyncToWebServer() {
-        isSyncToWebServer = false;
-        isSyncToWebServerDb.edit().putBoolean(syncServerKey, true).apply();
-    }
-
-    public boolean syncIsOpen() {
-        return isSyncToWebServer;
     }
 
     public void add(final TaskConfig config, final View view) {
@@ -67,12 +43,6 @@ public class TaskService {
         saveDb(config.getGroup(), new HashSet<>(tasks));
         Log.d("add task: ", config.toString());
         Snackbar.make(view, "任务添加成功", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
-        if (isSyncToWebServer) {
-            taskRequest.update(config,
-                    s -> Snackbar.make(view, "任务同步到服务器成功", Snackbar.LENGTH_LONG).setAction("Action", null).show(),
-                    f -> Snackbar.make(view, "任务同步到服务器失败：" + f, Snackbar.LENGTH_LONG).setAction("Action", null).show());
-        }
     }
 
     public void delete(final String groupName, final String id) {
@@ -167,7 +137,7 @@ public class TaskService {
     public List<TaskConfig> getAllConfig() {
         List<TaskConfig> configs = new ArrayList<>();
         List<String> groups = getAllGroup();
-        groups.stream().forEach(group -> configs.addAll(query(group, null)));
+        groups.forEach(group -> configs.addAll(query(group, null)));
         return configs;
     }
 }

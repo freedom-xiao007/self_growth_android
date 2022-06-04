@@ -21,7 +21,6 @@ public class CalenderFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_calender, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_calender, container, false);
     }
 }
