@@ -12,12 +12,6 @@ public class UserCache {
         return instance;
     }
 
-    public void initUser(String userName, String token) {
-        this.userName = userName;
-        this.token = token;
-        this.login = true;
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -32,6 +26,14 @@ public class UserCache {
 
     public boolean isLogin() {
         return this.login;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void login() {
+        this.login = true;
     }
 
     public void setAuth(String key, String token) {

@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
 import com.example.selfgrowth.http.request.UserRequest;
-import com.example.selfgrowth.model.LoginUser;
 import com.google.android.material.snackbar.Snackbar;
 
 public class LoginFragment extends Fragment {
@@ -37,8 +36,11 @@ public class LoginFragment extends Fragment {
                 edit.putString("username", username.getText().toString());
                 edit.putString("password", password.getText().toString());
                 edit.apply();
+                UserCache.getInstance().setUserName(username.getText().toString());
+                UserCache.getInstance().login();
                 Snackbar.make(view, "登录成功:" + token, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                requireActivity().getSupportFragmentManager().popBackStack();
             }, failedMessage -> Snackbar.make(view, "登录失败:" + failedMessage, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show());
         });
