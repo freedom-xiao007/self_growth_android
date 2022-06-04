@@ -75,6 +75,13 @@ public class UserFragment extends Fragment {
         } else {
             userEmail.setText("未登录");
         }
+
+        userEmail.setOnClickListener((View.OnClickListener) v -> requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.user_info, new LoginFragment())
+                .addToBackStack(null)
+                .commit());
     }
 
     private void initServerUrlSetting(View view) {
@@ -120,34 +127,6 @@ public class UserFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_user, container, false);
         TextView userEmail = rootView.findViewById(R.id.login_user_email);
         userEmail.setText(UserCache.getInstance().getUserName());
-        return rootView;
-    }
-
-    private View loadLoginFragment(LayoutInflater inflater, ViewGroup container) {
-        View rootView = inflater.inflate(R.layout.fragment_login, container, false);
-        Button loginButton = rootView.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(view -> {
-            EditText email = rootView.findViewById(R.id.login_user_email);
-            EditText password = rootView.findViewById(R.id.login_password);
-
-            final LoginUser user = LoginUser.builder()
-                    .email(email.getText().toString())
-                    .password(password.getText().toString())
-                    .applications(AppUtils.getInstallSoftware(this.requireContext()))
-                    .build();
-
-            userRequest.login(user, (token) -> {
-                UserCache.getInstance().initUser(email.getText().toString(), token.toString());
-                final SharedPreferences preferences = requireContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                final SharedPreferences.Editor edit = preferences.edit();
-                edit.putString("username", email.getText().toString());
-                edit.putString("password", password.getText().toString());
-                edit.apply();
-                Snackbar.make(view, "登录成功:" + token.toString(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }, failedMessage -> Snackbar.make(view, "登录失败:" + failedMessage, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show());
-        });
         return rootView;
     }
 

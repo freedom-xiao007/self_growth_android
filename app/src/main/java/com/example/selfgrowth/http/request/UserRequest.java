@@ -10,9 +10,9 @@ import retrofit2.Call;
 
 public class UserRequest extends Request {
 
-    public void login(LoginUser user, Consumer<? super Object> success, Consumer<? super Object> failed) {
+    public void login(String name, String pwd, Consumer<? super Object> success, Consumer<? super Object> failed) {
         UserApi request = retrofit.create(UserApi.class);
-        Call<ApiResponse> call = request.login(user);
+        Call<ApiResponse> call = request.login(name, pwd);
         sendRequest(call, success, failed);
     }
 }

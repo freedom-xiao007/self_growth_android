@@ -21,7 +21,7 @@ public class AccessTokenInterceptor implements Interceptor {
 
         Request original = chain.request();
         Request.Builder requestBuilder = original.newBuilder()
-                .addHeader("Authorization", UserCache.getInstance().getToken());
+                .addHeader(UserCache.getInstance().getKey(), UserCache.getInstance().getToken());
         Request request = requestBuilder.build();
         return chain.proceed(request);
     }

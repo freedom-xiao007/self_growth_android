@@ -34,9 +34,10 @@ public abstract class Request {
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                Log.e("response:", response.toString());
                 if (response.code() != 200) {
                     Log.w("Http Response", "请求响应错误:" + response.message());
-                    failed.accept(response.raw().message());
+                    failed.accept(response.toString());
                     return;
                 }
                 if (response.body() == null || response.body().getData() == null) {

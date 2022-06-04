@@ -21,14 +21,14 @@ public class HttpConfig {
 
     public static String getServerUrl() {
         if (address == null) {
-            address = preferences.getString(SERVER_URL, "http://127.0.0.1:8080");
+            address = preferences.getString(SERVER_URL, "http://192.168.1.3:80");
         }
         return address;
     }
 
     public static void init(Context context) {
         preferences = context.getSharedPreferences(HTTP_CONFIG, Context.MODE_PRIVATE);
-        address = preferences.getString(SERVER_URL, "http://127.0.0.1:8080");
+        address = preferences.getString(SERVER_URL, "http://192.168.1.3:80");
         openNetwork = preferences.getBoolean(NET_OPEN, false);
     }
 
