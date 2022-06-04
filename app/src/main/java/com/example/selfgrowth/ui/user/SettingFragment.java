@@ -67,14 +67,23 @@ public class SettingFragment extends Fragment {
 
         dashboardRequest.upload(data,
             success -> {
-                Log.d("upload:", "上传成功：" + data.size());
-                Snackbar.make(requireView(), "上传成功：" + data.size(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                List<DashboardResult> records = convertToRecord((List<LinkedTreeMap>) success);
+                records.forEach(dashboardService::add);
+                Log.d("upload:", String.format("上传：%d, 拉取: %d", data.size(), records.size()));
+                Snackbar.make(requireView(), String.format("上传：%d, 拉取: %d", data.size(), records.size()),
+                        Snackbar.LENGTH_LONG).setAction("Action", null).show();
             },
             failed -> {
                 Log.d("upload:", "上传失败");
                 Snackbar.make(requireView(), "上传失败", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
        );
+    }
+
+    private List<DashboardResult> convertToRecord(List<LinkedTreeMap> success) {
+        List<DashboardResult> configs = new ArrayList<>(success.size());
+        success.forEach(t -> configs.add(GsonUtils.getInstance().fromJson(GsonUtils.getInstance().toJson(t), DashboardResult.class)));
+        return configs;
     }
 
     private void syncTaskData(View v) {
@@ -96,9 +105,7 @@ public class SettingFragment extends Fragment {
 
     private List<TaskConfig> convert(List<LinkedTreeMap> success) {
         List<TaskConfig> configs = new ArrayList<>(success.size());
-        success.forEach(t -> {
-            configs.add(GsonUtils.getInstance().fromJson(GsonUtils.getInstance().toJson(t), TaskConfig.class));
-        });
+        success.forEach(t -> configs.add(GsonUtils.getInstance().fromJson(GsonUtils.getInstance().toJson(t), TaskConfig.class)));
         return configs;
     }
 }

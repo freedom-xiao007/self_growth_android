@@ -32,7 +32,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:gravity="center_vertical|left"
-                android:text="任务自动同步服务器"
+                android:text="任务数据同步"
                 app:drawableLeftCompat="@drawable/ic_baseline_settings_50"/>
             <Button
                 android:id="@+id/task_sync"
@@ -71,7 +71,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:gravity="center_vertical|left"
-                android:text="周期统计数据同步云端"
+                android:text="统计数据同步"
                 app:drawableLeftCompat="@drawable/ic_baseline_settings_50"/>
             <Button
                 android:id="@+id/statistics_data_upload_cloud"

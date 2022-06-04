@@ -136,6 +136,7 @@ public class DashboardService {
     private void saveToDb(final DashboardResult result, final Date date, final StatisticsTypeEnum type) {
         final String day = DateUtils.toCustomDay(date);
         final String dbKey = String.join("::", day, type.name());
+        result.setDay(dbKey);
         sharedPreferences.edit().putString(dbKey, GsonUtils.getGson().toJson(result)).apply();
     }
 
@@ -150,6 +151,12 @@ public class DashboardService {
         if (!sharedPreferences.contains(dbKey)) {
             return null;
         }
-        return GsonUtils.getGson().fromJson(sharedPreferences.getString(dbKey, null), DashboardResult.class);
+        DashboardResult res = GsonUtils.getGson().fromJson(sharedPreferences.getString(dbKey, null), DashboardResult.class);
+        res.setDay(dbKey);
+        return res;
+    }
+
+    public void add(final DashboardResult result) {
+        sharedPreferences.edit().putString(result.getDay(), GsonUtils.getGson().toJson(result)).apply();
     }
 }
