@@ -10,7 +10,7 @@ public class HttpConfig {
     private static final String SERVER_URL = "SERVER_URL";
     private static final String NET_OPEN = "NET_OPEN";
     private static SharedPreferences preferences;
-    private static boolean openNetwork = false;
+    private static boolean openNetwork = true;
 
     public static void setServerUrl(String url) {
         address = url;
@@ -29,21 +29,7 @@ public class HttpConfig {
     public static void init(Context context) {
         preferences = context.getSharedPreferences(HTTP_CONFIG, Context.MODE_PRIVATE);
         address = preferences.getString(SERVER_URL, "http://192.168.1.3:80");
-        openNetwork = preferences.getBoolean(NET_OPEN, false);
-    }
-
-    public static boolean isOpenNetwork() {
-        return openNetwork;
-    }
-
-    public static void openNetwork() {
-        openNetwork = true;
-        preferences.edit().putBoolean(NET_OPEN, openNetwork).apply();;
-    }
-
-    public static void closeNetwork() {
-        openNetwork = false;
-        preferences.edit().putBoolean(NET_OPEN, openNetwork).apply();;
+        openNetwork = preferences.getBoolean(NET_OPEN, true);
     }
 
     public static boolean networkIsOpen() {
