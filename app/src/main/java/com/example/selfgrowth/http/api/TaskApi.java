@@ -3,6 +3,8 @@ package com.example.selfgrowth.http.api;
 import com.example.selfgrowth.model.ApiResponse;
 import com.example.selfgrowth.model.TaskConfig;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -36,4 +38,7 @@ public interface TaskApi {
      **/
     @POST("api/task/update")
     Call<ApiResponse> update(@Body TaskConfig taskConfig);
+
+    @POST("/api/task/sync")
+    Call<ApiResponse> sync(@Body List<TaskConfig> configs);
 }

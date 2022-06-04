@@ -163,4 +163,11 @@ public class TaskService {
             return task.getId().equals(id);
         }).map(config -> GsonUtils.getGson().fromJson(config, TaskConfig.class)).findAny().orElse(null);
     }
+
+    public List<TaskConfig> getAllConfig() {
+        List<TaskConfig> configs = new ArrayList<>();
+        List<String> groups = getAllGroup();
+        groups.stream().forEach(group -> configs.addAll(query(group, null)));
+        return configs;
+    }
 }

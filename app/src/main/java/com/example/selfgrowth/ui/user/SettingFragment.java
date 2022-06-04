@@ -18,13 +18,17 @@ import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.http.api.DashboardApi;
 import com.example.selfgrowth.http.request.DashboardRequest;
+import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.model.DailyLogModel;
 import com.example.selfgrowth.model.DashboardResult;
+import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.service.backend.AppLogService;
 import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.service.backend.TaskService;
 import com.example.selfgrowth.utils.DateUtils;
+import com.example.selfgrowth.utils.GsonUtils;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,57 +42,15 @@ public class SettingFragment extends Fragment {
     private final AppLogService appLogService = AppLogService.getInstance();
     private final DashboardService dashboardService = DashboardService.getInstance();
     private final DashboardRequest dashboardRequest = new DashboardRequest();
+    private final TaskRequest taskRequest = new TaskRequest();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.data_sync_setting, container, false);
-
-        boolean taskSyncOpen = taskService.syncIsOpen();
-        boolean appSyncOpen = appLogService.syncIsOpen();
-        ((TextView) view.findViewById(R.id.net_switch_status)).setText(HttpConfig.isOpenNetwork() ? "已开启" : "已关闭");
-        ((TextView) view.findViewById(R.id.task_switch_status)).setText(taskSyncOpen ? "已开启" : "已关闭");
-        ((TextView) view.findViewById(R.id.app_switch_status)).setText(appSyncOpen ? "已开启" : "已关闭");
-
-        CompoundButton netSwitch = view.findViewById(R.id.net_sync_switch);
-        netSwitch.setChecked(HttpConfig.isOpenNetwork());
-        netSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                HttpConfig.openNetwork();
-                Snackbar.make(view, "开启网络同步", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            } else {
-                HttpConfig.closeNetwork();
-                Snackbar.make(view, "关闭网络同步", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
-
-        CompoundButton taskSwitch = view.findViewById(R.id.task_sync_switch);
-        taskSwitch.setChecked(taskSyncOpen);
-        taskSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                taskService.openSyncToWebServer();
-                Snackbar.make(view, "开启任务数据同步", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            } else {
-                taskService.closeSyncToWebServer();
-                Snackbar.make(view, "关闭任务数据同步", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
-
-        CompoundButton appSwitch = view.findViewById(R.id.app_sync_switch);
-        appSwitch.setChecked(appSyncOpen);
-        appSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                appLogService.openSyncToWebServer();
-                Snackbar.make(view, "开启手机应用数据同步", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            } else {
-                appLogService.closeSyncToWebServer();
-                Snackbar.make(view, "关闭手机应用数据同步", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
-
         view.findViewById(R.id.statistics_data_upload_cloud).setOnClickListener(v -> uploadDailyStatisticsData());
-
+        view.findViewById(R.id.task_sync_switch).setOnClickListener(this::syncTaskData);
         return view;
     }
 
@@ -119,5 +81,30 @@ public class SettingFragment extends Fragment {
                 Snackbar.make(requireView(), "上传失败", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
        );
+    }
+
+    private void syncTaskData(View v) {
+        Snackbar.make(requireView(), "后台进程任务同步中，可返回进行其他操作", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        List<TaskConfig> tasks = taskService.getAllConfig();
+        tasks.forEach(t -> t.setId(null));
+        taskRequest.sync(tasks,
+                success -> {
+                    List<TaskConfig> newConfig = convert((List<LinkedTreeMap>) success);
+                    Log.d("sync Task:", newConfig.toString());
+                    newConfig.forEach(task -> taskService.add(task, v));
+                    Snackbar.make(requireView(), "任务同步成功：" + newConfig.size(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                },
+                failed -> {
+                    Snackbar.make(requireView(), "任务同步失败", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+        );
+    }
+
+    private List<TaskConfig> convert(List<LinkedTreeMap> success) {
+        List<TaskConfig> configs = new ArrayList<>(success.size());
+        success.forEach(t -> {
+            configs.add(GsonUtils.getInstance().fromJson(GsonUtils.getInstance().toJson(t), TaskConfig.class));
+        });
+        return configs;
     }
 }
