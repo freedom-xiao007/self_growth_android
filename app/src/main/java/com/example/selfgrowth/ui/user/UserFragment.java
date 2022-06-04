@@ -1,13 +1,10 @@
 package com.example.selfgrowth.ui.user;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,15 +20,12 @@ import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.http.RetrofitClient;
 import com.example.selfgrowth.model.DashboardStatistics;
-import com.example.selfgrowth.model.LoginUser;
-import com.example.selfgrowth.http.request.UserRequest;
 import com.example.selfgrowth.service.backend.AppStatisticsService;
 import com.example.selfgrowth.service.backend.TaskLogService;
 import com.example.selfgrowth.ui.activity.AppFragment;
 import com.example.selfgrowth.ui.activity.AppHistoryFragment;
 import com.example.selfgrowth.ui.dashboard.DailyDashboardFragment;
 import com.example.selfgrowth.ui.dashboard.PeriodDashboardFragment;
-import com.example.selfgrowth.utils.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Date;
@@ -39,7 +33,6 @@ import java.util.Map;
 
 public class UserFragment extends Fragment {
 
-    private final UserRequest userRequest = new UserRequest();
     private final TaskLogService taskLogService = TaskLogService.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -121,13 +114,6 @@ public class UserFragment extends Fragment {
         ((TextView)view.findViewById(R.id.running_minutes)).setText(String.valueOf(runningMinutes));
         ((TextView)view.findViewById(R.id.sleep_minutes)).setText(String.valueOf(sleepMinutes));
         ((TextView)view.findViewById(R.id.task_complete)).setText(String.valueOf(taskComplete));
-    }
-
-    private View userInfo(LayoutInflater inflater, ViewGroup container) {
-        View rootView = inflater.inflate(R.layout.fragment_user, container, false);
-        TextView userEmail = rootView.findViewById(R.id.login_user_email);
-        userEmail.setText(UserCache.getInstance().getUserName());
-        return rootView;
     }
 
     @Override

@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -15,17 +13,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
-import com.example.selfgrowth.http.HttpConfig;
-import com.example.selfgrowth.http.api.DashboardApi;
 import com.example.selfgrowth.http.request.DashboardRequest;
 import com.example.selfgrowth.http.request.TaskRequest;
-import com.example.selfgrowth.model.DailyLogModel;
 import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.service.backend.AppLogService;
 import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.service.backend.TaskService;
-import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.GsonUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.internal.LinkedTreeMap;
@@ -50,7 +44,7 @@ public class SettingFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.data_sync_setting, container, false);
         view.findViewById(R.id.statistics_data_upload_cloud).setOnClickListener(v -> uploadDailyStatisticsData());
-        view.findViewById(R.id.task_sync_switch).setOnClickListener(this::syncTaskData);
+        view.findViewById(R.id.task_sync).setOnClickListener(this::syncTaskData);
         return view;
     }
 
