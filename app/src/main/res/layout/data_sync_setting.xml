@@ -53,7 +53,6 @@
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintHorizontal_bias="1"/>
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
@@ -103,7 +102,6 @@
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintHorizontal_bias="1"/>
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
@@ -153,6 +151,44 @@
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintHorizontal_bias="1"/>
         </LinearLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text4"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="center_vertical|left"
+                android:text="周期统计数据同步云端"
+                app:drawableLeftCompat="@drawable/ic_baseline_settings_50"/>
+            <Button
+                android:id="@+id/statistics_data_upload_cloud"
+                android:text="进行同步"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintHorizontal_bias="1"/>
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

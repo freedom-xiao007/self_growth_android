@@ -87,4 +87,8 @@ public class AppLogService {
         }
         return logs.subList(0, limit);
     }
+
+    public Set<String> getDays() {
+        return sharedPreferences.getAll().keySet();
+    }
 }
