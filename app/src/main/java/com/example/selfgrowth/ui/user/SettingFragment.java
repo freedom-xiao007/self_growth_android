@@ -75,7 +75,7 @@ public class SettingFragment extends Fragment {
             },
             failed -> {
                 Log.d("upload:", "上传失败");
-                Snackbar.make(requireView(), "上传失败", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Snackbar.make(requireView(), "上传失败:" + failed.toString(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
        );
     }
@@ -98,7 +98,7 @@ public class SettingFragment extends Fragment {
                     Snackbar.make(requireView(), "任务同步成功：" + newConfig.size(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 },
                 failed -> {
-                    Snackbar.make(requireView(), "任务同步失败", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    Snackbar.make(requireView(), "任务同步失败:" + failed.toString(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
         );
     }
