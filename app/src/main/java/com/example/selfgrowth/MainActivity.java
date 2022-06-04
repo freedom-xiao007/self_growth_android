@@ -3,14 +3,18 @@ package com.example.selfgrowth;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 
+import com.example.selfgrowth.cache.UserCache;
 import com.example.selfgrowth.http.HttpConfig;
+import com.example.selfgrowth.http.request.UserRequest;
 import com.example.selfgrowth.service.backend.AppLogService;
 import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.service.foregroud.MonitorActivityService;
@@ -25,6 +29,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.selfgrowth.databinding.ActivityMainBinding;
 import com.example.selfgrowth.service.backend.TaskLogService;
 import com.example.selfgrowth.service.backend.TaskService;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         TaskLogService.getInstance().init(this.getApplicationContext());
         // 初始化仪表盘统计服务
         DashboardService.getInstance().init(this.getApplicationContext());
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -78,6 +84,24 @@ public class MainActivity extends AppCompatActivity {
         if (!isNotificationEnabled()) {
             goToNotificationSetting();
         }
+
+        // 自动登录
+        autoLogin();
+    }
+
+    private void autoLogin() {
+        final SharedPreferences preferences = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String username = preferences.getString("username", null);
+        String password = preferences.getString("password", null);
+        if (username == null || password == null) {
+            return;
+        }
+        final UserRequest userRequest = new UserRequest();
+        userRequest.login(username, password, (token) -> {
+            UserCache.getInstance().setUserName(username);
+            UserCache.getInstance().login();
+            Log.i("login:", "自动登录成功");
+        }, failedMessage -> Log.i("login:", "自动登录失败"));
     }
 
     /**
