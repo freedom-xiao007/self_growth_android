@@ -17,6 +17,7 @@ import com.example.selfgrowth.http.request.DashboardRequest;
 import com.example.selfgrowth.http.request.TaskRequest;
 import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.model.TaskConfig;
+import com.example.selfgrowth.model.TaskSyncData;
 import com.example.selfgrowth.service.backend.AppLogService;
 import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.service.backend.TaskService;
@@ -92,10 +93,11 @@ public class SettingFragment extends Fragment {
         tasks.forEach(t -> t.setId(null));
         taskRequest.sync(tasks,
                 success -> {
-                    List<TaskConfig> newConfig = convert((List<LinkedTreeMap>) success);
-                    Log.d("sync Task:", newConfig.toString());
-                    newConfig.forEach(task -> taskService.add(task, v));
-                    Snackbar.make(requireView(), "任务同步成功：" + newConfig.size(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    TaskSyncData data = convert((LinkedTreeMap) success);
+                    Log.d("sync Task:", data.toString());
+                    data.getNewTask().forEach(task -> taskService.add(task, v));
+                    data.getDeleteLogs().forEach(t -> taskService.deleteByGroupAndName(t.getGroup(), t.getName()));
+                    Snackbar.make(requireView(), "任务同步成功：" + data.getNewTask().size(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 },
                 failed -> {
                     Snackbar.make(requireView(), "任务同步失败:" + failed.toString(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
@@ -103,9 +105,7 @@ public class SettingFragment extends Fragment {
         );
     }
 
-    private List<TaskConfig> convert(List<LinkedTreeMap> success) {
-        List<TaskConfig> configs = new ArrayList<>(success.size());
-        success.forEach(t -> configs.add(GsonUtils.getInstance().fromJson(GsonUtils.getInstance().toJson(t), TaskConfig.class)));
-        return configs;
+    private TaskSyncData convert(LinkedTreeMap success) {
+        return GsonUtils.getInstance().fromJson(GsonUtils.getInstance().toJson(success), TaskSyncData.class);
     }
 }

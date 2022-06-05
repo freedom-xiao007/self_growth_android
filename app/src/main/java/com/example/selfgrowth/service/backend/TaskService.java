@@ -56,6 +56,17 @@ public class TaskService {
         Log.d("delete task: ", id);
     }
 
+    public void deleteByGroupAndName(final String group, final String name) {
+        final Set<String> origin = taskConfigDb.getStringSet(name, new HashSet<>());
+        Set<String> filter = origin.stream().filter(config -> {
+            final TaskConfig task = GsonUtils.getGson().fromJson(config, TaskConfig.class);
+            return !(task.getGroup().equals(group) && task.getName().equals(name));
+        }).collect(Collectors.toSet());
+
+        saveDb(group, filter);
+        Log.d("delete task: ", group + ":" + name);
+    }
+
     public List<TaskConfig> query(final String groupName, final String taskName) {
         return taskConfigDb.getStringSet(groupName, new HashSet<>())
                 .stream()
