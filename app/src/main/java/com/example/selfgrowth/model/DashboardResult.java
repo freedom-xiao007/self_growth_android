@@ -157,6 +157,9 @@ public class DashboardResult {
         } else {
             taskLabelStatistics.put(config.getLabel(), 1);
         }
+        if (config.getTaskTypeEnum() == null) {
+            config.setTaskTypeEnum(TaskTypeEnum.DEFAULT);
+        }
         if (config.getTaskTypeEnum().equals(TaskTypeEnum.BOOK)) {
             books += 1;
             readBooks.add(config.getName());

@@ -134,7 +134,6 @@ public class DashboardFragment extends Fragment {
             final DashboardResult result = dashboardService.getPeriodData(new Date(), StatisticsTypeEnum.DAY, view, true);
             List<DailyLogModel> dailyLogs = result.getDailyLogs()
                     .stream()
-                    .filter(item -> !item.getLabel().equals(LabelEnum.DEFAULT))
                     .sorted(Comparator.comparing(DailyLogModel::getDate))
                     .collect(Collectors.toList());
             DailyLogAdapter adapter = new DailyLogAdapter(dailyLogs);
