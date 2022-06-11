@@ -2,7 +2,6 @@ package com.example.selfgrowth.service.backend.xiuxian;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -17,13 +16,10 @@ import com.example.selfgrowth.utils.GsonUtils;
 import java.util.Date;
 import java.util.Locale;
 
-import lombok.extern.slf4j.Slf4j;
-
 public class XiuXianService {
 
     private final static XiuXianService instance = new XiuXianService();
     private SharedPreferencesDb xiuXianDb;
-    private final String stateKey = "state";
     private CalService calService;
 
     public static XiuXianService getInstance() {
@@ -45,6 +41,7 @@ public class XiuXianService {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public XiuXianState yesterdaySettlement() {
+        String stateKey = "state";
         String stateStr = xiuXianDb.getString(stateKey, "{}");
         XiuXianState state = GsonUtils.getInstance().fromJson(stateStr, XiuXianState.class);
         state.setQiXiuUpgradeMsg("");

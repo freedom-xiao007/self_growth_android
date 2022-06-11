@@ -5,7 +5,6 @@ import com.example.selfgrowth.enums.LianQiStateEnum;
 import com.example.selfgrowth.enums.TiXiuStateEnum;
 import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.model.XiuXianState;
-import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.service.backend.xiuxian.CalService;
 import com.example.selfgrowth.service.backend.xiuxian.XiuXianService;
 
@@ -16,7 +15,6 @@ import org.mockito.stubbing.Answer;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 修仙相关服务测试
@@ -32,7 +30,7 @@ import java.util.Objects;
  */
 public class XiuXianServiceTest {
 
-    private XiuXianService xiuXianService = XiuXianService.getInstance();
+    private final XiuXianService xiuXianService = XiuXianService.getInstance();
     private final Map<String, Object> db =new HashMap<>(10);
 
     @Test

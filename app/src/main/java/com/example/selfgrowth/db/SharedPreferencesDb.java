@@ -7,7 +7,7 @@ import com.example.selfgrowth.utils.GsonUtils;
 
 public class SharedPreferencesDb {
 
-    private SharedPreferences db;
+    private final SharedPreferences db;
 
     public SharedPreferencesDb(Context applicationContext, String dbName) {
         this.db = applicationContext.getSharedPreferences(dbName, Context.MODE_PRIVATE);
@@ -22,7 +22,7 @@ public class SharedPreferencesDb {
     }
 
     public void save(String stateKey, String val) {
-        db.edit().putString(stateKey, GsonUtils.getInstance().toJson(stateKey)).apply();
+        db.edit().putString(stateKey, GsonUtils.getInstance().toJson(val)).apply();
     }
 
     public void save(String stateKey, Boolean bool) {
