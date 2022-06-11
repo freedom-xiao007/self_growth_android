@@ -108,7 +108,6 @@ public class PeriodDashboardFragment extends Fragment {
         ViewPager2 viewPager = view.findViewById(R.id.pager);
         viewPager.setAdapter(collectionAdapter);
 
-
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         TabLayoutMediator mediator = new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             //这里可以自定义TabView
@@ -129,7 +128,7 @@ public class PeriodDashboardFragment extends Fragment {
         //要执行这一句才是真正将两者绑定起来
         mediator.attach();
 
-        TextView dateText = ((TextView) view.findViewById(R.id.date));
+        TextView dateText = view.findViewById(R.id.date);
         final List<Date> periodDate = DateUtils.getPeriodDates(date, statisticsType);
         if (periodDate.isEmpty()) {
             dateText.setText(String.join(" - ", DateUtils.dateShow(date), DateUtils.dateShow(date)));

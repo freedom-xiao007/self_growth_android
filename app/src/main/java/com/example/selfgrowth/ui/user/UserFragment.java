@@ -70,7 +70,7 @@ public class UserFragment extends Fragment {
             userEmail.setText("未登录");
         }
 
-        userEmail.setOnClickListener((View.OnClickListener) v -> requireActivity()
+        userEmail.setOnClickListener(v -> requireActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.user_info, new LoginFragment())

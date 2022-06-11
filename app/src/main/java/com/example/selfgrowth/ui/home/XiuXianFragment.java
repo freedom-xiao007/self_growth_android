@@ -1,23 +1,34 @@
 package com.example.selfgrowth.ui.home;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
+import com.example.selfgrowth.http.HttpConfig;
+import com.example.selfgrowth.http.RetrofitClient;
 import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.model.XiuXianState;
 import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.service.backend.xiuxian.XiuXianService;
+import com.example.selfgrowth.ui.dashboard.DailyDashboardFragment;
+import com.example.selfgrowth.ui.dashboard.PeriodDashboardFragment;
+import com.example.selfgrowth.ui.user.SettingFragment;
+import com.example.selfgrowth.ui.user.UserFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Date;
 import java.util.Locale;
@@ -79,5 +90,28 @@ public class XiuXianFragment extends Fragment {
             xiuXianService.reloadStateFromOldDate(view);
             refresh(view);
         });
+
+        view.findViewById(R.id.xiu_xian_blog).setOnClickListener(v -> {
+            Toast.makeText(requireContext(), "设置为自动模式", Toast.LENGTH_SHORT).show();
+        });
+
+        view.findViewById(R.id.xiu_xian_data_overview).setOnClickListener(v -> {
+            View settingView = View.inflate(view.getContext(), R.layout.data_overview, null);
+            setRoute(settingView, R.id.xiu_xian_daily_dashboard, new DailyDashboardFragment());
+            setRoute(settingView, R.id.xiu_xian_week_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.WEEK));
+            setRoute(settingView, R.id.xiu_xian_month_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.MONTH));
+            setRoute(settingView, R.id.xiu_xian_year_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.YEAR));
+            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
+            popupLayout.show(PopupLayout.POSITION_TOP);
+        });
+    }
+
+    private void setRoute(View view, int buttonId, Fragment fragment) {
+        view.findViewById(buttonId).setOnClickListener(v -> requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.xiu_xian, fragment)
+                .addToBackStack(null)
+                .commit());
     }
 }
