@@ -129,6 +129,9 @@ public class XiuXianService {
             state.setTiXiuState(new XiuXianState.TiXiuState(TiXiuStateEnum.TONG_MAI, 1,
                     TiXiuStateEnum.TONG_MAI.getUpgradeNeed(), TiXiuStateEnum.TONG_MAI.getUpgradeNeed() / 2));
         }
+
+        while (tiXiuUpgrade(state));
+        while (qiXiuUpgrade(state));
         updateUpgradeNeed(state);
         xiuXianDb.save(stateKey, GsonUtils.getGson().toJson(state));
         return state;
@@ -169,7 +172,7 @@ public class XiuXianService {
 
         String yesterdayLog = String.format(Locale.CHINA, "连续修炼打卡奖励暴击率：%f\n " +
                         "昨日修炼：元力 %d, 气力 %d, 体力 %d\n" +
-                        "睡眠6小时，学习两小时，锻炼半小时：" + (success ? "达成" : "未达成"),
+                        "昨日睡眠6小时，学习两小时，锻炼半小时：" + (success ? "达成" : "未达成"),
                 clockInAward, yuanLi, qiLi, tiLi);
         state.setYesterdayLog(yesterdayLog);
 

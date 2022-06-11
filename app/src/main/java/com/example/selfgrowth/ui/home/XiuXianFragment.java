@@ -45,7 +45,7 @@ public class XiuXianFragment extends Fragment {
                 "%s%d层(轮回%d)：升级需%d气力+%d元力", qiXiuState.getState().getName(), qiXiuState.getLevel(),
                 res.getReincarnationAmountOfQiXiu(), qiXiuState.getUpgradeNeedQiLi(), qiXiuState.getUpgradeNeedYuanLi()));
 
-        int qiXiuUpgradeProcess = (int) ((res.getQiLi() / qiXiuState.getUpgradeNeedQiLi()) * 100);
+        int qiXiuUpgradeProcess = (int) (((double)res.getQiLi() / (double)qiXiuState.getUpgradeNeedQiLi()) * 100);
         ((ProgressBar) view.findViewById(R.id.qi_xiu_upgrade_process)).setProgress(qiXiuUpgradeProcess);
 
         XiuXianState.TiXiuState tiXiuState = res.getTiXiuState();
@@ -53,7 +53,7 @@ public class XiuXianFragment extends Fragment {
                 "%s%d层(轮回%d)：升级需%d气力+%d元力", tiXiuState.getState().getName(), tiXiuState.getLevel(),
                 res.getReincarnationAmountOfTiXiu(), tiXiuState.getUpgradeNeedTiLi(), tiXiuState.getUpgradeNeedYuanLi()));
 
-        int tiXiuUpgradeProcess = (int) ((res.getTiLi() / qiXiuState.getUpgradeNeedQiLi()) * 100);
+        int tiXiuUpgradeProcess = (int) (((double)res.getTiLi() / (double)qiXiuState.getUpgradeNeedQiLi()) * 100);
         ((ProgressBar) view.findViewById(R.id.ti_xiu_upgrade_process)).setProgress(tiXiuUpgradeProcess);
 
         ((TextView) view.findViewById(R.id.current_yuan_li)).setText(String.format(Locale.CHINA,
