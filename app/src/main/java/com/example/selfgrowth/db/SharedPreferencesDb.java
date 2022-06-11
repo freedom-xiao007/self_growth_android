@@ -3,8 +3,6 @@ package com.example.selfgrowth.db;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.selfgrowth.utils.GsonUtils;
-
 public class SharedPreferencesDb {
 
     private final SharedPreferences db;
@@ -22,7 +20,7 @@ public class SharedPreferencesDb {
     }
 
     public void save(String stateKey, String val) {
-        db.edit().putString(stateKey, GsonUtils.getInstance().toJson(val)).apply();
+        db.edit().putString(stateKey, val).apply();
     }
 
     public void save(String stateKey, Boolean bool) {

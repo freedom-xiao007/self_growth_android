@@ -2,25 +2,36 @@ package com.example.selfgrowth.service.backend.xiuxian;
 
 import android.content.Context;
 import android.os.Build;
+import android.view.View;
 
 import androidx.annotation.RequiresApi;
 
 import com.example.selfgrowth.db.SharedPreferencesDb;
 import com.example.selfgrowth.enums.LianQiStateEnum;
+import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.enums.TiXiuStateEnum;
 import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.model.XiuXianState;
+import com.example.selfgrowth.service.backend.AppLogService;
+import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.utils.DateUtils;
 import com.example.selfgrowth.utils.GsonUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class XiuXianService {
 
     private final static XiuXianService instance = new XiuXianService();
     private SharedPreferencesDb xiuXianDb;
     private CalService calService;
+    private final AppLogService appLogService = AppLogService.getInstance();
+    private final DashboardService dashboardService = DashboardService.getInstance();
+    private final String stateKey = "state";
 
     public static XiuXianService getInstance() {
         return instance;
@@ -40,12 +51,25 @@ public class XiuXianService {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public XiuXianState yesterdaySettlement() {
-        String stateKey = "state";
+    public XiuXianState yesterdaySettlement(View view) {
         String stateStr = xiuXianDb.getString(stateKey, "{}");
-        XiuXianState state = GsonUtils.getInstance().fromJson(stateStr, XiuXianState.class);
-        state.setQiXiuUpgradeMsg("");
-        state.setTiXiuUpgradeMsg("");
+        XiuXianState state;
+        try {
+            state = GsonUtils.getGson().fromJson(stateStr, XiuXianState.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            state = new XiuXianState();
+        }
+
+        if (state.getQiXiuUpgradeMsg() == null) {
+            state.setQiXiuUpgradeMsg("");
+        }
+        if (state.getTiXiuUpgradeMsg() == null) {
+            state.setTiXiuUpgradeMsg("");
+        }
+        if (state.getYesterdayLog() == null) {
+            state.setYesterdayLog("");
+        }
         if (state.getQiXiuState() == null) {
             state.setQiXiuState(new XiuXianState.LianQiState(LianQiStateEnum.LIAN_QI, 1,
                     LianQiStateEnum.LIAN_QI.getUpgradeNeed(), LianQiStateEnum.LIAN_QI.getUpgradeNeed() / 2));
@@ -63,12 +87,50 @@ public class XiuXianService {
 
         state.setQiXiuUpgradeMsg("");
         state.setTiXiuUpgradeMsg("");
-        addYesterdayData(state);
+        state.setYesterdayLog("");
+        addYesterdayData(state, view);
 
         updateUpgradeNeed(state);
 
-        xiuXianDb.save(stateKey, GsonUtils.getInstance().toJson(state));
+        xiuXianDb.save(stateKey, GsonUtils.getGson().toJson(state));
         xiuXianDb.save(calYesterdayData, true);
+        return state;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public XiuXianState reloadStateFromOldDate(View view) {
+        XiuXianState state = new XiuXianState();
+        Set<String> days = appLogService.getDays();
+        SimpleDateFormat dayFormat = new SimpleDateFormat("MM/dd/yyyy");
+        AtomicLong yuanLi = new AtomicLong();
+        AtomicLong qiLi = new AtomicLong();
+        AtomicLong tiLi = new AtomicLong();
+        days.forEach(day -> {
+            try {
+                final DashboardResult result = dashboardService.getPeriodData(dayFormat.parse(day), StatisticsTypeEnum.DAY, view, false);
+                yuanLi.addAndGet(result.getSleepTime());
+                qiLi.addAndGet(result.getLearnTime());
+                tiLi.addAndGet(result.getRunningTime());
+            } catch (ParseException e2) {
+                e2.printStackTrace();
+            }
+        });
+        state.setYuanLi(yuanLi.get());
+        state.setQiLi(qiLi.get());
+        state.setTiLi(tiLi.get());
+        state.setQiXiuUpgradeMsg("");
+        state.setTiXiuUpgradeMsg("");
+        state.setYesterdayLog("");
+        if (state.getQiXiuState() == null) {
+            state.setQiXiuState(new XiuXianState.LianQiState(LianQiStateEnum.LIAN_QI, 1,
+                    LianQiStateEnum.LIAN_QI.getUpgradeNeed(), LianQiStateEnum.LIAN_QI.getUpgradeNeed() / 2));
+        }
+        if (state.getTiXiuState() == null) {
+            state.setTiXiuState(new XiuXianState.TiXiuState(TiXiuStateEnum.TONG_MAI, 1,
+                    TiXiuStateEnum.TONG_MAI.getUpgradeNeed(), TiXiuStateEnum.TONG_MAI.getUpgradeNeed() / 2));
+        }
+        updateUpgradeNeed(state);
+        xiuXianDb.save(stateKey, GsonUtils.getGson().toJson(state));
         return state;
     }
 
@@ -85,12 +147,12 @@ public class XiuXianService {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void addYesterdayData(XiuXianState state) {
+    private void addYesterdayData(XiuXianState state, View view) {
         System.out.println("进行升级模拟");
 
         final String clockInAwardKey = "clockInAward";
         double clockInAward = xiuXianDb.getDouble(clockInAwardKey);
-        DashboardResult res = calService.getPeriodData(new Date());
+        DashboardResult res = calService.getYesterdayData(view);
         boolean success = res.getSleepTime() >= 360 && res.getLearnTime() >= 120 && res.getRunningTime() >= 30;
         if (success) {
             xiuXianDb.save(clockInAwardKey, clockInAward + 0.1);
@@ -105,7 +167,7 @@ public class XiuXianService {
         state.setQiLi(qiLi);
         state.setTiLi(tiLi);
 
-        String yesterdayLog = String.format(Locale.CHINA, "连续修炼打卡奖励暴击率：%f\n, " +
+        String yesterdayLog = String.format(Locale.CHINA, "连续修炼打卡奖励暴击率：%f\n " +
                         "昨日修炼：元力 %d, 气力 %d, 体力 %d\n" +
                         "睡眠6小时，学习两小时，锻炼半小时：" + (success ? "达成" : "未达成"),
                 clockInAward, yuanLi, qiLi, tiLi);

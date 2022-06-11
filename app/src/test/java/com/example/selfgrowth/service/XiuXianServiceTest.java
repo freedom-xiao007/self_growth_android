@@ -61,12 +61,12 @@ public class XiuXianServiceTest {
         xiuXianService.setXiuXianDb(preferencesDb);
 
         CalService calService = Mockito.mock(CalService.class);
-        Mockito.when(calService.getPeriodData(Mockito.any())).thenReturn(DashboardResult.builder().build());
+        Mockito.when(calService.getYesterdayData(Mockito.any())).thenReturn(DashboardResult.builder().build());
         xiuXianService.setCalService(calService);
 
         // 初始境界，练气一层，通脉一层,轮回一层
-        XiuXianState state = xiuXianService.yesterdaySettlement();
-        Mockito.verify(calService, Mockito.times(1)).getPeriodData(Mockito.any());
+        XiuXianState state = xiuXianService.yesterdaySettlement(null);
+        Mockito.verify(calService, Mockito.times(1)).getYesterdayData(Mockito.any());
         Assert.assertEquals(1, state.getReincarnationAmountOfQiXiu());
         Assert.assertEquals(1, state.getReincarnationAmountOfTiXiu());
         Assert.assertEquals("气修：资源不足，无法突破，请努力修炼", state.getQiXiuUpgradeMsg());
@@ -86,18 +86,18 @@ public class XiuXianServiceTest {
         Assert.assertEquals(TiXiuStateEnum.TONG_MAI.getUpgradeNeed() / 2, tiXiuState.getUpgradeNeedYuanLi());
 
         // 从缓存中获取
-        xiuXianService.yesterdaySettlement();
-        Mockito.verify(calService, Mockito.times(1)).getPeriodData(Mockito.any());
+        state = xiuXianService.yesterdaySettlement(null);
+        Mockito.verify(calService, Mockito.times(1)).getYesterdayData(Mockito.any());
 
         // 设置计算累计昨天的修炼
         Mockito.when(preferencesDb.getBoolean(Mockito.anyString())).thenReturn(false);
         // 不升级，数据累计
-        Mockito.when(calService.getPeriodData(Mockito.any())).thenReturn(DashboardResult.builder()
+        Mockito.when(calService.getYesterdayData(Mockito.any())).thenReturn(DashboardResult.builder()
                 .sleepTime(1L)
                 .learnTime(1L)
                 .runningTime(1L)
                 .build());
-        state = xiuXianService.yesterdaySettlement();
+        state = xiuXianService.yesterdaySettlement(null);
         System.out.println(state);
         Assert.assertEquals(1, state.getReincarnationAmountOfQiXiu());
         Assert.assertEquals(1, state.getReincarnationAmountOfTiXiu());
@@ -118,12 +118,12 @@ public class XiuXianServiceTest {
         Assert.assertEquals(TiXiuStateEnum.TONG_MAI.getUpgradeNeed() / 2, tiXiuState.getUpgradeNeedYuanLi());
 
         // 升级
-        Mockito.when(calService.getPeriodData(Mockito.any())).thenReturn(DashboardResult.builder()
+        Mockito.when(calService.getYesterdayData(Mockito.any())).thenReturn(DashboardResult.builder()
                 .sleepTime(60L)
                 .learnTime(60L)
                 .runningTime(60L)
                 .build());
-        state = xiuXianService.yesterdaySettlement();
+        state = xiuXianService.yesterdaySettlement(null);
         Assert.assertEquals(1, state.getReincarnationAmountOfQiXiu());
         Assert.assertEquals(1, state.getReincarnationAmountOfTiXiu());
         Assert.assertEquals("天道酬勤，成功突破（练气境1层->练气境2层）", state.getQiXiuUpgradeMsg());
@@ -143,12 +143,12 @@ public class XiuXianServiceTest {
         Assert.assertEquals(TiXiuStateEnum.TONG_MAI.getUpgradeNeed() / 2, tiXiuState.getUpgradeNeedYuanLi());
 
         // 进阶
-        Mockito.when(calService.getPeriodData(Mockito.any())).thenReturn(DashboardResult.builder()
+        Mockito.when(calService.getYesterdayData(Mockito.any())).thenReturn(DashboardResult.builder()
                 .sleepTime(60L * 8)
                 .learnTime(60L * 8)
                 .runningTime(60L * 8)
                 .build());
-        state = xiuXianService.yesterdaySettlement();
+        state = xiuXianService.yesterdaySettlement(null);
         Assert.assertEquals(1, state.getReincarnationAmountOfQiXiu());
         Assert.assertEquals(1, state.getReincarnationAmountOfTiXiu());
         Assert.assertEquals("天道酬勤，成功突破（练气境9层->筑基境1层）", state.getQiXiuUpgradeMsg());
@@ -168,12 +168,12 @@ public class XiuXianServiceTest {
         Assert.assertEquals(TiXiuStateEnum.DUAN_GU.getUpgradeNeed() / 2, tiXiuState.getUpgradeNeedYuanLi());
 
         // 轮回
-        Mockito.when(calService.getPeriodData(Mockito.any())).thenReturn(DashboardResult.builder()
+        Mockito.when(calService.getYesterdayData(Mockito.any())).thenReturn(DashboardResult.builder()
                 .sleepTime(60L * 800)
                 .learnTime(60L * 1200)
                 .runningTime(60L * 410)
                 .build());
-        state = xiuXianService.yesterdaySettlement();
+        state = xiuXianService.yesterdaySettlement(null);
         System.out.println(state);
         Assert.assertEquals(2, state.getReincarnationAmountOfQiXiu());
         Assert.assertEquals(2, state.getReincarnationAmountOfTiXiu());
