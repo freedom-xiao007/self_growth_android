@@ -87,10 +87,30 @@ public class XiuXianService {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void addYesterdayData(XiuXianState state) {
         System.out.println("进行升级模拟");
+
+        final String clockInAwardKey = "clockInAward";
+        double clockInAward = xiuXianDb.getDouble(clockInAwardKey);
         DashboardResult res = calService.getPeriodData(new Date());
-        state.setYuanLi(state.getYuanLi() + res.getSleepTime());
-        state.setQiLi(state.getQiLi() + res.getLearnTime());
-        state.setTiLi(state.getTiLi() + res.getRunningTime());
+        boolean success = res.getSleepTime() >= 360 && res.getLearnTime() >= 120 && res.getRunningTime() >= 30;
+        if (success) {
+            xiuXianDb.save(clockInAwardKey, clockInAward + 0.1);
+        } else {
+            xiuXianDb.save(clockInAwardKey, 1.0);
+        }
+
+        long yuanLi = (long) (state.getYuanLi() + res.getSleepTime() * clockInAward);
+        long qiLi = (long) (state.getQiLi() + res.getLearnTime() * clockInAward);
+        long tiLi = (long) (state.getTiLi() + res.getRunningTime() * clockInAward);
+        state.setYuanLi(yuanLi);
+        state.setQiLi(qiLi);
+        state.setTiLi(tiLi);
+
+        String yesterdayLog = String.format(Locale.CHINA, "连续修炼打卡奖励暴击率：%f\n, " +
+                        "昨日修炼：元力 %d, 气力 %d, 体力 %d\n" +
+                        "睡眠6小时，学习两小时，锻炼半小时：" + (success ? "达成" : "未达成"),
+                clockInAward, yuanLi, qiLi, tiLi);
+        state.setYesterdayLog(yesterdayLog);
+
         while (tiXiuUpgrade(state));
         while (qiXiuUpgrade(state));
     }

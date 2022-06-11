@@ -28,4 +28,12 @@ public class SharedPreferencesDb {
     public void save(String stateKey, Boolean bool) {
         db.edit().putBoolean(stateKey, bool).apply();
     }
+
+    public double getDouble(String key) {
+        return db.getFloat(key, 1.0F);
+    }
+
+    public void save(String key, double v) {
+        db.edit().putFloat(key, (float) v).apply();
+    }
 }

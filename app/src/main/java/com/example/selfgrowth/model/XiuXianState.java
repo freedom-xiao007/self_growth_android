@@ -21,6 +21,7 @@ public class XiuXianState {
     private int reincarnationAmountOfTiXiu = 1;
     private String qiXiuUpgradeMsg;
     private String tiXiuUpgradeMsg;
+    private String yesterdayLog;
 
     private long yuanLi = 0;
     private long qiLi = 0;

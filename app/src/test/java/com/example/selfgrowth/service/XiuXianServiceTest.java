@@ -57,6 +57,7 @@ public class XiuXianServiceTest {
             db.put(key, val);
             return null;
         }).when(preferencesDb).save(Mockito.anyString(), Mockito.anyBoolean());
+        Mockito.when(preferencesDb.getDouble(Mockito.anyString())).thenReturn(1.0);
         xiuXianService.setXiuXianDb(preferencesDb);
 
         CalService calService = Mockito.mock(CalService.class);
@@ -97,6 +98,7 @@ public class XiuXianServiceTest {
                 .runningTime(1L)
                 .build());
         state = xiuXianService.yesterdaySettlement();
+        System.out.println(state);
         Assert.assertEquals(1, state.getReincarnationAmountOfQiXiu());
         Assert.assertEquals(1, state.getReincarnationAmountOfTiXiu());
         Assert.assertEquals("气修：资源不足，无法突破，请努力修炼", state.getQiXiuUpgradeMsg());
