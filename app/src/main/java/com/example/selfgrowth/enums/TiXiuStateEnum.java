@@ -22,9 +22,9 @@ public enum TiXiuStateEnum {
     NIE_PAN(10, "涅槃境", 1, 10, 60 * 2),
     TONG_SHEN(11, "通神境", 1, 10, 60 * 3),
     HUN_YUAN(12, "混元境", 1, 10, 60 * 3),
-    XIAN_TI(13, "仙体", 1, 10, 60 * 4),
-    SHEN_TI(14, "圣体", 1, 10, 60 * 5),
-    DAO_TI(15, "道体", 1, 10, 60 * 6),
+    XIAN_TI(13, "仙体", 1, 10, 60 * 3),
+    SHEN_TI(14, "圣体", 1, 10, 60 * 3),
+    DAO_TI(15, "道体", 1, 10, 60 * 3),
     ;
 
     private final int index;
