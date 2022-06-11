@@ -25,6 +25,7 @@ import com.example.selfgrowth.model.XiuXianState;
 import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.service.backend.xiuxian.XiuXianService;
 import com.example.selfgrowth.ui.dashboard.DailyDashboardFragment;
+import com.example.selfgrowth.ui.dashboard.DashboardFragment;
 import com.example.selfgrowth.ui.dashboard.PeriodDashboardFragment;
 import com.example.selfgrowth.ui.user.SettingFragment;
 import com.example.selfgrowth.ui.user.UserFragment;
@@ -91,9 +92,7 @@ public class XiuXianFragment extends Fragment {
             refresh(view);
         });
 
-        view.findViewById(R.id.xiu_xian_blog).setOnClickListener(v -> {
-            Toast.makeText(requireContext(), "设置为自动模式", Toast.LENGTH_SHORT).show();
-        });
+        setRoute(view, R.id.xiu_xian_today_data, new DashboardFragment());
 
         view.findViewById(R.id.xiu_xian_data_overview).setOnClickListener(v -> {
             View settingView = View.inflate(view.getContext(), R.layout.data_overview, null);

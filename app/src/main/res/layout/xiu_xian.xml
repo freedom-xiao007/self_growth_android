@@ -177,6 +177,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
                     <Button
+                        android:id="@+id/xiu_xian_today_data"
                         android:text="今日修炼"
                         android:textAlignment="center"
                         android:gravity="center_vertical|center"
