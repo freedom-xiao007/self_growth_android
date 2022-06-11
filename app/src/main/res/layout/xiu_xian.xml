@@ -103,13 +103,18 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent">
-                <TextView
-                    android:text="当前修炼值"
-                    android:textColor="@color/white"
-                    android:textAlignment="center"
-                    android:gravity="center_vertical|center"
+                <LinearLayout
+                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="50dp">
+                    <Button
+                        android:text="修炼总览"
+                        android:textAlignment="center"
+                        android:gravity="center_vertical|center"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"/>
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/current_yuan_li"
                     android:text="元力：10000"
@@ -145,12 +150,12 @@
 
                 <Button
                     android:id="@+id/xiu_xian_blog"
-                    android:text="修炼心得记录"
+                    android:text="修炼心得输出"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/xiu_xian_book"
-                    android:text="仙界典籍阅读"
+                    android:text="修炼典籍记录"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <Button
@@ -166,13 +171,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent">
-                <TextView
-                    android:text="今日修炼"
-                    android:textColor="@color/white"
-                    android:textAlignment="center"
-                    android:gravity="center_vertical|center"
+                <LinearLayout
+                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="50dp">
+                    <Button
+                        android:text="今日修炼"
+                        android:textAlignment="center"
+                        android:gravity="center_vertical|center"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"/>
+                </LinearLayout>
                 <TextView
                     android:id="@+id/today_yuan_li"
                     android:text="元力：10000"
