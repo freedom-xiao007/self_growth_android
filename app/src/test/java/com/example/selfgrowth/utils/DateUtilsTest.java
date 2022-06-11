@@ -2,6 +2,7 @@ package com.example.selfgrowth.utils;
 
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.DateFormat;
@@ -67,10 +68,10 @@ public class DateUtilsTest {
     @Test
     public void getPeriodDatesOfYear() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime ldt = LocalDateTime.parse("2022-02-25 20:27:00", formatter);
+        LocalDateTime ldt = LocalDateTime.parse("2021-02-25 20:27:00", formatter);
         Date date = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
         List<Date> res = DateUtils.getPeriodDates(date, StatisticsTypeEnum.YEAR);
-        assert res.size() == 365;
+        Assert.assertEquals(365, res.size());
     }
 
     @Test
