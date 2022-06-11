@@ -83,6 +83,20 @@
             android:layout_marginTop="25dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:text="睡觉=元力，学习=气力，运动=体力"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:gravity="center_vertical|center"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="200dp">
             <LinearLayout
                 android:orientation="vertical"
