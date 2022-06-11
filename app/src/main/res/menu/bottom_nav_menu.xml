@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_baseline_self_improvement_24"
+        android:title="修仙" />
+
+    <item
         android:id="@+id/navigation_task"
         android:icon="@drawable/task_list"
         android:title="@string/nav_task" />
