@@ -54,15 +54,25 @@ public class AppInfoListViewAdapter extends BaseAdapter {
         }
 
         viewHolder.appName.setText(dataList.get(position).getAppName());
-        viewHolder.packageName.setText(dataList.get(position).getPackageName());
-        viewHolder.appLabel.setText(dataList.get(position).getLabel());
+        viewHolder.labelSpinner.setSelectedIndex(getIndex(dataList.get(position).getLabel()));
         viewHolder.labelSpinner.setOnSpinnerItemSelectedListener((parent1, view, position1, id) -> {
-            String label =parent1.getItemAtPosition(position1).toString();
-            viewHolder.appLabel.setText("标签： " + label);
+            String label = parent1.getItemAtPosition(position1).toString();
             final SharedPreferences preferences = context.getSharedPreferences(AppInfo.APP_INFO, Context.MODE_PRIVATE);
             dataList.get(position).updateLabel(preferences, label);
         });
         return convertView;
+    }
+
+    private int getIndex(String label) {
+        switch (label) {
+            case "学习":
+                return 1;
+            case "运动":
+                return 2;
+            case "睡觉":
+                return 3;
+        }
+        return 0;
     }
 
     /**
@@ -70,8 +80,6 @@ public class AppInfoListViewAdapter extends BaseAdapter {
      */
     private static final class ViewHolder {
         private final TextView appName;
-        private final TextView packageName;
-        private final TextView appLabel;
         private final NiceSpinner labelSpinner;
 
         /**
@@ -80,8 +88,6 @@ public class AppInfoListViewAdapter extends BaseAdapter {
          */
         ViewHolder(View view) {
             appName = view.findViewById(R.id.app_info_name);
-            packageName = view.findViewById(R.id.app_info_package);
-            appLabel = view.findViewById(R.id.app_info_label);
             labelSpinner = view.findViewById(R.id.app_info_label_spinner);
         }
     }

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -39,7 +38,6 @@ public class AppFragment extends Fragment {
 
         ((NiceSpinner)view.findViewById(R.id.type_spinner)).setOnSpinnerItemSelectedListener((parent, view1, position, id) -> {
             String type = (String) parent.getItemAtPosition(position);
-            ((TextView)view.findViewById(R.id.type_text)).setText("类型： " + type);
             List<AppInfo> searchApp = new ArrayList<>();
             for (AppInfo appInfo: apps) {
                 if (appInfo.getLabel().equals(type)) {
