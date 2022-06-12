@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TableView">
+        <attr name="unitColumnWidth" format="dimension" />
+        <attr name="rowHeight" format="dimension" />
+        <attr name="headerColor" format="color" />
+        <attr name="dividerWidth" format="dimension" />
+        <attr name="dividerColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="headerTextSize" format="dimension" />
+        <attr name="headerTextColor" format="color" />
+    </declare-styleable>
+</resources>

@@ -164,6 +164,11 @@
                     android:text="重载修炼数据"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/share_xiu_xian_data"
+                    android:text="分享修炼数据"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <LinearLayout

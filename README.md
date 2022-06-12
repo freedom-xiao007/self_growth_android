@@ -139,6 +139,8 @@
 - [有哪些无版权、免费、高清图片素材网站？](https://www.zhihu.com/question/318961106/answer/767074512)
 - [官方Vector资源:res文件夹右键也可以添加资源](https://fonts.google.com/icons?selected=Material+Icons)
 - [pexels 图片资源丰富](https://www.pexels.com/zh-cn/search/%E6%89%8B%E6%9C%BA%E5%A3%81%E7%BA%B8/)
+- [UI 开源组件库](https://github.com/Trinea/android-open-project)
+- [最流行的android组件大全](https://colobu.com/2014/08/15/android-components-collection/)
 
 ### 自动登录
 - [Android学习之保存用户登录信息](https://blog.csdn.net/u013132758/article/details/)
