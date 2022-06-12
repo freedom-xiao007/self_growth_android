@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/xiu_xian"
     android:background="@color/black"
     android:layout_width="match_parent"
@@ -79,19 +80,20 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="25dp"
-            android:orientation="horizontal"
+        <com.example.selfgrowth.ui.custum.TableView
+            android:id="@+id/today_data"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-            <TextView
-                android:text="睡觉=元力，学习=气力，运动=体力"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:gravity="center_vertical|center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"/>
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:dividerColor="#e1e1e1"
+            app:dividerWidth="1px"
+            app:headerColor="@color/gray"
+            app:headerTextColor="@color/white"
+            app:headerTextSize="10dp"
+            app:rowHeight="36dp"
+            app:textColor="@color/white"
+            app:textSize="11sp"
+            app:unitColumnWidth="0dp" />
 
         <LinearLayout
             android:layout_marginTop="25dp"
@@ -247,4 +249,4 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

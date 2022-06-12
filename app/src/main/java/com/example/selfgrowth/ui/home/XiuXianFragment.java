@@ -19,10 +19,12 @@ import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.model.XiuXianState;
 import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.service.backend.xiuxian.XiuXianService;
+import com.example.selfgrowth.ui.custum.TableView;
 import com.example.selfgrowth.ui.dashboard.DailyDashboardFragment;
 import com.example.selfgrowth.ui.dashboard.DashboardFragment;
 import com.example.selfgrowth.ui.dashboard.DataShareFragment;
 import com.example.selfgrowth.ui.dashboard.PeriodDashboardFragment;
+import com.example.selfgrowth.utils.MyTimeUtils;
 
 import java.util.Date;
 import java.util.Locale;
@@ -75,6 +77,14 @@ public class XiuXianFragment extends Fragment {
                 "气力：%d", stat.getLearnTime()));
         ((TextView) view.findViewById(R.id.today_ti_li)).setText(String.format(Locale.CHINA,
                 "体力：%d", stat.getRunningTime()));
+
+        TableView todayData = view.findViewById(R.id.today_data);
+        todayData.clearTableContents()
+                .setHeader("今日数据", "时间", "修炼值")
+                .addContent("睡觉（元力）", MyTimeUtils.toString(stat.getSleepTime()), String.valueOf(stat.getSleepTime()))
+                .addContent("学习（气力）", MyTimeUtils.toString(stat.getLearnTime()), String.valueOf(stat.getLearnTime()))
+                .addContent("运动（体力）", MyTimeUtils.toString(stat.getRunningTime()), String.valueOf(stat.getRunningTime()))
+                .refreshTable();
 
         ((TextView) view.findViewById(R.id.qi_xiu_log)).setText(res.getQiXiuUpgradeMsg());
         ((TextView) view.findViewById(R.id.ti_xiu_log)).setText(res.getTiXiuUpgradeMsg());
