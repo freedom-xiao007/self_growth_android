@@ -1,7 +1,11 @@
 package com.example.selfgrowth.ui.user;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +19,19 @@ import androidx.fragment.app.Fragment;
 import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
 import com.example.selfgrowth.cache.UserCache;
+import com.example.selfgrowth.config.VersionConfig;
 import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
-import com.example.selfgrowth.http.HttpConfig;
-import com.example.selfgrowth.http.RetrofitClient;
 import com.example.selfgrowth.http.request.AppRequest;
+import com.example.selfgrowth.model.AppVersionCheck;
 import com.example.selfgrowth.model.DashboardStatistics;
 import com.example.selfgrowth.model.Feedback;
 import com.example.selfgrowth.service.backend.AppStatisticsService;
 import com.example.selfgrowth.service.backend.TaskLogService;
 import com.example.selfgrowth.ui.activity.AppFragment;
-import com.example.selfgrowth.ui.activity.AppHistoryFragment;
 import com.example.selfgrowth.ui.dashboard.DailyDashboardFragment;
 import com.example.selfgrowth.ui.dashboard.PeriodDashboardFragment;
+import com.example.selfgrowth.utils.GsonUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Date;
@@ -57,25 +61,37 @@ public class UserFragment extends Fragment {
     }
 
     private void initVersionCheck(View view) {
-        view.findViewById(R.id.app_version_check).setOnClickListener(v -> {
-            View settingView = View.inflate(view.getContext(), R.layout.server_url_setting, null);
+        view.findViewById(R.id.app_version_check).setOnClickListener(v -> appRequest.versionCheck(VersionConfig.code,
+                success -> {
+                    AppVersionCheck check = GsonUtils.getInstance().fromJson(GsonUtils.getInstance().toJson(success), AppVersionCheck.class);
+                    if (check.getLatest()) {
+                        Snackbar.make(view, "已是最新版本", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        return;
+                    }
 
-            settingView.findViewById(R.id.server_url_setting_button).setOnClickListener(ignore -> {
-                EditText serverUrl = settingView.findViewById(R.id.server_url);
-                HttpConfig.setServerUrl(serverUrl.getText().toString());
-                try {
-                    RetrofitClient.getInstance().httpClientReload();
-                    Snackbar.make(settingView, "设置成功", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } catch (Exception e) {
-                    Snackbar.make(settingView, "设置失败:" + e.getMessage(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
+                    View settingView = View.inflate(view.getContext(), R.layout.version_check, null);
+                    ((TextView) settingView.findViewById(R.id.version)).setText(VersionConfig.version);
+                    ((TextView) settingView.findViewById(R.id.url)).setText(check.getDownloadUrl());
+                    ((TextView) settingView.findViewById(R.id.log)).setMovementMethod(ScrollingMovementMethod.getInstance());
+                    ((TextView) settingView.findViewById(R.id.log)).setText(check.getUpdateMsg());
 
-            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
-            popupLayout.show(PopupLayout.POSITION_TOP);
-        });
+                    settingView.findViewById(R.id.copy).setOnClickListener(bv -> {
+                        String url = ((TextView) settingView.findViewById(R.id.url)).getText().toString();
+                        //获取剪贴板管理器：
+                        ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        // 创建普通字符型ClipData
+                        ClipData mClipData = ClipData.newPlainText("Label", url);
+                        // 将ClipData内容放到系统剪贴板里。
+                        cm.setPrimaryClip(mClipData);
+                        Snackbar.make(settingView, "复制成功", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    });
+
+                    PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
+                    popupLayout.show(PopupLayout.POSITION_BOTTOM);
+                },
+                failed -> {
+                    Snackbar.make(view, "网络故障，请其他时间重试", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }));
     }
 
     private void initFeedback(View view) {

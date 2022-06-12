@@ -1,12 +1,9 @@
 package com.example.selfgrowth.http.request;
 
 import com.example.selfgrowth.http.api.AppApi;
-import com.example.selfgrowth.http.api.DashboardApi;
 import com.example.selfgrowth.model.ApiResponse;
-import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.model.Feedback;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 import retrofit2.Call;
@@ -19,9 +16,9 @@ public class AppRequest extends Request {
         sendRequest(call, success, failed);
     }
 
-    public void versionCheck(String version, Consumer<? super Object> success, Consumer<? super Object> failed) {
+    public void versionCheck(int versionCode, Consumer<? super Object> success, Consumer<? super Object> failed) {
         AppApi request = retrofit.create(AppApi.class);
-        Call<ApiResponse> call = request.versionCheck(version);
+        Call<ApiResponse> call = request.versionCheck(versionCode);
         sendRequest(call, success, failed);
     }
 }
