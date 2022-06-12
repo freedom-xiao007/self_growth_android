@@ -42,7 +42,8 @@ public class UserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         initUserInfo(view);
         initOverview(view);
-        initServerUrlSetting(view);
+        initVersionCheck(view);
+        initFeedback(view);
         setRoute(view, R.id.app_setting, new AppFragment());
         setRoute(view, R.id.app_history, new AppHistoryFragment());
         setRoute(view, R.id.daily_dashboard, new DailyDashboardFragment());
@@ -51,6 +52,50 @@ public class UserFragment extends Fragment {
         setRoute(view, R.id.year_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.YEAR));
         setRoute(view, R.id.data_sync_setting, new SettingFragment());
         return view;
+    }
+
+    private void initVersionCheck(View view) {
+        view.findViewById(R.id.app_version_check).setOnClickListener(v -> {
+            View settingView = View.inflate(view.getContext(), R.layout.server_url_setting, null);
+
+            settingView.findViewById(R.id.server_url_setting_button).setOnClickListener(ignore -> {
+                EditText serverUrl = settingView.findViewById(R.id.server_url);
+                HttpConfig.setServerUrl(serverUrl.getText().toString());
+                try {
+                    RetrofitClient.getInstance().httpClientReload();
+                    Snackbar.make(view, "设置成功", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } catch (Exception e) {
+                    Snackbar.make(view, "设置失败:" + e.getMessage(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+
+            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
+            popupLayout.show(PopupLayout.POSITION_TOP);
+        });
+    }
+
+    private void initFeedback(View view) {
+        view.findViewById(R.id.app_feedback).setOnClickListener(v -> {
+            View settingView = View.inflate(view.getContext(), R.layout.server_url_setting, null);
+
+            settingView.findViewById(R.id.server_url_setting_button).setOnClickListener(ignore -> {
+                EditText serverUrl = settingView.findViewById(R.id.server_url);
+                HttpConfig.setServerUrl(serverUrl.getText().toString());
+                try {
+                    RetrofitClient.getInstance().httpClientReload();
+                    Snackbar.make(view, "设置成功", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } catch (Exception e) {
+                    Snackbar.make(view, "设置失败:" + e.getMessage(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+
+            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
+            popupLayout.show(PopupLayout.POSITION_TOP);
+        });
     }
 
     private void setRoute(View view, int buttonId, Fragment fragment) {
@@ -76,28 +121,6 @@ public class UserFragment extends Fragment {
                 .replace(R.id.user_info, new LoginFragment())
                 .addToBackStack(null)
                 .commit());
-    }
-
-    private void initServerUrlSetting(View view) {
-        view.findViewById(R.id.server_url_setting).setOnClickListener(v -> {
-            View settingView = View.inflate(view.getContext(), R.layout.server_url_setting, null);
-
-            settingView.findViewById(R.id.server_url_setting_button).setOnClickListener(ignore -> {
-                EditText serverUrl = settingView.findViewById(R.id.server_url);
-                HttpConfig.setServerUrl(serverUrl.getText().toString());
-                try {
-                    RetrofitClient.getInstance().httpClientReload();
-                    Snackbar.make(view, "设置成功", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } catch (Exception e) {
-                    Snackbar.make(view, "设置失败:" + e.getMessage(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
-
-            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
-            popupLayout.show(PopupLayout.POSITION_TOP);
-        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

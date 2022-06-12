@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background"
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/user_info"
@@ -324,7 +324,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/app_history"
+                    android:id="@+id/app_version_check"
                     android:background="@drawable/application"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
@@ -332,7 +332,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"/>
                 <TextView
-                    android:text="应用历史"
+                    android:text="版本检查"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"
@@ -348,7 +348,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/server_url_setting"
+                    android:id="@+id/app_feedback"
                     android:background="@drawable/application"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
@@ -356,7 +356,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"/>
                 <TextView
-                    android:text="服务地址"
+                    android:text="意见反馈"
                     android:textSize="15sp"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/white"
