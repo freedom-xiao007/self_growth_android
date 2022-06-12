@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:background="@color/gray"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="500dp">
+        <TextView
+            android:paddingStart="20dp"
+            android:layout_marginTop="15dp"
+            android:text="修炼体系说明"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:gravity="center_vertical|center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:paddingStart="10dp"
+            android:layout_marginTop="15dp"
+            android:text="需对手机中的应用打上学习、运动、睡眠等标签\n然后将对应的应用在前台使用即可生成数据\n使用一分钟对应得到1点修炼点\n当境界到最高，升级将触发轮回，所有境界所需资源将翻倍"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:gravity="center_vertical|left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <com.example.selfgrowth.ui.custum.TableView
+            android:id="@+id/state_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:dividerColor="#e1e1e1"
+            app:dividerWidth="1px"
+            app:headerColor="@color/gray"
+            app:headerTextColor="@color/white"
+            app:headerTextSize="10dp"
+            app:rowHeight="36dp"
+            app:textColor="@color/white"
+            app:textSize="11sp"
+            app:unitColumnWidth="0dp" />
+    </LinearLayout>
+</ScrollView>

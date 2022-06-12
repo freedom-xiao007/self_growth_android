@@ -11,7 +11,7 @@ public class HttpConfig {
     private static final String NET_OPEN = "NET_OPEN";
     private static SharedPreferences preferences;
     private static boolean openNetwork = true;
-    private static final String defaultServer = "http://192.168.1.3:80";
+    private static final String defaultServer = "http://www.xiuxian.plus";
 
     public static void setServerUrl(String url) {
         address = url;

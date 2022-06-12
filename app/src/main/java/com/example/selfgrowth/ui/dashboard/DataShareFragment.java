@@ -47,7 +47,7 @@ public class DataShareFragment extends Fragment {
     private void refresh(View view) {
         final XiuXianState state = xiuXianService.yesterdaySettlement(view);
         ((TextView) view.findViewById(R.id.lun_hui_time))
-                .setText(String.format(Locale.CHINA, "气修轮回-%d 体修轮回-%d", state.getReincarnationAmountOfQiXiu(), state.getReincarnationAmountOfTiXiu()));
+                .setText(String.format(Locale.CHINA, "气修%d 体修%d", state.getReincarnationAmountOfQiXiu(), state.getReincarnationAmountOfTiXiu()));
         ((TextView) view.findViewById(R.id.qi_xiu_state))
                 .setText(String.format(Locale.CHINA, "%s%d层",
                         state.getQiXiuState().getState().getName(),

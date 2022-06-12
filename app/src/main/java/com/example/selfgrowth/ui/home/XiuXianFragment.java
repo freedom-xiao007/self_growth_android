@@ -15,7 +15,9 @@ import androidx.fragment.app.Fragment;
 
 import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
+import com.example.selfgrowth.enums.LianQiStateEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
+import com.example.selfgrowth.enums.TiXiuStateEnum;
 import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.model.XiuXianState;
 import com.example.selfgrowth.service.backend.DashboardService;
@@ -56,7 +58,22 @@ public class XiuXianFragment extends Fragment {
                 res.getReincarnationAmountOfQiXiu(), qiXiuState.getUpgradeNeedQiLi(), qiXiuState.getUpgradeNeedYuanLi()));
 
         int qiXiuUpgradeProcess = (int) (((double)res.getQiLi() / (double)qiXiuState.getUpgradeNeedQiLi()) * 100);
-        ((ProgressBar) view.findViewById(R.id.qi_xiu_upgrade_process)).setProgress(qiXiuUpgradeProcess);
+        ProgressBar qiXiuBar = view.findViewById(R.id.qi_xiu_upgrade_process);
+        qiXiuBar.setProgress(qiXiuUpgradeProcess);
+        qiXiuBar.setOnClickListener(bv -> {
+            View settingView = View.inflate(view.getContext(), R.layout.state_instruction, null);
+            TableView table = settingView.findViewById(R.id.state_detail);
+            table.clearTableContents().setHeader("境界等级", "境界名称", "层数", "每层升级所需资源");
+            for (LianQiStateEnum e: LianQiStateEnum.values()) {
+                int need = e.getUpgradeNeed() * res.getReincarnationAmountOfQiXiu();
+                table.addContent(String.valueOf(e.getIndex()), e.getName(),
+                        String.valueOf(e.getMaxState() - e.getMinState()),
+                        String.format(Locale.CHINA, "气力:%d,元力:%d", need, need / 2));
+            }
+            table.refreshTable();
+            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
+            popupLayout.show(PopupLayout.POSITION_TOP);
+        });
 
         XiuXianState.TiXiuState tiXiuState = res.getTiXiuState();
         ((TextView) view.findViewById(R.id.ti_xiu_upgrade_need)).setText(String.format(Locale.CHINA,
@@ -64,7 +81,22 @@ public class XiuXianFragment extends Fragment {
                 res.getReincarnationAmountOfTiXiu(), tiXiuState.getUpgradeNeedTiLi(), tiXiuState.getUpgradeNeedYuanLi()));
 
         int tiXiuUpgradeProcess = (int) (((double)res.getTiLi() / (double)qiXiuState.getUpgradeNeedQiLi()) * 100);
-        ((ProgressBar) view.findViewById(R.id.ti_xiu_upgrade_process)).setProgress(tiXiuUpgradeProcess);
+        ProgressBar tiXiuBar =  view.findViewById(R.id.ti_xiu_upgrade_process);
+        tiXiuBar.setProgress(tiXiuUpgradeProcess);
+        tiXiuBar.setOnClickListener(bv -> {
+            View settingView = View.inflate(view.getContext(), R.layout.state_instruction, null);
+            TableView table = settingView.findViewById(R.id.state_detail);
+            table.clearTableContents().setHeader("境界等级", "境界名称", "层数", "每层升级所需资源");
+            for (TiXiuStateEnum e: TiXiuStateEnum.values()) {
+                int need = e.getUpgradeNeed() * res.getReincarnationAmountOfTiXiu();
+                table.addContent(String.valueOf(e.getIndex()), e.getName(),
+                        String.valueOf(e.getMaxState() - e.getMinState()),
+                        String.format(Locale.CHINA, "体力:%d,元力:%d", need, need / 2));
+            }
+            table.refreshTable();
+            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
+            popupLayout.show(PopupLayout.POSITION_TOP);
+        });
 
         ((TextView) view.findViewById(R.id.current_yuan_li)).setText(String.format(Locale.CHINA,
                 "元力：%d", res.getYuanLi()));
