@@ -19,7 +19,9 @@ import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.http.HttpConfig;
 import com.example.selfgrowth.http.RetrofitClient;
+import com.example.selfgrowth.http.request.AppRequest;
 import com.example.selfgrowth.model.DashboardStatistics;
+import com.example.selfgrowth.model.Feedback;
 import com.example.selfgrowth.service.backend.AppStatisticsService;
 import com.example.selfgrowth.service.backend.TaskLogService;
 import com.example.selfgrowth.ui.activity.AppFragment;
@@ -35,6 +37,7 @@ import java.util.Objects;
 public class UserFragment extends Fragment {
 
     private final TaskLogService taskLogService = TaskLogService.getInstance();
+    private final AppRequest appRequest = new AppRequest();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -45,7 +48,6 @@ public class UserFragment extends Fragment {
         initVersionCheck(view);
         initFeedback(view);
         setRoute(view, R.id.app_setting, new AppFragment());
-        setRoute(view, R.id.app_history, new AppHistoryFragment());
         setRoute(view, R.id.daily_dashboard, new DailyDashboardFragment());
         setRoute(view, R.id.week_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.WEEK));
         setRoute(view, R.id.month_dashboard, new PeriodDashboardFragment(StatisticsTypeEnum.MONTH));
@@ -63,10 +65,10 @@ public class UserFragment extends Fragment {
                 HttpConfig.setServerUrl(serverUrl.getText().toString());
                 try {
                     RetrofitClient.getInstance().httpClientReload();
-                    Snackbar.make(view, "设置成功", Snackbar.LENGTH_LONG)
+                    Snackbar.make(settingView, "设置成功", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } catch (Exception e) {
-                    Snackbar.make(view, "设置失败:" + e.getMessage(), Snackbar.LENGTH_LONG)
+                    Snackbar.make(settingView, "设置失败:" + e.getMessage(), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             });
@@ -78,23 +80,31 @@ public class UserFragment extends Fragment {
 
     private void initFeedback(View view) {
         view.findViewById(R.id.app_feedback).setOnClickListener(v -> {
-            View settingView = View.inflate(view.getContext(), R.layout.server_url_setting, null);
-
-            settingView.findViewById(R.id.server_url_setting_button).setOnClickListener(ignore -> {
-                EditText serverUrl = settingView.findViewById(R.id.server_url);
-                HttpConfig.setServerUrl(serverUrl.getText().toString());
-                try {
-                    RetrofitClient.getInstance().httpClientReload();
-                    Snackbar.make(view, "设置成功", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } catch (Exception e) {
-                    Snackbar.make(view, "设置失败:" + e.getMessage(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+            View settingView = View.inflate(view.getContext(), R.layout.feedback, null);
+            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
+            settingView.findViewById(R.id.confirm).setOnClickListener(bv -> {
+                String email = ((EditText) settingView.findViewById(R.id.email)).getText().toString();
+                String feedback = ((EditText) settingView.findViewById(R.id.feedback)).getText().toString();
+                if (feedback.isEmpty()) {
+                    Snackbar.make(view, "请填写反馈内容", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
                 }
+
+                appRequest.feedback(Feedback.builder().email(email).msg(feedback).build(),
+                        success -> {
+                            popupLayout.dismiss();
+                            Snackbar.make(view, "感谢您的反馈", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        },
+                        failed -> {
+                            Snackbar.make(settingView, "网络故障，请其他时间重试", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        });
             });
 
-            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
-            popupLayout.show(PopupLayout.POSITION_TOP);
+            settingView.findViewById(R.id.cancel).setOnClickListener(bv -> {
+                popupLayout.dismiss();
+            });
+
+            popupLayout.show(PopupLayout.POSITION_BOTTOM);
         });
     }
 
