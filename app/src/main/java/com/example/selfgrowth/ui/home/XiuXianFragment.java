@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.example.selfgrowth.enums.LianQiStateEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
 import com.example.selfgrowth.enums.TiXiuStateEnum;
 import com.example.selfgrowth.model.DashboardResult;
+import com.example.selfgrowth.model.Feedback;
 import com.example.selfgrowth.model.XiuXianState;
 import com.example.selfgrowth.service.backend.DashboardService;
 import com.example.selfgrowth.service.backend.xiuxian.XiuXianService;
@@ -28,6 +30,7 @@ import com.example.selfgrowth.ui.dashboard.DashboardFragment;
 import com.example.selfgrowth.ui.dashboard.DataShareFragment;
 import com.example.selfgrowth.ui.dashboard.PeriodDashboardFragment;
 import com.example.selfgrowth.utils.MyTimeUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Date;
 import java.util.Locale;
@@ -149,6 +152,42 @@ public class XiuXianFragment extends Fragment {
             setRoute(settingView, R.id.xiu_xian_month_dashboard, new DataShareFragment(StatisticsTypeEnum.MONTH));
             setRoute(settingView, R.id.xiu_xian_year_dashboard, new DataShareFragment(StatisticsTypeEnum.YEAR));
             PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
+            popupLayout.show(PopupLayout.POSITION_TOP);
+        });
+
+        view.findViewById(R.id.xiu_xian_blog).setOnClickListener(v -> {
+            View settingView = View.inflate(view.getContext(), R.layout.add_blog, null);
+            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
+            settingView.findViewById(R.id.confirm).setOnClickListener(bv -> {
+                String title = ((EditText) settingView.findViewById(R.id.title)).getText().toString();
+                String url = ((EditText) settingView.findViewById(R.id.url)).getText().toString();
+                if (title.isEmpty() || url.isEmpty()) {
+                    Snackbar.make(view, "请填写标题和url", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+            });
+
+            settingView.findViewById(R.id.cancel).setOnClickListener(bv -> {
+                popupLayout.dismiss();
+            });
+            popupLayout.show(PopupLayout.POSITION_TOP);
+        });
+
+        view.findViewById(R.id.xiu_xian_book).setOnClickListener(v -> {
+            View settingView = View.inflate(view.getContext(), R.layout.add_book, null);
+            PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
+            settingView.findViewById(R.id.confirm).setOnClickListener(bv -> {
+                String title = ((EditText) settingView.findViewById(R.id.title)).getText().toString();
+                String url = ((EditText) settingView.findViewById(R.id.url)).getText().toString();
+                if (title.isEmpty() || url.isEmpty()) {
+                    Snackbar.make(view, "请填写标题和url", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+            });
+
+            settingView.findViewById(R.id.cancel).setOnClickListener(bv -> {
+                popupLayout.dismiss();
+            });
             popupLayout.show(PopupLayout.POSITION_TOP);
         });
     }
