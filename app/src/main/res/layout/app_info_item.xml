@@ -9,40 +9,47 @@
         android:layout_marginBottom="5dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="100dp">
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="50dp"
-                android:textSize="15sp"
-                android:gravity="center_vertical|left"
-                android:text="应用名称:"/>
-            <TextView
-                android:id="@+id/app_info_name"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="50dp"
-                android:textSize="15sp"
-                android:gravity="center_vertical|left"
-                android:text="KEEP"/>
+            android:layout_height="50dp">
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="50dp"
                 android:textSize="15sp"
                 android:gravity="center_vertical|right"
-                android:paddingRight="50dp"
-                android:text="标签："/>
-            <org.angmarch.views.NiceSpinner
-                android:id="@+id/app_info_label_spinner"
+                android:text="应用名称:"/>
+            <TextView
+                android:id="@+id/app_info_name"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:layout_height="50dp"
-                app:entries="@array/add_task_label"/>
+                android:textSize="15sp"
+                android:gravity="center_vertical|left"
+                android:paddingStart="10dp"
+                android:text="KEEP"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|right"
+                    android:text="标签："/>
+                <org.angmarch.views.NiceSpinner
+                    android:id="@+id/app_info_label_spinner"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="50dp"
+                    app:entries="@array/add_task_label"/>
         </LinearLayout>
     </LinearLayout>
 
