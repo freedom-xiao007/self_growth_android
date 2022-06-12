@@ -9,18 +9,6 @@
         android:name="com.example.selfgrowth.ui.home.XiuXianFragment"/>
 
     <fragment
-        android:id="@+id/navigation_task"
-        android:name="com.example.selfgrowth.ui.task.TaskFragment"/>
-
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.selfgrowth.ui.dashboard.DashboardFragment"/>
-
-    <fragment
-        android:id="@+id/navigation_calender"
-        android:name="com.example.selfgrowth.ui.calender.CalenderFragment"/>
-
-    <fragment
         android:id="@+id/navigation_user"
         android:name="com.example.selfgrowth.ui.user.UserFragment"/>
 </navigation>
