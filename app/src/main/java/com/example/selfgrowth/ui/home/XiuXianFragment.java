@@ -62,7 +62,7 @@ public class XiuXianFragment extends Fragment {
 
         XiuXianState.TiXiuState tiXiuState = res.getTiXiuState();
         ((TextView) view.findViewById(R.id.ti_xiu_upgrade_need)).setText(String.format(Locale.CHINA,
-                "%s%d层(轮回%d)：升级需%d气力+%d元力", tiXiuState.getState().getName(), tiXiuState.getLevel(),
+                "%s%d层(轮回%d)：升级需%d体力+%d元力", tiXiuState.getState().getName(), tiXiuState.getLevel(),
                 res.getReincarnationAmountOfTiXiu(), tiXiuState.getUpgradeNeedTiLi(), tiXiuState.getUpgradeNeedYuanLi()));
 
         int tiXiuUpgradeProcess = (int) (((double)res.getTiLi() / (double)qiXiuState.getUpgradeNeedQiLi()) * 100);

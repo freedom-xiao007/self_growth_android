@@ -173,7 +173,8 @@ public class XiuXianService {
         String yesterdayLog = String.format(Locale.CHINA, "连续修炼打卡奖励暴击率：%f\n " +
                         "昨日修炼：元力 %d, 气力 %d, 体力 %d\n" +
                         "昨日睡眠6小时，学习两小时，锻炼半小时：" + (success ? "达成" : "未达成"),
-                clockInAward, yuanLi, qiLi, tiLi);
+                clockInAward, (int) (res.getSleepTime() * clockInAward),
+                (int) (res.getLearnTime() * clockInAward), (int) (res.getRunningTime() * clockInAward));
         state.setYesterdayLog(yesterdayLog);
 
         while (tiXiuUpgrade(state));

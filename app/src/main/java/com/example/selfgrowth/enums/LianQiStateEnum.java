@@ -21,10 +21,10 @@ public enum LianQiStateEnum {
     JIN_XIAN(9, "金仙境", 1, 10, 60 * 9),
     TAI_YI_JIN_XIAN(10, "太乙金仙境", 1, 10, 60 * 10),
     DA_LUO_JIN_XIAN(11, "大罗金仙境", 1, 10, 60 * 11),
-    ZHUN_SHENG(12, "准圣", 1, 10, 60 * 12),
-    SHENG_REN(13, "圣人", 1, 10, 60 * 13),
-    TIAN_DAO(14, "天道", 1, 10, 60 * 14),
-    DA_DAO(15, "大道", 1, 10, 60 * 15),
+    ZHUN_SHENG(12, "准圣境", 1, 10, 60 * 12),
+    SHENG_REN(13, "圣人境", 1, 10, 60 * 13),
+    TIAN_DAO(14, "天道境", 1, 10, 60 * 14),
+    DA_DAO(15, "大道境", 1, 10, 60 * 15),
     ;
 
     private final int index;
