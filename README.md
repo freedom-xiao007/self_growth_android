@@ -141,6 +141,8 @@
 - [pexels 图片资源丰富](https://www.pexels.com/zh-cn/search/%E6%89%8B%E6%9C%BA%E5%A3%81%E7%BA%B8/)
 - [UI 开源组件库](https://github.com/Trinea/android-open-project)
 - [最流行的android组件大全](https://colobu.com/2014/08/15/android-components-collection/)
+- [Android 开源项目分类汇总](https://github.com/Trinea/android-open-project) 
+- [二维码生成](https://cli.im/url/info?464597fcec755357a351a16a0e45176c)
 
 ### 自动登录
 - [Android学习之保存用户登录信息](https://blog.csdn.net/u013132758/article/details/)
@@ -161,6 +163,10 @@
 - [对话框](https://developer.android.com/guide/topics/ui/dialogs)
 - [图表库：MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
 - [Android输入法弹出时界面被挤压的问题](https://blog.csdn.net/Sunxiaolin2016/article/details/111947770)
+- [表格组件](https://github.com/xiaoowuu/TableView)
+- [Android EditText设置边框](https://blog.csdn.net/tracydragonlxy/article/details/100558915)
+- [安卓 textview 超出限制自动添加省略号](https://blog.csdn.net/leehu1987/article/details/17247985)
+- [Android----复制到剪切板](https://www.jianshu.com/p/1e84d33154bd)
 
 ### 路由与跳转
 - [How to move from one fragment to another fragment on click of an ImageView in Android?](https://stackoverflow.com/questions/23212162/how-to-move-from-one-fragment-to-another-fragment-on-click-of-an-imageview-in-an)
