@@ -49,7 +49,7 @@
                 android:layout_height="50dp"
                 android:hint="书籍"
                 android:gravity="left|top"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:background="@drawable/edit_background"
                 android:layout_marginStart="10dp"
                 />
