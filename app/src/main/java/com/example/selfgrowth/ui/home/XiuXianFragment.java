@@ -83,7 +83,7 @@ public class XiuXianFragment extends Fragment {
                 "%s%d层(轮回%d)：升级需%d体力+%d元力", tiXiuState.getState().getName(), tiXiuState.getLevel(),
                 res.getReincarnationAmountOfTiXiu(), tiXiuState.getUpgradeNeedTiLi(), tiXiuState.getUpgradeNeedYuanLi()));
 
-        int tiXiuUpgradeProcess = (int) (((double)res.getTiLi() / (double)qiXiuState.getUpgradeNeedQiLi()) * 100);
+        int tiXiuUpgradeProcess = (int) (((double)res.getTiLi() / (double)tiXiuState.getUpgradeNeedTiLi()) * 100);
         ProgressBar tiXiuBar =  view.findViewById(R.id.ti_xiu_upgrade_process);
         tiXiuBar.setProgress(tiXiuUpgradeProcess);
         tiXiuBar.setOnClickListener(bv -> {
