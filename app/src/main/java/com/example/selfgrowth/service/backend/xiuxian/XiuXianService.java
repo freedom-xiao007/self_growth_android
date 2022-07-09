@@ -158,7 +158,7 @@ public class XiuXianService {
         DashboardResult res = calService.getYesterdayData(view);
         boolean success = res.getSleepTime() >= 360 && res.getLearnTime() >= 120 && res.getRunningTime() >= 30;
         if (success) {
-            xiuXianDb.save(clockInAwardKey, clockInAward + 0.1);
+            xiuXianDb.save(clockInAwardKey, clockInAward + 0.01);
         } else {
             xiuXianDb.save(clockInAwardKey, 1.0);
         }
