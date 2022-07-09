@@ -16,13 +16,19 @@ import androidx.fragment.app.Fragment;
 
 import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
+import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.LianQiStateEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
+import com.example.selfgrowth.enums.TaskCycleEnum;
+import com.example.selfgrowth.enums.TaskLearnTypeEnum;
+import com.example.selfgrowth.enums.TaskTypeEnum;
 import com.example.selfgrowth.enums.TiXiuStateEnum;
 import com.example.selfgrowth.model.DashboardResult;
 import com.example.selfgrowth.model.Feedback;
+import com.example.selfgrowth.model.TaskConfig;
 import com.example.selfgrowth.model.XiuXianState;
 import com.example.selfgrowth.service.backend.DashboardService;
+import com.example.selfgrowth.service.backend.TaskLogService;
 import com.example.selfgrowth.service.backend.xiuxian.XiuXianService;
 import com.example.selfgrowth.ui.custum.TableView;
 import com.example.selfgrowth.ui.dashboard.DailyDashboardFragment;
@@ -39,6 +45,7 @@ public class XiuXianFragment extends Fragment {
 
     private final XiuXianService xiuXianService = XiuXianService.getInstance();
     private final DashboardService dashboardService = DashboardService.getInstance();
+    private final TaskLogService taskLogService = TaskLogService.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -165,6 +172,20 @@ public class XiuXianFragment extends Fragment {
                     Snackbar.make(view, "请填写标题和url", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
+                taskLogService.add(TaskConfig.builder()
+                        .name(title)
+                        .description(url)
+                        .label(LabelEnum.LEARN)
+                        .cycleType(TaskCycleEnum.DEFAULT)
+                        .learnType(TaskLearnTypeEnum.OUTPUT)
+                        .group("博客输出")
+                        .taskTypeEnum(TaskTypeEnum.NOTE)
+                        .isComplete(true)
+                        .completeDate(new Date())
+                        .isDelete(false)
+                        .build());
+                Snackbar.make(view, "添加完成", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                popupLayout.dismiss();
             });
 
             settingView.findViewById(R.id.cancel).setOnClickListener(bv -> {
@@ -178,11 +199,24 @@ public class XiuXianFragment extends Fragment {
             PopupLayout popupLayout= PopupLayout.init(view.getContext(), settingView);
             settingView.findViewById(R.id.confirm).setOnClickListener(bv -> {
                 String title = ((EditText) settingView.findViewById(R.id.title)).getText().toString();
-                String url = ((EditText) settingView.findViewById(R.id.url)).getText().toString();
-                if (title.isEmpty() || url.isEmpty()) {
-                    Snackbar.make(view, "请填写标题和url", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                if (title.isEmpty()) {
+                    Snackbar.make(view, "请填写标题", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
+                taskLogService.add(TaskConfig.builder()
+                        .name(title)
+                        .description("书籍")
+                        .label(LabelEnum.LEARN)
+                        .cycleType(TaskCycleEnum.DEFAULT)
+                        .learnType(TaskLearnTypeEnum.INPUT)
+                        .group("书籍阅读")
+                        .taskTypeEnum(TaskTypeEnum.BOOK)
+                        .isComplete(true)
+                        .completeDate(new Date())
+                        .isDelete(false)
+                        .build());
+                Snackbar.make(view, "添加完成", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                popupLayout.dismiss();
             });
 
             settingView.findViewById(R.id.cancel).setOnClickListener(bv -> {
