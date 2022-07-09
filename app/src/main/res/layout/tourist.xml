@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/tourist"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:layout_width="300dp"
+        android:layout_height="550dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+
+            <TextView
+                android:text="使用教程"
+                android:gravity="center_vertical|center"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/close"
+                android:background="@drawable/ic_baseline_close_24"
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
+        </LinearLayout>
+
+        <ViewFlipper
+            android:id="@+id/viewFlipper1"
+
+            android:layout_width="300dp"
+            android:layout_height="500dp"
+            android:flipInterval="3000">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/tourist1" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/tourist2" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/tourist3" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/tourist4" />
+        </ViewFlipper>
+
+    </LinearLayout>
+
+</RelativeLayout>

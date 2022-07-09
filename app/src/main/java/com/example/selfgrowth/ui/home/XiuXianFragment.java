@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.codingending.popuplayout.PopupLayout;
 import com.example.selfgrowth.R;
+import com.example.selfgrowth.config.AppConfig;
 import com.example.selfgrowth.enums.LabelEnum;
 import com.example.selfgrowth.enums.LianQiStateEnum;
 import com.example.selfgrowth.enums.StatisticsTypeEnum;
@@ -50,6 +52,20 @@ public class XiuXianFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        if (AppConfig.isShowTourist()) {
+            View view = inflater.inflate(R.layout.tourist, container, false);
+            ((ViewFlipper) view.findViewById(R.id.viewFlipper1)).startFlipping();
+            view.findViewById(R.id.close).setOnClickListener(v -> {
+                AppConfig.closeShowTourist();
+                requireActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.tourist, new XiuXianFragment())
+                        .addToBackStack(null)
+                        .commit();
+            });
+            return view;
+        }
         View view = inflater.inflate(R.layout.xiu_xian, container, false);
         refresh(view);
         Toast.makeText(getContext(),"第一次使用时请到：我的-->应用设置页面，设置应用的学习、运动等标签", Toast.LENGTH_LONG).show();
